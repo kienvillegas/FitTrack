@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "602497208729",
+    "project_id": "fittrack-ae240",
+    "storage_bucket": "fittrack-ae240.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602497208729:android:80ed8f56102c1b32eb4308",
+        "android_client_info": {
+          "package_name": "com.example.fittrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmPDDVHHxh49QxOZAQiW7TkHjW0VZ6yqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
