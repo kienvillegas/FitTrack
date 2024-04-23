@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView42" />
 
     <EditText
-        android:id="@+id/editTextText5"
+        android:id="@+id/etSetCalorieDaily"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -90,7 +90,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView41"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/editTextText5"
+        app:layout_constraintStart_toEndOf="@+id/etSetCalorieDaily"
         app:layout_constraintTop_toBottomOf="@+id/textView79" />
 
     <TextView
@@ -104,10 +104,10 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText5" />
+        app:layout_constraintTop_toBottomOf="@+id/etSetCalorieDaily" />
 
     <EditText
-        android:id="@+id/editTextText6"
+        android:id="@+id/etSetCalorieWeekly"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -132,11 +132,11 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView41"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/editTextText6"
+        app:layout_constraintStart_toEndOf="@+id/etSetCalorieWeekly"
         app:layout_constraintTop_toBottomOf="@+id/textView81" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/btnSetCalorieGoal"
         android:layout_width="180dp"
         android:layout_height="35dp"
         android:layout_marginTop="10dp"
@@ -146,10 +146,10 @@
         android:textColor="@color/btnText"
         app:layout_constraintEnd_toEndOf="@+id/imageView41"
         app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText6" />
+        app:layout_constraintTop_toBottomOf="@+id/etSetCalorieWeekly" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/btnSetCalorieCancel"
         android:layout_width="180dp"
         android:layout_height="35dp"
         android:background="@drawable/btn_mid_rounded_red"
@@ -159,7 +159,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView41"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/button10" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSetCalorieGoal" />
 
     <TextView
         android:id="@+id/textView92"
@@ -188,7 +188,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView45" />
 
     <TextView
-        android:id="@+id/textView94"
+        android:id="@+id/tvSetCalorieDailyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
@@ -201,7 +201,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView92" />
 
     <TextView
-        android:id="@+id/textView96"
+        android:id="@+id/tvSetCalorieWeeklyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"

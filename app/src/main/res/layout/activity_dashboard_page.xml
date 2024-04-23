@@ -185,7 +185,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
 
             <ImageView
-                android:id="@+id/imageView91"
+                android:id="@+id/imDayOneBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="30dp"
@@ -195,62 +195,62 @@
                 app:srcCompat="@drawable/circle_filled_shape" />
 
             <ImageView
-                android:id="@+id/imageView92"
+                android:id="@+id/imDayTwoBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView91"
+                app:layout_constraintStart_toEndOf="@+id/imDayOneBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView165"
                 app:srcCompat="@drawable/circle_filled_shape" />
 
             <ImageView
-                android:id="@+id/imageView93"
+                android:id="@+id/imDayThreeBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView92"
+                app:layout_constraintStart_toEndOf="@+id/imDayTwoBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView166"
                 app:srcCompat="@drawable/circle_filled_shape" />
 
             <ImageView
-                android:id="@+id/imageView94"
+                android:id="@+id/imDayFourBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView93"
+                app:layout_constraintStart_toEndOf="@+id/imDayThreeBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView167"
                 app:srcCompat="@drawable/circle_filled_shape" />
 
             <ImageView
-                android:id="@+id/imageView95"
+                android:id="@+id/imDayFiveBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="19dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView94"
+                app:layout_constraintStart_toEndOf="@+id/imDayFourBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView168"
                 app:srcCompat="@drawable/circle_filled_shape" />
 
             <ImageView
-                android:id="@+id/imageView96"
+                android:id="@+id/imDaySixBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView95"
+                app:layout_constraintStart_toEndOf="@+id/imDayFiveBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView169"
                 app:srcCompat="@drawable/circle_filled_shape" />
 
             <ImageView
-                android:id="@+id/imageView97"
+                android:id="@+id/imDaySevenBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView96"
+                app:layout_constraintStart_toEndOf="@+id/imDaySixBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView170"
                 app:srcCompat="@drawable/circle_filled_shape" />
 
@@ -261,10 +261,10 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="1"
                 android:textColor="@color/primaryText"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView91"
-                app:layout_constraintEnd_toEndOf="@+id/imageView91"
-                app:layout_constraintStart_toStartOf="@+id/imageView91"
-                app:layout_constraintTop_toTopOf="@+id/imageView91" />
+                app:layout_constraintBottom_toBottomOf="@+id/imDayOneBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayOneBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayOneBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayOneBg" />
 
             <TextView
                 android:id="@+id/tvDayTwo"
@@ -273,10 +273,10 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="2"
                 android:textColor="@color/primaryText"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView92"
-                app:layout_constraintEnd_toEndOf="@+id/imageView92"
-                app:layout_constraintStart_toStartOf="@+id/imageView92"
-                app:layout_constraintTop_toTopOf="@+id/imageView92" />
+                app:layout_constraintBottom_toBottomOf="@+id/imDayTwoBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayTwoBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayTwoBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayTwoBg" />
 
             <TextView
                 android:id="@+id/tvDayThree"
@@ -285,10 +285,10 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="3"
                 android:textColor="@color/primaryText"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView93"
-                app:layout_constraintEnd_toEndOf="@+id/imageView93"
-                app:layout_constraintStart_toStartOf="@+id/imageView93"
-                app:layout_constraintTop_toTopOf="@+id/imageView93" />
+                app:layout_constraintBottom_toBottomOf="@+id/imDayThreeBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayThreeBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayThreeBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayThreeBg" />
 
             <TextView
                 android:id="@+id/tvDayFour"
@@ -297,10 +297,10 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="4"
                 android:textColor="@color/primaryText"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView94"
-                app:layout_constraintEnd_toEndOf="@+id/imageView94"
-                app:layout_constraintStart_toStartOf="@+id/imageView94"
-                app:layout_constraintTop_toTopOf="@+id/imageView94" />
+                app:layout_constraintBottom_toBottomOf="@+id/imDayFourBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayFourBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayFourBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayFourBg" />
 
             <TextView
                 android:id="@+id/tvDayFive"
@@ -309,22 +309,22 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="5"
                 android:textColor="@color/primaryText"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView95"
-                app:layout_constraintEnd_toEndOf="@+id/imageView95"
-                app:layout_constraintStart_toStartOf="@+id/imageView95"
-                app:layout_constraintTop_toTopOf="@+id/imageView95" />
+                app:layout_constraintBottom_toBottomOf="@+id/imDayFiveBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayFiveBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayFiveBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayFiveBg" />
 
             <TextView
                 android:id="@+id/tvDaySix"
-                android:layout_width="7dp"
-                android:layout_height="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="6"
                 android:textColor="@color/primaryText"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView96"
-                app:layout_constraintEnd_toEndOf="@+id/imageView96"
-                app:layout_constraintStart_toStartOf="@+id/imageView96"
-                app:layout_constraintTop_toTopOf="@+id/imageView96" />
+                app:layout_constraintBottom_toBottomOf="@+id/imDaySixBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDaySixBg"
+                app:layout_constraintStart_toStartOf="@+id/imDaySixBg"
+                app:layout_constraintTop_toTopOf="@+id/imDaySixBg" />
 
             <TextView
                 android:id="@+id/tvDaySeven"
@@ -333,10 +333,10 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="7"
                 android:textColor="@color/primaryText"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView97"
-                app:layout_constraintEnd_toEndOf="@+id/imageView97"
-                app:layout_constraintStart_toStartOf="@+id/imageView97"
-                app:layout_constraintTop_toTopOf="@+id/imageView97" />
+                app:layout_constraintBottom_toBottomOf="@+id/imDaySevenBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDaySevenBg"
+                app:layout_constraintStart_toStartOf="@+id/imDaySevenBg"
+                app:layout_constraintTop_toTopOf="@+id/imDaySevenBg" />
 
             <ImageView
                 android:id="@+id/imageView98"

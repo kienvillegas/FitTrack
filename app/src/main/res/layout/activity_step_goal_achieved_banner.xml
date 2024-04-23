@@ -63,7 +63,7 @@
         app:srcCompat="@drawable/user_icon" />
 
     <TextView
-        android:id="@+id/textView114"
+        android:id="@+id/tvStepBannerUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -84,7 +84,7 @@
         android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView62"
         app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/textView114"
+        app:layout_constraintTop_toBottomOf="@+id/tvStepBannerUsername"
         app:srcCompat="@drawable/line_divider_pink" />
 
     <TextView
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView115" />
 
     <TextView
-        android:id="@+id/textView117"
+        android:id="@+id/tvStepBannerTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -179,7 +179,7 @@
         app:srcCompat="@drawable/steps_icon" />
 
     <TextView
-        android:id="@+id/textView120"
+        android:id="@+id/tvStepBannerPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_bold"
@@ -205,7 +205,7 @@
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
     <TextView
-        android:id="@+id/textView122"
+        android:id="@+id/tvStepBannerGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -227,11 +227,11 @@
         android:text="steps"
         android:textColor="@color/tertiaryText"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView122"
+        app:layout_constraintStart_toEndOf="@+id/tvStepBannerGoal"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
     <Button
-        android:id="@+id/button18"
+        android:id="@+id/btnStepBannerShare"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -244,7 +244,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView65" />
 
     <Button
-        android:id="@+id/button19"
+        android:id="@+id/btnStepBannerCancel"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -254,6 +254,6 @@
         android:textColor="@color/btnCancelColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button18" />
+        app:layout_constraintTop_toBottomOf="@+id/btnStepBannerShare" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

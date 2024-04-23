@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView46" />
 
     <TextView
-        android:id="@+id/textView57"
+        android:id="@+id/tvProfileSleepTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -65,7 +65,7 @@
         android:fontFamily="@font/outfit_semi_bold"
         android:text="hours"
         android:textColor="@color/tertiaryText"
-        app:layout_constraintStart_toEndOf="@+id/textView57"
+        app:layout_constraintStart_toEndOf="@+id/tvProfileSleepTaken"
         app:layout_constraintTop_toBottomOf="@+id/textView55" />
 
     <com.github.mikephil.charting.charts.BarChart
@@ -123,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView60" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnProfileSleepSetGoal"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_mid_rounded_primary"
@@ -148,7 +148,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView36" />
 
     <TextView
-        android:id="@+id/textView62"
+        android:id="@+id/tvProfileSleepDailyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
@@ -173,7 +173,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView37" />
 
     <TextView
-        android:id="@+id/textView64"
+        android:id="@+id/tvProfileSleepWeeklyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"

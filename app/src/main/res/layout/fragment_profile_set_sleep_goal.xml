@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView47" />
 
     <EditText
-        android:id="@+id/editTextText7"
+        android:id="@+id/etSetSleepDaily"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -91,10 +91,10 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView46"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText7" />
+        app:layout_constraintTop_toBottomOf="@+id/etSetSleepDaily" />
 
     <EditText
-        android:id="@+id/editTextText8"
+        android:id="@+id/etSetSleepWeekly"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -119,7 +119,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView46"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/editTextText7"
+        app:layout_constraintStart_toEndOf="@+id/etSetSleepDaily"
         app:layout_constraintTop_toBottomOf="@+id/textView84" />
 
     <TextView
@@ -132,11 +132,11 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView46"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/editTextText8"
+        app:layout_constraintStart_toEndOf="@+id/etSetSleepWeekly"
         app:layout_constraintTop_toBottomOf="@+id/textView85" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/btnSetSleepGoal"
         android:layout_width="180dp"
         android:layout_height="35dp"
         android:layout_marginTop="10dp"
@@ -146,10 +146,10 @@
         android:textColor="@color/btnText"
         app:layout_constraintEnd_toEndOf="@+id/imageView46"
         app:layout_constraintStart_toStartOf="@+id/imageView46"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText8" />
+        app:layout_constraintTop_toBottomOf="@+id/etSetSleepWeekly" />
 
     <Button
-        android:id="@+id/button13"
+        android:id="@+id/btnSetSleepCancel"
         android:layout_width="180dp"
         android:layout_height="35dp"
         android:background="@drawable/btn_mid_rounded_red"
@@ -157,7 +157,7 @@
         android:textColor="@color/btnCancelColor"
         app:layout_constraintEnd_toEndOf="@+id/imageView46"
         app:layout_constraintStart_toStartOf="@+id/imageView46"
-        app:layout_constraintTop_toBottomOf="@+id/button12" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSetSleepGoal" />
 
     <TextView
         android:id="@+id/textView88"
@@ -186,7 +186,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView48" />
 
     <TextView
-        android:id="@+id/textView90"
+        android:id="@+id/tvSetSleepDailyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
@@ -199,7 +199,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView88" />
 
     <TextView
-        android:id="@+id/textView91"
+        android:id="@+id/tvSetSleepWeeklyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"

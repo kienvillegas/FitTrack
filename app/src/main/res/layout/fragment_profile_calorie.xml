@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
     <TextView
-        android:id="@+id/textView49"
+        android:id="@+id/tvProfileCalorieTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -67,8 +67,8 @@
         android:text="Kcal"
         android:textColor="@color/tertiaryText"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView49"
-        app:layout_constraintTop_toTopOf="@+id/textView49" />
+        app:layout_constraintStart_toEndOf="@+id/tvProfileCalorieTaken"
+        app:layout_constraintTop_toTopOf="@+id/tvProfileCalorieTaken" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/caloriesBarChart"
@@ -78,7 +78,7 @@
         android:background="@drawable/rectangle_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView49" />
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileCalorieTaken" />
 
     <ImageView
         android:id="@+id/imageView30"
@@ -125,7 +125,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnProfileCalorieSetGoal"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -151,7 +151,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView31" />
 
     <TextView
-        android:id="@+id/textView53"
+        android:id="@+id/tvProfileCaloreiDailyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
@@ -175,7 +175,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView32" />
 
     <TextView
-        android:id="@+id/textView56"
+        android:id="@+id/tvProfileCalorieWeeklyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"

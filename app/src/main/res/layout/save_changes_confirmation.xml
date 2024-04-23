@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView194" />
 
     <Button
-        android:id="@+id/button29"
+        android:id="@+id/btnSaveChangesYes"
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView195" />
 
     <Button
-        android:id="@+id/button30"
+        android:id="@+id/btnSaveChangesNo"
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"

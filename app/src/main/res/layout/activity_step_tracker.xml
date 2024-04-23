@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/rectangle_shape" />
 
     <EditText
-        android:id="@+id/etStepsTaken"
+        android:id="@+id/etStepsTrackerInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
@@ -89,7 +89,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etStepsTaken" />
+        app:layout_constraintTop_toBottomOf="@+id/etStepsTrackerInput" />
 
     <TextView
         android:id="@+id/textView5"
@@ -120,7 +120,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
-        android:id="@+id/tvStepsTaken"
+        android:id="@+id/tvStepsTackerTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -192,7 +192,7 @@
         app:srcCompat="@drawable/steps_icon" />
 
     <TextView
-        android:id="@+id/tvStepsPercent"
+        android:id="@+id/tvStepsTrackerPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_bold"
@@ -218,7 +218,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
     <TextView
-        android:id="@+id/textView143"
+        android:id="@+id/tvStepsTrackerGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -240,7 +240,7 @@
         android:fontFamily="@font/outfit_semi_bold"
         android:text="steps"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView143"
+        app:layout_constraintStart_toEndOf="@+id/tvStepsTrackerGoal"
         app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
 

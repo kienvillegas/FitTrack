@@ -62,7 +62,7 @@
         app:srcCompat="@drawable/user_icon" />
 
     <TextView
-        android:id="@+id/textView134"
+        android:id="@+id/tvCalorieBannerUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -82,7 +82,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView75"
         app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toBottomOf="@+id/textView134"
+        app:layout_constraintTop_toBottomOf="@+id/tvCalorieBannerUsername"
         app:srcCompat="@drawable/line_divider" />
 
     <TextView
@@ -112,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView135" />
 
     <TextView
-        android:id="@+id/textView137"
+        android:id="@+id/tvCalorieBannerTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
@@ -131,7 +131,7 @@
         android:text="today"
         android:textColor="@color/primaryText"
         android:textSize="21sp"
-        app:layout_constraintStart_toEndOf="@+id/textView137"
+        app:layout_constraintStart_toEndOf="@+id/tvCalorieBannerTaken"
         app:layout_constraintTop_toBottomOf="@+id/textView136" />
 
     <ProgressBar
@@ -148,7 +148,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView137" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCalorieBannerTaken" />
 
     <ImageView
         android:id="@+id/imageView78"
@@ -161,7 +161,7 @@
         app:srcCompat="@drawable/food_icon" />
 
     <TextView
-        android:id="@+id/textView139"
+        android:id="@+id/tvCalorieBannerPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -188,7 +188,7 @@
         app:layout_constraintTop_toBottomOf="@+id/progressBar4" />
 
     <TextView
-        android:id="@+id/textView141"
+        android:id="@+id/tvCalorieBannerGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -210,11 +210,11 @@
         android:text="Kcal"
         android:textColor="@color/tertiaryText"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView141"
+        app:layout_constraintStart_toEndOf="@+id/tvCalorieBannerGoal"
         app:layout_constraintTop_toBottomOf="@+id/progressBar4" />
 
     <Button
-        android:id="@+id/button22"
+        android:id="@+id/btnCalorieBannerShare"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -227,7 +227,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView75" />
 
     <Button
-        android:id="@+id/button23"
+        android:id="@+id/btnCalorieBannerCancel"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -237,6 +237,6 @@
         android:textColor="@color/btnCancelColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button22" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCalorieBannerShare" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

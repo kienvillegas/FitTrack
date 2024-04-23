@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView43" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/etSetWaterDaily"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -89,11 +89,11 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView40"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/editTextText3"
+        app:layout_constraintStart_toEndOf="@+id/etSetWaterDaily"
         app:layout_constraintTop_toBottomOf="@+id/textView74" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/etSetWaterWeekly"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -118,7 +118,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView40"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/etSetWaterDaily" />
 
     <TextView
         android:id="@+id/textView77"
@@ -131,11 +131,11 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView40"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/editTextText4"
+        app:layout_constraintStart_toEndOf="@+id/etSetWaterWeekly"
         app:layout_constraintTop_toBottomOf="@+id/textView76" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btnSetWaterGoal"
         android:layout_width="180dp"
         android:layout_height="35dp"
         android:layout_marginTop="10dp"
@@ -145,10 +145,10 @@
         android:textColor="@color/btnText"
         app:layout_constraintEnd_toEndOf="@+id/imageView40"
         app:layout_constraintStart_toStartOf="@+id/imageView40"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/etSetWaterWeekly" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/btnSetWaterCancel"
         android:layout_width="180dp"
         android:layout_height="35dp"
         android:layout_marginTop="10dp"
@@ -158,7 +158,7 @@
         android:textColor="@color/btnCancelColor"
         app:layout_constraintEnd_toEndOf="@+id/imageView40"
         app:layout_constraintStart_toStartOf="@+id/imageView40"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSetWaterGoal" />
 
     <TextView
         android:id="@+id/textView95"
@@ -187,7 +187,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView44" />
 
     <TextView
-        android:id="@+id/textView98"
+        android:id="@+id/tvSetWaterDaily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
@@ -200,7 +200,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView95" />
 
     <TextView
-        android:id="@+id/textView99"
+        android:id="@+id/tvSetWaterWeekly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"

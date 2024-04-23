@@ -65,7 +65,7 @@
         app:srcCompat="@drawable/user_icon" />
 
     <TextView
-        android:id="@+id/textView125"
+        android:id="@+id/tvWaterBannerUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -85,7 +85,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView71"
         app:layout_constraintStart_toStartOf="@+id/imageView71"
-        app:layout_constraintTop_toBottomOf="@+id/textView125"
+        app:layout_constraintTop_toBottomOf="@+id/tvWaterBannerUsername"
         app:srcCompat="@drawable/line_divider" />
 
     <TextView
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView126" />
 
     <TextView
-        android:id="@+id/textView128"
+        android:id="@+id/tvWaterBannerTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -168,20 +168,6 @@
         app:srcCompat="@drawable/water_droplet_icon" />
 
     <TextView
-        android:id="@+id/tvWaterPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/outfit_bold"
-        android:text="100%"
-        android:textColor="@color/primary"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView74" />
-
-    <TextView
         android:id="@+id/textView131"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -195,7 +181,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pbWaterBanner" />
 
     <TextView
-        android:id="@+id/textView132"
+        android:id="@+id/tvWaterBannerGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -217,11 +203,11 @@
         android:text="ml"
         android:textColor="@color/tertiaryText"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView132"
+        app:layout_constraintStart_toEndOf="@+id/tvWaterBannerGoal"
         app:layout_constraintTop_toBottomOf="@+id/pbWaterBanner" />
 
     <Button
-        android:id="@+id/button20"
+        android:id="@+id/btnWaterBannerShare"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -235,7 +221,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView71" />
 
     <Button
-        android:id="@+id/button21"
+        android:id="@+id/btnWaterBannerCancel"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -245,6 +231,19 @@
         android:textColor="@color/btnCancelColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button20" />
+        app:layout_constraintTop_toBottomOf="@+id/btnWaterBannerShare" />
+
+    <TextView
+        android:id="@+id/tvWaterBannerPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_bold"
+        android:text="100%"
+        android:textColor="@color/secondaryText"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView71"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toBottomOf="@+id/imageView74" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

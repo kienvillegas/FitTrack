@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView51"
+        android:id="@+id/imStartActIcon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -36,7 +36,7 @@
         android:textColor="@color/primaryText"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView51"
+        app:layout_constraintStart_toEndOf="@+id/imStartActIcon"
         app:layout_constraintTop_toTopOf="@+id/imageView50" />
 
     <TextView
@@ -47,7 +47,7 @@
         android:text="Running"
         android:textColor="@color/tertiaryText"
         android:textSize="13sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView51"
+        app:layout_constraintStart_toEndOf="@+id/imStartActIcon"
         app:layout_constraintTop_toBottomOf="@+id/textView100" />
 
     <ImageView
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
     <TextView
-        android:id="@+id/textView106"
+        android:id="@+id/tvStartActCurrentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -93,7 +93,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/line_divider"
-        app:layout_constraintStart_toEndOf="@+id/textView106"
+        app:layout_constraintStart_toEndOf="@+id/tvStartActCurrentTime"
         app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
     <TextView
@@ -110,7 +110,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
     <TextView
-        android:id="@+id/textView109"
+        android:id="@+id/tvStartActTimeGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -132,7 +132,7 @@
         android:textColor="@color/secondaryText"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView109"
+        app:layout_constraintStart_toEndOf="@+id/tvStartActTimeGoal"
         app:layout_constraintTop_toBottomOf="@+id/textView108" />
 
     <ImageView
@@ -158,7 +158,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
     <ImageView
-        android:id="@+id/imageView57"
+        android:id="@+id/imStartActDecTime"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginStart="10dp"
@@ -168,7 +168,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView55" />
 
     <ImageView
-        android:id="@+id/imageView58"
+        android:id="@+id/imStartActIncTime"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginStart="29dp"
@@ -178,7 +178,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/btnStartActStart"
         android:layout_width="100dp"
         android:layout_height="35dp"
         android:layout_marginStart="74dp"
@@ -193,7 +193,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView53" />
 
     <Button
-        android:id="@+id/button15"
+        android:id="@+id/btnStartActCancel"
         android:layout_width="100dp"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
@@ -203,7 +203,7 @@
         android:textColor="@color/btnCancelColor"
         app:layout_constraintEnd_toEndOf="@+id/imageView50"
         app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toEndOf="@+id/button14"
+        app:layout_constraintStart_toEndOf="@+id/btnStartActStart"
         app:layout_constraintTop_toBottomOf="@+id/imageView56" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

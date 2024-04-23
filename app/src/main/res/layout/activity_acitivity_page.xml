@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tvActDayMonDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="197dp"
@@ -70,7 +70,7 @@
                 app:srcCompat="@drawable/notification_circle" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/imNotifications"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView8"
@@ -245,202 +245,6 @@
                 app:layout_constraintStart_toEndOf="@+id/tvDailyGoals"
                 app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="372dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView12"
-                app:srcCompat="@drawable/rectangle_shape" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/outfit_semi_bold"
-                android:text="Start a new activity "
-                android:textColor="@color/primaryText"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/outfit_semi_bold"
-                android:text="Try new things"
-                android:textColor="@color/tertiaryText"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-            <ImageView
-                android:id="@+id/imageView13"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView19"
-                app:srcCompat="@drawable/circle_filled_shape" />
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
-                android:fontFamily="@font/outfit_semi_bold"
-                android:text="Run"
-                android:textColor="@color/primaryText"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/imageView13" />
-
-            <TextView
-                android:id="@+id/textView27"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:fontFamily="@font/outfit_semi_bold"
-                android:text="Cycle"
-                android:textColor="@color/primaryText"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/imageView14" />
-
-            <ImageView
-                android:id="@+id/imageView14"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="90dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView19"
-                app:srcCompat="@drawable/circle_filled_shape" />
-
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="160dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView19"
-                app:srcCompat="@drawable/circle_filled_shape" />
-
-            <ImageView
-                android:id="@+id/imageView17"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="230dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView19"
-                app:srcCompat="@drawable/circle_filled_shape" />
-
-            <ImageView
-                android:id="@+id/imageView18"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="300dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView19"
-                app:srcCompat="@drawable/circle_filled_shape" />
-
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="167dp"
-                android:fontFamily="@font/outfit_semi_bold"
-                android:text="Swim"
-                android:textColor="@color/primaryText"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/imageView15" />
-
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
-                android:fontFamily="@font/outfit_semi_bold"
-                android:text="Yoga"
-                android:textColor="@color/primaryText"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/imageView17" />
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="310dp"
-                android:fontFamily="@font/outfit_semi_bold"
-                android:text="Gym"
-                android:textColor="@color/primaryText"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/imageView18" />
-
-            <ImageView
-                android:id="@+id/imRun"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-                app:layout_constraintEnd_toEndOf="@+id/imageView13"
-                app:layout_constraintStart_toStartOf="@+id/imageView13"
-                app:layout_constraintTop_toTopOf="@+id/imageView13"
-                app:srcCompat="@drawable/running_icon" />
-
-            <ImageView
-                android:id="@+id/imCycle"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView14"
-                app:layout_constraintEnd_toEndOf="@+id/imageView14"
-                app:layout_constraintStart_toStartOf="@+id/imageView14"
-                app:layout_constraintTop_toTopOf="@+id/imageView14"
-                app:srcCompat="@drawable/cycling_icon" />
-
-            <ImageView
-                android:id="@+id/ivSwim"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView15"
-                app:layout_constraintEnd_toEndOf="@+id/imageView15"
-                app:layout_constraintStart_toStartOf="@+id/imageView15"
-                app:layout_constraintTop_toTopOf="@+id/imageView15"
-                app:srcCompat="@drawable/swimming_icon" />
-
-            <ImageView
-                android:id="@+id/ivYoga"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView17"
-                app:layout_constraintEnd_toEndOf="@+id/imageView17"
-                app:layout_constraintStart_toStartOf="@+id/imageView17"
-                app:layout_constraintTop_toTopOf="@+id/imageView17"
-                app:srcCompat="@drawable/yoga_icon" />
-
-            <ImageView
-                android:id="@+id/ivGym"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView18"
-                app:layout_constraintEnd_toEndOf="@+id/imageView18"
-                app:layout_constraintStart_toStartOf="@+id/imageView18"
-                app:layout_constraintTop_toTopOf="@+id/imageView18"
-                app:srcCompat="@drawable/weights_icon" />
 
             <ImageView
                 android:id="@+id/imageView22"
@@ -448,8 +252,9 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView2"
                 app:srcCompat="@drawable/rectangle_shape" />
 
             <TextView
@@ -535,6 +340,16 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView12"
                 app:layout_constraintStart_toStartOf="@+id/imageView12"
                 app:layout_constraintTop_toBottomOf="@+id/imageView74" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView2"
+                android:name="com.example.fittrack.viewActivityFragment"
+                android:layout_width="372dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

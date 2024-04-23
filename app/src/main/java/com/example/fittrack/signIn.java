@@ -87,6 +87,7 @@ public class signIn extends AppCompatActivity {
 
                                             Intent intent = new Intent(getApplicationContext(), dashboardPage.class);
                                             startActivity(intent);
+                                            finish();
                                         } else {
                                             // If sign in fails, display a message to the user.
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -107,6 +108,7 @@ public class signIn extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), signUp.class);
                 startActivity(intent);
+                finish();
             }
         });
         tvForgotPassword.setOnClickListener(new View.OnClickListener() {

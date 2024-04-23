@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/tvProfileStepTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -67,8 +67,8 @@
         android:text="steps"
         android:textColor="@color/tertiaryText"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView30"
-        app:layout_constraintTop_toTopOf="@+id/textView30" />
+        app:layout_constraintStart_toEndOf="@+id/tvProfileStepTaken"
+        app:layout_constraintTop_toTopOf="@+id/tvProfileStepTaken" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/stepsBarChart"
@@ -78,7 +78,7 @@
         android:background="@drawable/rectangle_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileStepTaken" />
 
     <ImageView
         android:id="@+id/imageView20"
@@ -138,7 +138,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView21" />
 
     <TextView
-        android:id="@+id/textView34"
+        android:id="@+id/tvProfileStepDailyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
@@ -162,7 +162,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView23" />
 
     <TextView
-        android:id="@+id/textView36"
+        android:id="@+id/tvProfileStepWeeklyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
@@ -174,7 +174,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnProfileStepSetGoal"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
