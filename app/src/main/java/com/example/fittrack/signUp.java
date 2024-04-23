@@ -4,7 +4,10 @@ import static android.content.ContentValues.TAG;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -59,57 +62,69 @@ public class signUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email, name, password, confirmPassword;
-                email = String.valueOf(etSignUpEmail.getText());
-                name = String.valueOf(etSignUpName.getText());
-                password = String.valueOf(etSignUpPassword.getText());
-                confirmPassword = String.valueOf(etSignUpCPassowrd.getText());
-                String regexPattern = "\\b[A-Za-z0-9._%+-]+@gmail\\.com\\b";
+                email = etSignUpEmail.getText().toString().trim();
+                name = etSignUpName.getText().toString().trim();
+                password = etSignUpPassword.getText().toString().trim();
+                confirmPassword = etSignUpCPassowrd.getText().toString().trim();
 
-                Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
-                Matcher matcher = pattern.matcher(email);
                 try{
-                    if(!email.isEmpty() || !name.isEmpty() || !password.isEmpty() || !confirmPassword.isEmpty()){
-                        if(matcher.find()){
-                            if(password.equals(confirmPassword)){
-                                mAuth.createUserWithEmailAndPassword(email, password)
-                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(Task<AuthResult> task) {
-                                                Log Log = null;
-                                                if (task.isSuccessful()) {
-                                                    Log.d(TAG, "createUserWithEmail:success");
+                    if(email.isEmpty()){
+                        int resourceId = R.drawable.text_field_red;
+                        Drawable drawable = getResources().getDrawable(resourceId);
+                        etSignUpEmail.setBackground(drawable);
+                    }
 
-                                                    String userId = task.getResult().getUser().getUid();
-                                                    Log.d(TAG, "User ID: " + userId);
+                    if(name.isEmpty()){
+                        int resourceId = R.drawable.text_field_red;
+                        Drawable drawable = getResources().getDrawable(resourceId);
+                        etSignUpName.setBackground(drawable);
+                    }
 
-                                                    addUserToFireStore(userId,email,name);
-                                                    Toast.makeText(signUp.this, "Account Successfully Created.", Toast.LENGTH_SHORT).show();
+                    if(password.isEmpty()){
+                        int resourceId = R.drawable.text_field_red;
+                        Drawable drawable = getResources().getDrawable(resourceId);
+                        etSignUpPassword.setBackground(drawable);
+                    }
 
-                                                    etSignUpEmail.setText("");
-                                                    etSignUpName.setText("");
-                                                    etSignUpPassword.setText("");
-                                                    etSignUpCPassowrd.setText("");
-                                                } else {
-                                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                                    Toast.makeText(signUp.this, "Account Creation Failed.", Toast.LENGTH_SHORT).show();
+                    if(confirmPassword.isEmpty()){
+                        int resourceId = R.drawable.text_field_red;
+                        Drawable drawable = getResources().getDrawable(resourceId);
+                        etSignUpCPassowrd.setBackground(drawable);
+                    }
 
-                                                    if(task.getException() != null){
-                                                        handleRegistrationError(task.getException());
-                                                    }else{
-                                                        Log.e(TAG, "Unknown registration error occurred");
-                                                        Toast.makeText(signUp.this, "Unknown error occurred", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
+                    if(email.isEmpty() || name.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()){
+                        Toast.makeText(signUp.this, "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if(password.equals(confirmPassword)){
+                        mAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            String userId = task.getResult().getUser().getUid();
+                                            Log.d(TAG, "User ID: " + userId);
+
+                                            Intent intent = new Intent(getApplicationContext(), signIn.class);
+                                            startActivity(intent);
+
+                                            Toast.makeText(signUp.this, "Account Successfully Registered", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.e(TAG, "createUserWithEmailAndPassword:failure", task.getException());
+                                            if (task.getException() != null) {
+                                            } else {
+                                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                                Toast.makeText(signUp.this, "Authentication failed.",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
-                                        });
-                            }else{
-                                Toast.makeText(signUp.this, "Confirm Password does not match.", Toast.LENGTH_SHORT).show();
-                            }
-                        }else{
-                            Toast.makeText(signUp.this, "Email must contain \"@gmail.com\".", Toast.LENGTH_SHORT).show();
-                        }
+                                        }
+                                    }
+                                });
                     }else{
-                        Toast.makeText(signUp.this, "Please fill in missing fields", Toast.LENGTH_SHORT).show();
+                        int resourceId = R.drawable.text_field_red;
+                        Drawable drawable = getResources().getDrawable(resourceId);
+                        etSignUpCPassowrd.setBackground(drawable);
                     }
                 }catch(Exception e){
                     Toast.makeText(signUp.this, "An Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -122,49 +137,86 @@ public class signUp extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), signIn.class);
                 startActivity(intent);
+                finish();
             }
         });
-    }
 
-    private void addUserToFireStore(String uid, String email, String name){
-        Map<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name", name);
+        etSignUpEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        db.collection("users").document(uid)
-                .set(data)
-                .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Successfully added user to Firestore");
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Failed to add user to Firestore");
-                });
-    }
+            }
 
-    private void handleRegistrationError(Exception exception) {
-        if (exception instanceof FirebaseAuthWeakPasswordException) {
-            Toast.makeText(signUp.this, "Weak password. Please use a stronger password.", Toast.LENGTH_SHORT).show();
-        } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-            Toast.makeText(signUp.this, "Invalid email format. Please enter a valid email.", Toast.LENGTH_SHORT).show();
-        } else if (exception instanceof FirebaseAuthUserCollisionException) {
-            Toast.makeText(signUp.this, "Email is already in use. Please use a different email.", Toast.LENGTH_SHORT).show();
-        } else {
-            String errorMessage = exception.getMessage();
-            Log.e(TAG, "Registration Error: " + errorMessage);
-            Toast.makeText(signUp.this, "An Error Occurred: " + errorMessage, Toast.LENGTH_SHORT).show();
-        }
-    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int resourceId = R.drawable.text_field_bg_white;
+                Drawable drawable = getResources().getDrawable(resourceId);
+                etSignUpEmail.setBackground(drawable);
+            }
 
-    private void showSignInErrorDialog(String errorMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Sign In Error")
-                .setMessage(errorMessage)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();
-    }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etSignUpName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int resourceId = R.drawable.text_field_bg_white;
+                Drawable drawable = getResources().getDrawable(resourceId);
+                etSignUpName.setBackground(drawable);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etSignUpPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int resourceId = R.drawable.text_field_bg_white;
+                Drawable drawable = getResources().getDrawable(resourceId);
+                etSignUpPassword.setBackground(drawable);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etSignUpCPassowrd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int resourceId = R.drawable.text_field_bg_white;
+                Drawable drawable = getResources().getDrawable(resourceId);
+                etSignUpCPassowrd.setBackground(drawable);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+     }
 
     @Override
     protected void onStart() {

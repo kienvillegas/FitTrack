@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".profileSleepFragment">
 
     <TextView
@@ -12,7 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="This week's Progress"
+        android:textColor="@color/primaryText"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Total Hours"
+        android:textColor="@color/tertiaryText"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView46" />
@@ -45,7 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="25"
+        android:textColor="@color/primaryText"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView55" />
@@ -55,7 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="hours"
+        android:textColor="@color/tertiaryText"
         app:layout_constraintStart_toEndOf="@+id/textView57"
         app:layout_constraintTop_toBottomOf="@+id/textView55" />
 
@@ -85,7 +94,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Goal"
+        android:textColor="@color/primaryText"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView34"
@@ -115,7 +126,10 @@
         android:id="@+id/button5"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_mid_rounded_primary"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Set Goal"
+        android:textColor="@color/btnText"
         app:layout_constraintEnd_toEndOf="@+id/imageView34"
         app:layout_constraintStart_toStartOf="@+id/imageView34"
         app:layout_constraintTop_toBottomOf="@+id/imageView36" />
@@ -126,7 +140,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="DAILY HOURS"
+        android:textColor="@color/primaryText"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/imageView36"
         app:layout_constraintTop_toTopOf="@+id/imageView36" />
@@ -135,7 +151,9 @@
         android:id="@+id/textView62"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="8"
+        android:textColor="@color/secondaryText"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView36"
         app:layout_constraintStart_toStartOf="@+id/imageView36"
@@ -147,7 +165,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="WEEKLY HOURS"
+        android:textColor="@color/primaryText"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/imageView37"
         app:layout_constraintTop_toTopOf="@+id/imageView37" />
@@ -156,7 +176,9 @@
         android:id="@+id/textView64"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="56"
+        android:textColor="@color/secondaryText"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView37"
         app:layout_constraintStart_toStartOf="@+id/imageView37"

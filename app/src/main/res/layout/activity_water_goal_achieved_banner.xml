@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bannerWaterGoalAchieved">
+
+    <ImageView
+        android:id="@+id/imageView69"
+        android:layout_width="420dp"
+        android:layout_height="500dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rectangle_shape_not_rounded" />
+
+    <ImageView
+        android:id="@+id/imageView70"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView69"
+        app:layout_constraintTop_toTopOf="@+id/imageView69"
+        app:srcCompat="@drawable/arrow_left_white" />
+
+    <TextView
+        android:id="@+id/textView124"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Goal Achieved! Congratulations"
+        android:textAlignment="center"
+        android:textColor="@color/whiteText"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView70" />
+
+    <ImageView
+        android:id="@+id/imageView71"
+        android:layout_width="372dp"
+        android:layout_height="440dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView124"
+        app:srcCompat="@drawable/rectangle_shape" />
+
+    <ImageView
+        android:id="@+id/imageView72"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toTopOf="@+id/imageView71"
+        app:srcCompat="@drawable/user_icon" />
+
+    <TextView
+        android:id="@+id/textView125"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Username"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imageView71"
+        app:layout_constraintStart_toEndOf="@+id/imageView72"
+        app:layout_constraintTop_toTopOf="@+id/imageView71" />
+
+    <ImageView
+        android:id="@+id/imageView73"
+        android:layout_width="372dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView71"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toBottomOf="@+id/textView125"
+        app:srcCompat="@drawable/line_divider" />
+
+    <TextView
+        android:id="@+id/textView126"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Water Intake"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView71"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toBottomOf="@+id/imageView73" />
+
+    <TextView
+        android:id="@+id/textView127"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="You took"
+        android:textColor="@color/primaryText"
+        android:textSize="21sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toBottomOf="@+id/textView126" />
+
+    <TextView
+        android:id="@+id/textView128"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="750 ml"
+        android:textColor="@color/secondaryText"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView71"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView127"
+        app:layout_constraintTop_toBottomOf="@+id/textView126" />
+
+    <TextView
+        android:id="@+id/textView129"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="of water today"
+        android:textColor="@color/primaryText"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView71"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toBottomOf="@+id/textView127" />
+
+    <ProgressBar
+        android:id="@+id/pbWaterBanner"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/circle_shape"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/circle_progress_bar"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView129" />
+
+    <ImageView
+        android:id="@+id/imageView74"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pbWaterBanner"
+        app:srcCompat="@drawable/water_droplet_icon" />
+
+    <TextView
+        android:id="@+id/tvWaterPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/outfit_bold"
+        android:text="100%"
+        android:textColor="@color/primary"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView74" />
+
+    <TextView
+        android:id="@+id/textView131"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Daily Goal"
+        android:textColor="@color/tertiaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterBanner" />
+
+    <TextView
+        android:id="@+id/textView132"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="2,000"
+        android:textColor="@color/primaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView131"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterBanner" />
+
+    <TextView
+        android:id="@+id/textView133"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="ml"
+        android:textColor="@color/tertiaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView132"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterBanner" />
+
+    <Button
+        android:id="@+id/button20"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_mid_rounded_primary"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Share to Friends"
+        android:textColor="@color/btnText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView71" />
+
+    <Button
+        android:id="@+id/button21"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_mid_rounded_red"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Not Now"
+        android:textColor="@color/btnCancelColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button20" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

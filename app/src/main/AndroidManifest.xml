@@ -13,7 +13,16 @@
         android:theme="@style/Theme.FitTrack"
         tools:targetApi="31">
         <activity
-            android:name=".profilePage"
+            android:name=".settingsPage"
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".dashboardPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".acitivityPage"
+            android:name=".bannerCalorieGoalAchieved"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -33,7 +42,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".foodIntakeTracker"
+            android:name=".bannerWaterGoalAchieved"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -44,7 +53,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".waterIntakeTracker"
+            android:name=".bannerStepGoalAchieved"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -55,7 +64,49 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".stepTracker"
+            android:name=".profilePage"
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".activityPage"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".actFoodIntakeTracker"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".actWaterIntakeTracker"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".actStepTracker"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -80,12 +131,12 @@
             android:name=".signIn"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
@@ -98,6 +149,10 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

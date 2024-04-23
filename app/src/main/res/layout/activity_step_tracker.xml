@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".stepTracker">
+    android:background="@color/backgroundColor"
+    tools:context=".actStepTracker">
 
     <ImageView
         android:id="@+id/imBackBtn"
@@ -24,7 +25,9 @@
         android:layout_marginStart="170dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="183dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Step Taken"
+        android:textColor="#000000"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,10 +61,17 @@
     <EditText
         android:id="@+id/etStepsTaken"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/text_field_bg_grey"
         android:ems="10"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:hint="Enter steps"
         android:inputType="number"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/tertiaryText"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -71,7 +81,10 @@
         android:layout_width="372dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/btn_mid_rounded_white"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Add Steps"
+        android:textColor="@color/secondaryText"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +96,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Step Tracker"
+        android:textColor="@color/primaryText"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +111,9 @@
         android:layout_marginStart="96dp"
         android:layout_marginTop="10dp"
         android:autoText="false"
+        android:fontFamily="@font/poppins_semibold"
         android:text="You have walked"
+        android:textColor="@color/primaryText"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,8 +125,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="2,300"
-        android:textColor="@color/primary"
+        android:textColor="@color/secondaryText"
         android:textColorLink="@color/primary"
         android:textSize="21sp"
         android:textStyle="bold"
@@ -123,8 +141,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="steps"
-        android:textColor="@color/primary"
+        android:textColor="@color/secondaryText"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +154,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Today"
+        android:textColor="@color/primaryText"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +165,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ProgressBar
-        android:id="@+id/pbStepsTracker"
+        android:id="@+id/pbWaterIntake"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -160,13 +181,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView74"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="@+id/pbStepsTracker"
-        app:layout_constraintEnd_toEndOf="@+id/pbStepsTracker"
-        app:layout_constraintStart_toStartOf="@+id/pbStepsTracker"
-        app:layout_constraintTop_toTopOf="@+id/pbStepsTracker"
+        app:layout_constraintBottom_toBottomOf="@+id/pbWaterIntake"
+        app:layout_constraintEnd_toEndOf="@+id/pbWaterIntake"
+        app:layout_constraintStart_toStartOf="@+id/pbWaterIntake"
+        app:layout_constraintTop_toTopOf="@+id/pbWaterIntake"
         app:layout_constraintVertical_bias="0.41"
         app:srcCompat="@drawable/steps_icon" />
 
@@ -174,23 +195,53 @@
         android:id="@+id/tvStepsPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_bold"
         android:text="100%"
-        android:textColor="@color/primary"
+        android:textColor="@color/secondaryText"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView74" />
 
     <TextView
-        android:id="@+id/tvStepsGoals"
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
         android:layout_marginTop="10dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbStepsTracker" />
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Daily Goal"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+
+    <TextView
+        android:id="@+id/textView143"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="4,000"
+        android:textColor="@color/primaryText"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+
+    <TextView
+        android:id="@+id/textView144"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="steps"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView143"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

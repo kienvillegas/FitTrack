@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".foodIntakeTracker">
+    android:background="@color/backgroundColor"
+    tools:context=".actFoodIntakeTracker">
 
     <ImageView
         android:id="@+id/imBackBtn"
@@ -24,7 +25,9 @@
         android:layout_marginStart="170dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="183dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Food Intake"
+        android:textColor="@color/primaryText"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,10 +61,16 @@
     <EditText
         android:id="@+id/etCalorieTaken"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/text_field_bg_grey"
         android:ems="10"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:hint="Enter amount of Calorie"
         android:inputType="number"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/btnText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -71,7 +80,10 @@
         android:layout_width="372dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/btn_mid_rounded_white"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Add Calories"
+        android:textColor="@color/secondaryText"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +95,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Calorie Tracker"
+        android:textColor="@color/primaryText"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +110,9 @@
         android:layout_marginStart="120dp"
         android:layout_marginTop="10dp"
         android:autoText="false"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="You have consumed"
+        android:textColor="@color/primaryText"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,8 +123,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="356 Kcal"
-        android:textColor="@color/primary"
+        android:textColor="@color/secondaryText"
         android:textColorLink="@color/primary"
         android:textSize="21sp"
         android:textStyle="bold"
@@ -119,7 +136,9 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text=" today"
+        android:textColor="@color/primaryText"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +147,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ProgressBar
-        android:id="@+id/pbStepsTracker"
+        android:id="@+id/pbWaterIntake"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -144,36 +163,66 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCaloriesTaken" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView74"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pbStepsTracker"
+        app:layout_constraintTop_toTopOf="@+id/pbWaterIntake"
         app:srcCompat="@drawable/food_icon" />
 
     <TextView
         android:id="@+id/tvCaloriesPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_bold"
         android:text="100%"
         android:textColor="@color/primary"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView74" />
 
     <TextView
-        android:id="@+id/tvCalorieGoals"
+        android:id="@+id/textView148"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
         android:layout_marginTop="10dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbStepsTracker" />
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Daily Goal"
+        android:textColor="@color/tertiaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+
+    <TextView
+        android:id="@+id/textView149"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="2,000"
+        android:textColor="@color/primaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView148"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+
+    <TextView
+        android:id="@+id/textView150"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Kcal"
+        android:textColor="@color/tertiaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView149"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

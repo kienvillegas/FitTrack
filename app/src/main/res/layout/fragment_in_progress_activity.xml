@@ -24,6 +24,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="New Activity"
+        android:textColor="@color/primaryText"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView49"
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="Running"
+        android:textColor="@color/tertiaryText"
         android:textSize="11sp"
         app:layout_constraintStart_toStartOf="@+id/imageView49"
         app:layout_constraintTop_toBottomOf="@+id/textView102" />
@@ -66,6 +68,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="Start:"
+        android:textColor="@color/tertiaryText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageView52"
         app:layout_constraintTop_toBottomOf="@+id/textView103" />
@@ -76,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="8:00 am"
+        android:textColor="@color/primaryText"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView52"
@@ -98,6 +102,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="Duration:"
+        android:textColor="@color/tertiaryText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageView60"
         app:layout_constraintTop_toBottomOf="@+id/textView103" />
@@ -108,6 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="2 hours"
+        android:textColor="@color/primaryText"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView60"
@@ -129,7 +135,9 @@
         android:layout_height="25dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+        android:background="@drawable/btn_rounded_primary"
         android:text="Done"
+        android:textColor="@color/btnText"
         android:textSize="11sp"
         app:layout_constraintStart_toEndOf="@+id/imageView61"
         app:layout_constraintTop_toBottomOf="@+id/button17" />
@@ -140,7 +148,9 @@
         android:layout_height="25dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+        android:background="@drawable/btn_rounded_red"
         android:text="Cancel"
+        android:textColor="@color/btnCancelColor"
         android:textSize="11sp"
         app:layout_constraintStart_toEndOf="@+id/imageView61"
         app:layout_constraintTop_toBottomOf="@+id/textView103" />

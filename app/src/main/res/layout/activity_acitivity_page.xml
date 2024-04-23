@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     android:orientation="vertical"
-    tools:context=".acitivityPage">
+    tools:context=".activityPage">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".acitivityPage">
+            android:background="@color/backgroundColor"
+            tools:context=".activityPage">
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -36,7 +37,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="188dp"
+                android:fontFamily="@font/outfit_bold"
                 android:text="Good Morning!"
+                android:textColor="@color/secondaryText"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,10 +50,11 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="197dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Wednesday, May 20"
-                android:textSize="14sp"
+                android:textColor="@color/tertiaryText"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView6"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -83,7 +87,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="261dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="My Activity"
+                android:textColor="@color/primaryText"
                 android:textSize="26dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="205dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Track your daily activity"
+                android:textColor="@color/tertiaryText"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +125,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Step Tracker"
+                android:textColor="@color/primaryText"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/imageView12"
@@ -130,7 +140,9 @@
                 android:layout_marginStart="88dp"
                 android:layout_marginTop="10dp"
                 android:autoText="false"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="You have walked"
+                android:textColor="@color/primaryText"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/imageView12"
@@ -142,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="2,300"
                 android:textColor="@color/primary"
                 android:textColorLink="@color/primary"
@@ -157,6 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="148dp"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="steps"
                 android:textColor="@color/primary"
                 android:textSize="21sp"
@@ -169,7 +183,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="Today"
+                android:textColor="@color/primaryText"
                 android:textSize="21sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/imageView12"
@@ -178,7 +194,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvStepsTaken" />
 
             <ProgressBar
-                android:id="@+id/pbStepsTracker"
+                android:id="@+id/pbWaterIntake"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
@@ -193,13 +209,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/imageView74"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:layout_constraintBottom_toBottomOf="@+id/pbStepsTracker"
-                app:layout_constraintEnd_toEndOf="@+id/pbStepsTracker"
-                app:layout_constraintStart_toStartOf="@+id/pbStepsTracker"
-                app:layout_constraintTop_toTopOf="@+id/pbStepsTracker"
+                app:layout_constraintBottom_toBottomOf="@+id/pbWaterIntake"
+                app:layout_constraintEnd_toEndOf="@+id/pbWaterIntake"
+                app:layout_constraintStart_toStartOf="@+id/pbWaterIntake"
+                app:layout_constraintTop_toTopOf="@+id/pbWaterIntake"
                 app:layout_constraintVertical_bias="0.41"
                 app:srcCompat="@drawable/steps_icon" />
 
@@ -207,22 +223,27 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="160dp"
+                android:layout_marginStart="124dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Daily Goal "
-                android:textColor="@color/extra2"
+                android:textColor="@color/tertiaryText"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/pbStepsTracker" />
+                app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="144dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text=" steps"
-                android:textColor="@color/extra2"
-                app:layout_constraintEnd_toEndOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                android:textColor="@color/tertiaryText"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/tvDailyGoals"
+                app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -240,7 +261,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Start a new activity "
+                android:textColor="@color/primaryText"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -251,8 +274,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Try new things"
-                android:textColor="@color/extra2"
+                android:textColor="@color/tertiaryText"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -273,8 +297,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Run"
-                android:textSize="12sp"
+                android:textColor="@color/primaryText"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
@@ -283,8 +309,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Cycle"
-                android:textSize="12sp"
+                android:textColor="@color/primaryText"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView14" />
 
@@ -333,7 +361,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="167dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Swim"
+                android:textColor="@color/primaryText"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView15" />
 
@@ -342,7 +373,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="240dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Yoga"
+                android:textColor="@color/primaryText"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView17" />
 
@@ -351,7 +385,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="310dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Gym"
+                android:textColor="@color/primaryText"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/imageView18" />
 
@@ -421,7 +458,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="Recent Activity"
+                android:textColor="@color/primaryText"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/imageView22"
@@ -443,8 +482,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:layout_marginTop="18dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="March 20 March 20, 2024 - 7:30 am - 2 hours"
-                android:textColor="@color/extra3"
+                android:textColor="@color/tertiaryText"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView22"
                 app:layout_constraintTop_toBottomOf="@+id/textView25" />
@@ -462,8 +502,8 @@
 
             <ImageView
                 android:id="@+id/ivViewRecentAct"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="19dp"
+                android:layout_height="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView27"
                 app:layout_constraintEnd_toEndOf="@+id/imageView27"
                 app:layout_constraintStart_toStartOf="@+id/imageView27"
@@ -474,31 +514,35 @@
                 android:id="@+id/tvDailyGoals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
                 android:text="4,000"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/textView17"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/textView16"
+                app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
             <TextView
                 android:id="@+id/tvStepActPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_bold"
                 android:text="100%"
                 android:textColor="@color/primary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/imageView12"
                 app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView74" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@+id/bottomNavActivity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:background="@drawable/bottom_nav_shape"
         app:itemIconSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"

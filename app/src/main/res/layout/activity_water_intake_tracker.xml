@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".waterIntakeTracker">
+    android:background="@color/backgroundColor"
+    tools:context=".actWaterIntakeTracker">
 
     <ImageView
         android:id="@+id/imBackBtn"
@@ -24,7 +25,9 @@
         android:layout_marginStart="170dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="183dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Water Intake"
+        android:textColor="#000000"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +64,10 @@
         android:layout_width="372dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/btn_mid_rounded_white"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Add Drink"
+        android:textColor="@color/secondaryText"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +79,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Water Tracker"
+        android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +93,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="136dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="You took "
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="750 ml"
         android:textColor="@color/primary"
         android:textColorLink="@color/primary"
@@ -110,7 +121,9 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:text="of water today"
+        android:textColor="#000000"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ProgressBar
-        android:id="@+id/pbStepsTracker"
+        android:id="@+id/pbWaterIntake"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -134,27 +147,28 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView74"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pbStepsTracker"
+        app:layout_constraintTop_toTopOf="@+id/pbWaterIntake"
         app:srcCompat="@drawable/water_droplet_icon" />
 
     <TextView
         android:id="@+id/tvWaterPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_bold"
         android:text="100%"
         android:textColor="@color/primary"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView74" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -224,26 +238,57 @@
         app:srcCompat="@drawable/plus_icon" />
 
     <TextView
-        android:id="@+id/tvWaterDGoals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Goals"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbStepsTracker" />
-
-    <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="1x Glass 250ml"
+        android:textColor="@color/primaryText"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+    <TextView
+        android:id="@+id/textView145"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Daily Goal"
+        android:textColor="@color/tertiaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+
+    <TextView
+        android:id="@+id/textView146"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="2,000"
+        android:textColor="@color/primaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView145"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+
+    <TextView
+        android:id="@+id/textView147"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="ml"
+        android:textColor="@color/tertiaryText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textView146"
+        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

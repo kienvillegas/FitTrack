@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primary">#C780FF</color>
-    <color name="secondary">#977BB6</color>
-    <color name="tertiary">#EDEDED</color>
-    <color name="extra1">#CDCDCD</color>
-    <color name="extra2">#A6A6A6</color>
-    <color name="extra3">#313131</color>
+    <color name="primaryDark">#977BB6</color>
+    <color name="secondary">#FDFCFC</color>
+    <color name="tertiary">#D9D9D9</color>
+    <color name="tertiaryDark">#A6A6A6</color>
+
+    <color name="primaryText">#000000</color>
+    <color name="secondaryText">#C780FF</color>
+    <color name="secondaryDarkText">#977BB6</color>
+    <color name="tertiaryText">#A6A6A6</color>
+    <color name="terDarkText">#313131</color>
+    <color name="whiteText">#FFFFFF</color>
+    <color name="btnText">#FFFFFF</color>
+
+    <color name="backTabsColor">#D9D9D9</color>
+    <color name="backgroundColor">#EDEDED</color>
+    <color name="btnCancelColor">#FF5757</color>
 </resources>
