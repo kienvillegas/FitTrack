@@ -14,6 +14,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Are you sure?"
+        android:textColor="@color/primaryText"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +27,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Your progress will be deleted"
+        android:textColor="@color/tertiaryText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView156" />

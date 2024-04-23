@@ -13,6 +13,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Are you sure?"
+        android:textColor="@color/primaryText"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -27,6 +28,7 @@
         android:background="@color/backgroundColor"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="We will miss you"
+        android:textColor="@color/tertiaryText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView192" />
