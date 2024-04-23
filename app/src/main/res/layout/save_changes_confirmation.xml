@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="280dp"
     android:layout_height="150dp"
-    android:background="@color/backgroundColor">
+    android:background="@drawable/confirmation_bg">
 
     <TextView
         android:id="@+id/textView194"
