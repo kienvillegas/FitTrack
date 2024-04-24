@@ -40,7 +40,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Total steps"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -65,7 +65,7 @@
         android:layout_marginTop="13dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="steps"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/tvProfileStepTaken"
         app:layout_constraintTop_toTopOf="@+id/tvProfileStepTaken" />

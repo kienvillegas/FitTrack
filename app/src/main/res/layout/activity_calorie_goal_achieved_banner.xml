@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/rectangle_shape_not_rounded" />
 
     <ImageView
-        android:id="@+id/imageView63"
+        android:id="@+id/imCalorieBannerBack"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
@@ -39,7 +39,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView63" />
+        app:layout_constraintTop_toBottomOf="@+id/imCalorieBannerBack" />
 
     <ImageView
         android:id="@+id/imageView75"
@@ -182,7 +182,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Daily Goal"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/imageView75"
         app:layout_constraintTop_toBottomOf="@+id/progressBar4" />
@@ -208,7 +208,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Kcal"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvCalorieBannerGoal"
         app:layout_constraintTop_toBottomOf="@+id/progressBar4" />

@@ -26,7 +26,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="You information will be updated"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView194" />

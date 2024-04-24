@@ -11,7 +11,6 @@
         android:id="@+id/imageView49"
         android:layout_width="372dp"
         android:layout_height="120dp"
-        android:layout_marginTop="20dp"
         android:src="@drawable/rectangle_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,12 +30,12 @@
         app:layout_constraintTop_toTopOf="@+id/imageView49" />
 
     <TextView
-        android:id="@+id/tvInProgressAct"
+        android:id="@+id/tvInProgressActName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="Running"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="11sp"
         app:layout_constraintStart_toStartOf="@+id/imageView49"
         app:layout_constraintTop_toBottomOf="@+id/textView102" />
@@ -49,7 +48,7 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/circle_filled_shape"
         app:layout_constraintStart_toStartOf="@+id/imageView49"
-        app:layout_constraintTop_toBottomOf="@+id/tvInProgressAct" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
 
     <ImageView
         android:id="@+id/imInProgressIcon"
@@ -68,10 +67,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="Start:"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageView52"
-        app:layout_constraintTop_toBottomOf="@+id/tvInProgressAct" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
 
     <TextView
         android:id="@+id/tvInProgressCurrentTime"
@@ -93,7 +92,7 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/line_divider"
         app:layout_constraintStart_toEndOf="@+id/tvInProgressCurrentTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvInProgressAct" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
 
     <TextView
         android:id="@+id/textView111"
@@ -102,13 +101,13 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="Duration:"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageView60"
-        app:layout_constraintTop_toBottomOf="@+id/tvInProgressAct" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
 
     <TextView
-        android:id="@+id/textView112"
+        android:id="@+id/tvInProgressTimeGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -126,8 +125,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/line_divider"
-        app:layout_constraintStart_toEndOf="@+id/textView112"
-        app:layout_constraintTop_toBottomOf="@+id/tvInProgressAct" />
+        app:layout_constraintStart_toEndOf="@+id/tvInProgressTimeGoal"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
 
     <Button
         android:id="@+id/btnInProgressDone"
@@ -153,5 +152,5 @@
         android:textColor="@color/btnCancelColor"
         android:textSize="11sp"
         app:layout_constraintStart_toEndOf="@+id/imageView61"
-        app:layout_constraintTop_toBottomOf="@+id/tvInProgressAct" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Total Hours"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView46" />
@@ -64,7 +64,7 @@
         android:layout_marginTop="13dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="hours"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         app:layout_constraintStart_toEndOf="@+id/tvProfileSleepTaken"
         app:layout_constraintTop_toBottomOf="@+id/textView55" />
 

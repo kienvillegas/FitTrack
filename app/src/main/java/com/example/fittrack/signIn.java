@@ -29,7 +29,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -66,7 +68,8 @@ public class signIn extends AppCompatActivity {
                     if(email.isEmpty()){
                         int resourceId = R.drawable.text_field_red;
                         Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignInEmail.setBackground(drawable);                    }
+                        etSignInEmail.setBackground(drawable);
+                    }
 
                     if(password.isEmpty()){
                         int resourceId = R.drawable.text_field_red;
@@ -76,29 +79,41 @@ public class signIn extends AppCompatActivity {
 
                     if(email.isEmpty() || password.isEmpty()){
                         Toast.makeText(signIn.this, "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
-                    }else{
-                        mAuth.createUserWithEmailAndPassword(email, password)
+                    } else {
+                        mAuth.signInWithEmailAndPassword(email, password)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(Task<AuthResult> task) {
+                                        String userId = task.getResult().getUser().getUid();
                                         if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
+                                            DocumentReference docRef = db.collection("users").document(userId);
+                                            Map<String, Object> userData = new HashMap<>();
+                                            userData.put("isOnline", "true");
+                                            docRef.update(userData)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Log.d(TAG, "isOnline has been set to true");
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.e(TAG, "Failed to set isOnline to true");
+                                                        }
+                                                    });
                                             Log.d(TAG, "createUserWithEmail:success");
-
                                             Intent intent = new Intent(getApplicationContext(), dashboardPage.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
-                                            // If sign in fails, display a message to the user.
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(signIn.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(signIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     }
                 }catch(Exception e){
-
+                    Toast.makeText(signIn.this, "An error occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -126,7 +141,31 @@ public class signIn extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(signIn.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                if(e instanceof FirebaseAuthException){
+                                    FirebaseAuthException firebaseAuthException = (FirebaseAuthException) e;
+                                    String errorCode = firebaseAuthException.getErrorCode();
+                                    String errorMessage;
+
+                                    int resourceId = R.drawable.text_field_red;
+                                    Drawable drawable = getResources().getDrawable(resourceId);
+
+                                    switch(errorCode){
+                                        case "ERROR_INVALID_EMAIL":
+                                            etSignInEmail.setBackground(drawable);
+                                            errorMessage = "Invalid email adress";
+                                            break;
+                                        case "ERROR_USER_NOT_FOUND":
+                                            etSignInEmail.setBackground(drawable);
+                                            errorMessage = "User does not exist";
+                                            break;
+                                        default:
+                                            errorMessage = "Authentication failed: " + firebaseAuthException.getLocalizedMessage();
+                                    }
+                                    Log.e(TAG, "Firebase authentication failed: " + errorMessage);
+                                }else{
+                                    Log.e(TAG, "Forgot Password Error: " + e.getMessage(), e);
+                                    Toast.makeText(signIn.this, "Failed to send the link to you account", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }else{
@@ -135,7 +174,7 @@ public class signIn extends AppCompatActivity {
                         etSignInEmail.setBackground(drawable);
                     }
                 }catch (Exception e){
-                    Toast.makeText(signIn.this, "Error: " + email + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(signIn.this, "An Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

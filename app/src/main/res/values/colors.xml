@@ -9,8 +9,8 @@
     <color name="primaryText">#000000</color>
     <color name="secondaryText">#C780FF</color>
     <color name="secondaryDarkText">#977BB6</color>
-    <color name="tertiaryText">#A6A6A6</color>
-    <color name="terDarkText">#313131</color>
+    <color name="tertiaryText">#D9D9D9</color>
+    <color name="tertiaryDarkText">#A6A6A6</color>
     <color name="whiteText">#FFFFFF</color>
     <color name="btnText">#FFFFFF</color>
 

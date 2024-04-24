@@ -102,7 +102,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_medium"
         android:text="Account Settings"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         app:layout_constraintStart_toStartOf="@+id/imageView84"
         app:layout_constraintTop_toBottomOf="@+id/imageView86" />
 
@@ -193,7 +193,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_medium"
         android:text="More"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/imageView109"
         app:layout_constraintTop_toBottomOf="@+id/imageView109" />
@@ -222,7 +222,7 @@
         app:srcCompat="@drawable/arrow_right_black" />
 
     <Button
-        android:id="@+id/button24"
+        android:id="@+id/btnSignOut"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:background="@drawable/btn_mid_rounded_white"

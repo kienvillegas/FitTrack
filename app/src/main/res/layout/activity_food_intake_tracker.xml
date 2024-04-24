@@ -8,16 +8,6 @@
     android:background="@color/backgroundColor"
     tools:context=".actFoodIntakeTracker">
 
-    <ImageView
-        android:id="@+id/imBackBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/arrow_left" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -33,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imBackBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/imCalorieTrackerBack" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -49,11 +39,8 @@
         android:id="@+id/imageView2"
         android:layout_width="372dp"
         android:layout_height="360dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/rectangle_shape" />
@@ -70,25 +57,10 @@
         android:inputType="number"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textColor="@color/btnText"
+        android:textColor="@color/tertiaryText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <Button
-        android:id="@+id/btnAddCalories"
-        android:layout_width="372dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/btn_mid_rounded_white"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Add Calories"
-        android:textColor="@color/secondaryText"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCalorieTrackerInput" />
 
     <TextView
         android:id="@+id/textView5"
@@ -147,7 +119,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ProgressBar
-        android:id="@+id/pbWaterIntake"
+        android:id="@+id/pbCalorieTracker"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -155,7 +127,7 @@
         android:background="@drawable/circle_shape"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/circle_progress_bar"
+        android:progressDrawable="@drawable/circle_progress_bar_primary"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -169,7 +141,7 @@
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pbWaterIntake"
+        app:layout_constraintTop_toTopOf="@+id/pbCalorieTracker"
         app:srcCompat="@drawable/food_icon" />
 
     <TextView
@@ -193,10 +165,10 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Daily Goal"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
     <TextView
         android:id="@+id/tvCalorieTrackerGoal"
@@ -209,7 +181,7 @@
         android:textColor="@color/primaryText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/textView148"
-        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
     <TextView
         android:id="@+id/textView150"
@@ -219,10 +191,34 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Kcal"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvCalorieTrackerGoal"
-        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
+
+    <Button
+        android:id="@+id/btnAddCalories"
+        android:layout_width="372dp"
+        android:layout_height="60dp"
+        android:background="@drawable/btn_mid_rounded_white"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="ADD CALORIES"
+        android:textColor="@color/secondaryText"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCalorieTrackerInput" />
+
+    <ImageView
+        android:id="@+id/imCalorieTrackerBack"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_left" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

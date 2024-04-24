@@ -53,7 +53,7 @@
                 android:layout_marginEnd="197dp"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="Wednesday, May 20"
-                android:textColor="@color/tertiaryText"
+                android:textColor="@color/tertiaryDarkText"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView6"
@@ -104,7 +104,7 @@
                 android:layout_marginEnd="205dp"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="Track your daily activity"
-                android:textColor="@color/tertiaryText"
+                android:textColor="@color/tertiaryDarkText"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <TextView
-                android:id="@+id/tvStepsTaken"
+                android:id="@+id/tvActStepTaken"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -191,10 +191,10 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView12"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toBottomOf="@+id/tvStepsTaken" />
+                app:layout_constraintTop_toBottomOf="@+id/tvActStepTaken" />
 
             <ProgressBar
-                android:id="@+id/pbWaterIntake"
+                android:id="@+id/pbCalorieTracker"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
@@ -212,10 +212,10 @@
                 android:id="@+id/imageView74"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:layout_constraintBottom_toBottomOf="@+id/pbWaterIntake"
-                app:layout_constraintEnd_toEndOf="@+id/pbWaterIntake"
-                app:layout_constraintStart_toStartOf="@+id/pbWaterIntake"
-                app:layout_constraintTop_toTopOf="@+id/pbWaterIntake"
+                app:layout_constraintBottom_toBottomOf="@+id/pbCalorieTracker"
+                app:layout_constraintEnd_toEndOf="@+id/pbCalorieTracker"
+                app:layout_constraintStart_toStartOf="@+id/pbCalorieTracker"
+                app:layout_constraintTop_toTopOf="@+id/pbCalorieTracker"
                 app:layout_constraintVertical_bias="0.41"
                 app:srcCompat="@drawable/steps_icon" />
 
@@ -227,10 +227,10 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="Daily Goal "
-                android:textColor="@color/tertiaryText"
+                android:textColor="@color/tertiaryDarkText"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+                app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -240,10 +240,10 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text=" steps"
-                android:textColor="@color/tertiaryText"
+                android:textColor="@color/tertiaryDarkText"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/tvDailyGoals"
-                app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+                app:layout_constraintStart_toEndOf="@+id/tvActStepGoal"
+                app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
 
             <ImageView
@@ -272,7 +272,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView22" />
 
             <ImageView
-                android:id="@+id/ivRecentActIcon"
+                android:id="@+id/imRecentActIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
@@ -289,7 +289,7 @@
                 android:layout_marginTop="18dp"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="March 20 March 20, 2024 - 7:30 am - 2 hours"
-                android:textColor="@color/tertiaryText"
+                android:textColor="@color/tertiaryDarkText"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView22"
                 app:layout_constraintTop_toBottomOf="@+id/textView25" />
@@ -316,7 +316,7 @@
                 app:srcCompat="@drawable/arrow_right" />
 
             <TextView
-                android:id="@+id/tvDailyGoals"
+                android:id="@+id/tvActStepGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -326,10 +326,10 @@
                 android:textColor="@color/primaryText"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+                app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
             <TextView
-                android:id="@+id/tvStepActPercent"
+                android:id="@+id/tvActStepPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_bold"
@@ -345,7 +345,7 @@
                 android:id="@+id/fragmentContainerView2"
                 android:name="com.example.fittrack.viewActivityFragment"
                 android:layout_width="372dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

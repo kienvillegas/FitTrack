@@ -9,7 +9,7 @@
     tools:context=".actStepTracker">
 
     <ImageView
-        android:id="@+id/imBackBtn"
+        android:id="@+id/imStepTrackerBack"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imBackBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/imStepTrackerBack" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -49,17 +49,15 @@
         android:id="@+id/imageView2"
         android:layout_width="372dp"
         android:layout_height="360dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/rectangle_shape" />
 
     <EditText
-        android:id="@+id/etStepsTrackerInput"
+        android:id="@+id/etStepTrackerInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
@@ -77,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
-        android:id="@+id/btnAddCalories"
+        android:id="@+id/btnAddSteps"
         android:layout_width="372dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
@@ -89,7 +87,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etStepsTrackerInput" />
+        app:layout_constraintTop_toBottomOf="@+id/etStepTrackerInput" />
 
     <TextView
         android:id="@+id/textView5"
@@ -120,7 +118,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
-        android:id="@+id/tvStepsTackerTaken"
+        android:id="@+id/tvStepTackerTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -165,15 +163,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ProgressBar
-        android:id="@+id/pbWaterIntake"
+        android:id="@+id/pbCalorieTracker"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/circle_shape"
+        android:indeterminateDrawable="@drawable/circle_progress_bar_primary"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/circle_progress_bar"
+        android:progressDrawable="@drawable/circle_progress_bar_primary"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -184,10 +183,10 @@
         android:id="@+id/imageView74"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="@+id/pbWaterIntake"
-        app:layout_constraintEnd_toEndOf="@+id/pbWaterIntake"
-        app:layout_constraintStart_toStartOf="@+id/pbWaterIntake"
-        app:layout_constraintTop_toTopOf="@+id/pbWaterIntake"
+        app:layout_constraintBottom_toBottomOf="@+id/pbCalorieTracker"
+        app:layout_constraintEnd_toEndOf="@+id/pbCalorieTracker"
+        app:layout_constraintStart_toStartOf="@+id/pbCalorieTracker"
+        app:layout_constraintTop_toTopOf="@+id/pbCalorieTracker"
         app:layout_constraintVertical_bias="0.41"
         app:srcCompat="@drawable/steps_icon" />
 
@@ -212,10 +211,11 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Daily Goal"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
     <TextView
         android:id="@+id/tvStepsTrackerGoal"
@@ -229,7 +229,7 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
     <TextView
         android:id="@+id/textView144"
@@ -239,9 +239,10 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="steps"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvStepsTrackerGoal"
-        app:layout_constraintTop_toBottomOf="@+id/pbWaterIntake" />
+        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

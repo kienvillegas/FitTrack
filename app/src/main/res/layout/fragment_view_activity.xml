@@ -37,7 +37,7 @@
         android:layout_marginStart="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Try new things"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="11sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView3"

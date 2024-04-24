@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/rectangle_shape_not_rounded" />
 
     <ImageView
-        android:id="@+id/imageView70"
+        android:id="@+id/imWaterBannerBack"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
@@ -41,7 +41,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView70" />
+        app:layout_constraintTop_toBottomOf="@+id/imWaterBannerBack" />
 
     <ImageView
         android:id="@+id/imageView71"
@@ -175,7 +175,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Daily Goal"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/imageView71"
         app:layout_constraintTop_toBottomOf="@+id/pbWaterBanner" />
@@ -201,7 +201,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="ml"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvWaterBannerGoal"
         app:layout_constraintTop_toBottomOf="@+id/pbWaterBanner" />

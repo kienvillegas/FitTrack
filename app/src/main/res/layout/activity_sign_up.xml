@@ -38,6 +38,8 @@
         android:inputType="text"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
+        android:textColor="@color/primaryText"
+        android:textColorHint="@color/tertiaryDarkText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -56,6 +58,8 @@
         android:inputType="textEmailAddress"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
+        android:textColor="@color/primaryText"
+        android:textColorHint="@color/tertiaryDarkText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSignUpName" />
@@ -74,6 +78,8 @@
         android:inputType="textPassword"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
+        android:textColor="@color/primaryText"
+        android:textColorHint="@color/tertiaryDarkText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSignUpEmail" />
@@ -92,6 +98,8 @@
         android:inputType="textPassword"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
+        android:textColor="@color/primaryText"
+        android:textColorHint="@color/tertiaryDarkText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSignUpPassword" />
@@ -146,6 +154,8 @@
         android:layout_marginTop="50dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="Already have a account? "
+        android:textColor="@color/tertiaryText"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
@@ -158,6 +168,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/sign_in"
         android:textColor="@color/whiteText"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
