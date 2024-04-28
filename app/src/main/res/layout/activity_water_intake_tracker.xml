@@ -51,8 +51,7 @@
         android:id="@+id/btnAddDrink"
         android:layout_width="372dp"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_mid_rounded_white"
+        android:backgroundTint="@color/secondary"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Add Drink"
         android:textColor="@color/secondaryText"
@@ -95,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="750 ml"
+        android:text=" ml"
         android:textColor="@color/primary"
         android:textColorLink="@color/primary"
         android:textSize="21sp"
@@ -133,8 +132,9 @@
         android:id="@+id/tvWaterTrackerPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/outfit_bold"
-        android:text="100%"
+        android:text="0%"
         android:textColor="@color/primary"
         android:textSize="21sp"
         android:textStyle="bold"
@@ -179,8 +179,8 @@
 
     <ImageView
         android:id="@+id/imDecWater"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView10"
         app:layout_constraintEnd_toEndOf="@+id/imageView10"
         app:layout_constraintStart_toStartOf="@+id/imageView10"
@@ -201,8 +201,8 @@
 
     <ImageView
         android:id="@+id/imIncWater"
-        android:layout_width="38dp"
-        android:layout_height="42dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView11"
         app:layout_constraintEnd_toEndOf="@+id/imageView11"
         app:layout_constraintStart_toStartOf="@+id/imageView11"
@@ -287,6 +287,16 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <ProgressBar
+        android:id="@+id/pbAddDrink"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWaterTrackerAmountInput" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

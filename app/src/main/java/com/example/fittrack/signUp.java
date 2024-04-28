@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,8 @@ public class signUp extends AppCompatActivity {
 
     Button btnSignUp;
     TextView tvSignIn;
-    EditText etSignUpEmail, etSignUpName, etSignUpPassword, etSignUpCPassowrd;
+    EditText etSignUpEmail, etSignUpName, etSignUpPassword, etSignUpCPassword;
+    ProgressBar pbSignUp;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,153 +62,228 @@ public class signUp extends AppCompatActivity {
         etSignUpEmail = findViewById(R.id.etSignUpEmail);
         etSignUpName = findViewById(R.id.etSignUpName);
         etSignUpPassword = findViewById(R.id.etSignUpPassword);
-        etSignUpCPassowrd = findViewById(R.id.etSignUpCPassword);
+        etSignUpCPassword = findViewById(R.id.etSignUpCPassword);
+        pbSignUp = findViewById(R.id.pbSignUp);
         mAuth = FirebaseAuth.getInstance();
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email, name, password, confirmPassword;
-                email = etSignUpEmail.getText().toString().trim();
-                name = etSignUpName.getText().toString().trim();
-                password = etSignUpPassword.getText().toString().trim();
-                confirmPassword = etSignUpCPassowrd.getText().toString().trim();
+        pbSignUp.setVisibility(View.GONE);
+        btnSignUp .setVisibility(View.VISIBLE);
 
-                try{
+        Map<String, Object> stepData = new HashMap<>();
+        stepData.put("mon", 0);
+        stepData.put("tue", 0);
+        stepData.put("wed", 0);
+        stepData.put("thu", 0);
+        stepData.put("fri", 0);
+        stepData.put("sat", 0);
+        stepData.put("sun", 0);
+
+        Map<String, Object> waterData = new HashMap<>();
+        waterData.put("mon", 0);
+        waterData.put("tue", 0);
+        waterData.put("wed", 0);
+        waterData.put("thu", 0);
+        waterData.put("fri", 0);
+        waterData.put("sat", 0);
+        waterData.put("sun", 0);
+
+        Map<String, Object> calorieData = new HashMap<>();
+        calorieData.put("mon", 0);
+        calorieData.put("tue", 0);
+        calorieData.put("wed", 0);
+        calorieData.put("thu", 0);
+        calorieData.put("fri", 0);
+        calorieData.put("sat", 0);
+        calorieData.put("sun", 0);
+
+        Map<String, Object> sleepData = new HashMap<>();
+        sleepData.put("mon", 0);
+        sleepData.put("tue", 0);
+        sleepData.put("wed", 0);
+        sleepData.put("thu", 0);
+        sleepData.put("fri", 0);
+        sleepData.put("sat", 0);
+        sleepData.put("sun", 0);
+
+        btnSignUp.setOnClickListener(v -> {
+            pbSignUp.setVisibility(View.VISIBLE);
+            btnSignUp .setVisibility(View.GONE);
+
+            String email, name, password, confirmPassword;
+            email = etSignUpEmail.getText().toString().trim();
+            name = etSignUpName.getText().toString().trim();
+            password = etSignUpPassword.getText().toString().trim();
+            confirmPassword = etSignUpCPassword.getText().toString().trim();
+
+            try{
                     if(email.isEmpty()){
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignUpEmail.setBackground(drawable);
-                    }
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
 
-                    if(name.isEmpty()){
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignUpName.setBackground(drawable);
-                    }
-
-                    if(password.isEmpty()){
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignUpPassword.setBackground(drawable);
-                    }
-
-                    if(confirmPassword.isEmpty()){
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignUpCPassowrd.setBackground(drawable);
-                    }
-
-                    if(email.isEmpty() || name.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()){
-                        Toast.makeText(signUp.this, "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
+                        etSignUpEmail.setBackgroundResource(R.drawable.text_field_red);
+                        etSignUpEmail.setError("Required");
+                        etSignUpEmail.requestFocus();
                         return;
                     }
 
-                    if(password.equals(confirmPassword)){
-                        mAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            String userId = task.getResult().getUser().getUid();
-                                            Log.d(TAG, "User ID: " + userId);
+                    if(name.isEmpty()){
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
 
-                                            DocumentReference docRef = db.collection("users").document(userId);
-                                            Map<String, Object> userData = new HashMap<>();
-                                            userData.put("email", email);
-                                            userData.put("name", name);
-                                            userData.put("stepDailyGoal", 4000);
-                                            userData.put("stepWeeklyGoal", 28000);
-                                            userData.put("dailyStepTaken", 0);
-                                            userData.put("weeklyStepTaken", 0);
-                                            userData.put("waterDailyGoal", 2000);
-                                            userData.put("waterWeeklyGoal", 140000);
-                                            userData.put("dailyWaterTaken", 0);
-                                            userData.put("weeklyWaterTaken", 0);
-                                            userData.put("calorieDailyGoal", 2000);
-                                            userData.put("calorieWeeklyGoal", 14000);
-                                            userData.put("dailyCalorieTaken", 0);
-                                            userData.put("weeklyCalorieTaken", 0);
-                                            userData.put("sleepDailyGoal", 2000);
-                                            userData.put("sleepWeeklyGoal", 14000);
-                                            userData.put("dailySleepTaken", 0);
-                                            userData.put("weeklySleepTaken", 0);
-                                            
-
-                                            docRef.set(userData)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void unused) {
-                                                            Log.d(TAG, "Successfully added " + name + " " + email + " to Firestore Database");
-                                                        }
-                                                    }).addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.e(TAG, "Failed to added " + name + " " + email + " to Firestore Database");
-                                                            Log.e(TAG, e.getMessage());
-                                                        }
-                                                    });
-
-                                            Intent intent = new Intent(getApplicationContext(), signIn.class);
-                                            startActivity(intent);
-                                            finish();
-                                            Toast.makeText(signUp.this, "Account Successfully Registered", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Exception exception = task.getException();
-                                            if(exception instanceof  FirebaseAuthException){
-                                                FirebaseAuthException firebaseAuthException = (FirebaseAuthException) exception;
-                                                String errorCode = firebaseAuthException.getErrorCode();
-                                                String errorMessage;
-
-                                                int resourceId = R.drawable.text_field_red;
-                                                Drawable drawable = getResources().getDrawable(resourceId);
-
-                                                switch (errorCode) {
-                                                    case "ERROR_INVALID_EMAIL":
-                                                        etSignUpEmail.setBackground(drawable);
-                                                        errorMessage = "Invalid email address.";
-                                                        Toast.makeText(signUp.this,  errorMessage, Toast.LENGTH_SHORT).show();
-                                                        break;
-                                                    case "ERROR_EMAIL_ALREADY_IN_USE":
-                                                        etSignUpEmail.setBackground(drawable);
-                                                        errorMessage = "Email address is already in use.";
-                                                        Toast.makeText(signUp.this,  errorMessage, Toast.LENGTH_SHORT).show();
-                                                        break;
-                                                    case "ERROR_WEAK_PASSWORD":
-                                                        etSignUpPassword.setBackground(drawable);
-                                                        errorMessage = "Weak password. Password should be at least 6 characters long.";
-                                                        Toast.makeText(signUp.this,  errorMessage, Toast.LENGTH_SHORT).show();
-                                                        break;
-                                                    default:
-                                                        errorMessage = "Authentication failed: " + firebaseAuthException.getLocalizedMessage();
-                                                        Toast.makeText(signUp.this,  errorMessage, Toast.LENGTH_SHORT).show();
-                                                }
-                                                Log.e(TAG, "Firebase authentication failed: " + errorMessage);
-                                            }else{
-                                                Log.e(TAG, "Sign-up failed: " + exception.getMessage(), exception);
-                                                Toast.makeText(signUp.this, "Sign-up failed", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    }
-                                });
-                    }else{
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignUpCPassowrd.setBackground(drawable);
+                        etSignUpName.setBackgroundResource(R.drawable.text_field_red);
+                        etSignUpName.setError("Required");
+                        etSignUpName.requestFocus();
+                        return;
                     }
-                }catch(Exception e){
-                    Toast.makeText(signUp.this, "An Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+
+                    if(password.isEmpty()){
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
+
+                        etSignUpPassword.setBackgroundResource(R.drawable.text_field_red);
+                        etSignUpPassword.setError("Required");
+                        etSignUpPassword.requestFocus();
+                        return;
+                    }
+
+                    if(confirmPassword.isEmpty()){
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
+
+                        etSignUpCPassword.setBackgroundResource(R.drawable.text_field_red);
+                        etSignUpCPassword.setError("Required");
+                        etSignUpPassword.requestFocus();
+                        return;
+                    }
+
+                    if(name.length() < 5){
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
+
+                        etSignUpName.setError("Minimum of 5 Characters");
+                        etSignUpName.requestFocus();
+                        return;
+                    }
+
+                    if(!email.endsWith("@gmail.com")){
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
+
+                        etSignUpEmail.setBackgroundResource(R.drawable.text_field_red);
+                        etSignUpEmail.setError("Invalid Email Format");
+                        etSignUpEmail.requestFocus();
+                        return;
+                    }
+
+                    if(!password.equals(confirmPassword)){
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
+
+                        etSignUpCPassword.setBackgroundResource(R.drawable.text_field_red);
+                        etSignUpCPassword.setError("Confirm Password Do Not Match");
+                        etSignUpPassword.requestFocus();
+                        return;
+                    }
+
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                String userId = task.getResult().getUser().getUid();
+                                Log.d(TAG, "User ID: " + userId);
+
+                                DocumentReference docRef = db.collection("users").document(userId);
+                                DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
+                                DocumentReference weeklyWaterRef = db.collection("weekly_water").document(userId);
+                                DocumentReference weeklyCalorieRef = db.collection("weekly_calorie").document(userId);
+                                DocumentReference weeklySleepRef = db.collection("weekly_sleep").document(userId);
+
+                                Map<String, Object> userData = new HashMap<>();
+                                userData.put("email", email);
+                                userData.put("name", name);
+                                userData.put("stepDailyGoal", 4000);
+                                userData.put("stepWeeklyGoal", 28000);
+                                userData.put("dailyStepTaken", 0);
+                                userData.put("weeklyStepTaken", 0);
+                                userData.put("waterDailyGoal", 2000);
+                                userData.put("waterWeeklyGoal", 140000);
+                                userData.put("dailyWaterTaken", 0);
+                                userData.put("weeklyWaterTaken", 0);
+                                userData.put("calorieDailyGoal", 2000);
+                                userData.put("calorieWeeklyGoal", 14000);
+                                userData.put("dailyCalorieTaken", 0);
+                                userData.put("weeklyCalorieTaken", 0);
+                                userData.put("sleepDailyGoal", 2000);
+                                userData.put("sleepWeeklyGoal", 14000);
+                                userData.put("dailySleepTaken", 0);
+                                userData.put("weeklySleepTaken", 0);
+                                userData.put("isStepDailyGoal", false);
+                                userData.put("isWaterDailyGoal", false);
+                                userData.put("isCalorieDailyGoal", false);
+                                userData.put("isSleepDailyGoal", false);
+
+                                docRef.set(userData)
+                                        .addOnSuccessListener(unused -> Log.d(TAG, "Successfully added " + name + " " + email + " to Firestore Database")).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e(TAG, "Failed to added " + name + " " + email + " to Firestore Database");
+                                                Log.e(TAG, e.getMessage());
+                                            }
+                                        });
+                                weeklyStepRef.set(stepData);
+                                weeklyWaterRef.set(waterData);
+                                weeklyCalorieRef.set(calorieData);
+                                weeklySleepRef.set(sleepData);
+
+                                pbSignUp.setVisibility(View.GONE);
+                                btnSignUp .setVisibility(View.VISIBLE);
+
+                                Intent intent = new Intent(getApplicationContext(), signIn.class);
+                                startActivity(intent);
+                                finish();
+                                Toast.makeText(signUp.this, "Account Successfully Registered", Toast.LENGTH_SHORT).show();
+                            } else {
+                                pbSignUp.setVisibility(View.GONE);
+                                btnSignUp .setVisibility(View.VISIBLE);
+
+                                Exception exception = task.getException();
+                                if(exception instanceof  FirebaseAuthException){
+                                    FirebaseAuthException firebaseAuthException = (FirebaseAuthException) exception;
+                                    String errorCode = firebaseAuthException.getErrorCode();
+
+                                    switch (errorCode) {
+                                        case "ERROR_INVALID_EMAIL":
+                                            etSignUpEmail.setBackgroundResource(R.drawable.text_field_red);
+                                            etSignUpEmail.setError("Invalid Email Format");
+                                            etSignUpEmail.requestFocus();
+                                            break;
+                                        case "ERROR_EMAIL_ALREADY_IN_USE":
+                                            etSignUpEmail.setBackgroundResource(R.drawable.text_field_red);
+                                            etSignUpEmail.setError("Email is already in use");
+                                            etSignUpEmail.requestFocus();
+                                            break;
+                                        case "ERROR_WEAK_PASSWORD":
+                                            etSignUpPassword.setBackgroundResource(R.drawable.text_field_red);
+                                            etSignUpPassword.setError("Alteast 6 Characters");
+                                            etSignUpPassword.requestFocus();
+                                            break;
+                                        default:
+                                            Toast.makeText(signUp.this,  "Authentication failed: " + firebaseAuthException.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }else{
+                                    Log.e(TAG, "Sign-up failed: " + exception.getMessage(), exception);
+                                    Toast.makeText(signUp.this, "Sign-up failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }catch(Exception e){
+                Log.e(TAG, e.getMessage());
             }
         });
 
-        tvSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), signIn.class);
-                startActivity(intent);
-                finish();
-            }
+        tvSignIn.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), signIn.class);
+            startActivity(intent);
+            finish();
         });
 
         etSignUpEmail.addTextChangedListener(new TextWatcher() {
@@ -217,9 +294,8 @@ public class signUp extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int resourceId = R.drawable.text_field_bg_white;
-                Drawable drawable = getResources().getDrawable(resourceId);
-                etSignUpEmail.setBackground(drawable);
+                etSignUpEmail.setBackgroundResource(R.drawable.text_field_bg_white);
+                etSignUpEmail.setError(null);
             }
 
             @Override
@@ -236,9 +312,8 @@ public class signUp extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int resourceId = R.drawable.text_field_bg_white;
-                Drawable drawable = getResources().getDrawable(resourceId);
-                etSignUpName.setBackground(drawable);
+                etSignUpName.setBackgroundResource(R.drawable.text_field_bg_white);
+                etSignUpName.setError(null);
             }
 
             @Override
@@ -255,9 +330,8 @@ public class signUp extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int resourceId = R.drawable.text_field_bg_white;
-                Drawable drawable = getResources().getDrawable(resourceId);
-                etSignUpPassword.setBackground(drawable);
+                etSignUpPassword.setBackgroundResource(R.drawable.text_field_bg_white);
+                etSignUpPassword.setError(null);
             }
 
             @Override
@@ -266,7 +340,7 @@ public class signUp extends AppCompatActivity {
             }
         });
 
-        etSignUpCPassowrd.addTextChangedListener(new TextWatcher() {
+        etSignUpCPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -274,9 +348,8 @@ public class signUp extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int resourceId = R.drawable.text_field_bg_white;
-                Drawable drawable = getResources().getDrawable(resourceId);
-                etSignUpCPassowrd.setBackground(drawable);
+                etSignUpCPassword.setBackgroundResource(R.drawable.text_field_bg_white);
+                etSignUpCPassword.setError(null);
             }
 
             @Override

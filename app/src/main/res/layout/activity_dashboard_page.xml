@@ -48,7 +48,7 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="Wednesday, March 20"
                 android:textColor="@color/tertiaryDarkText"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView79"
                 app:layout_constraintTop_toBottomOf="@+id/textView151" />
 
@@ -432,7 +432,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
-                android:text="2,000"
+                android:text="0"
                 android:textColor="@color/whiteText"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/pbDashboardWalk"
@@ -491,7 +491,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
-                android:text="750"
+                android:text="0"
                 android:textColor="@color/secondaryText"
                 android:textSize="36sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView99"
@@ -525,11 +525,11 @@
                 android:text="SLEEP"
                 android:textColor="@color/primaryText"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/imAddSleep"
+                app:layout_constraintStart_toEndOf="@+id/imSleepIcon"
                 app:layout_constraintTop_toTopOf="@+id/imageView101" />
 
             <ImageView
-                android:id="@+id/imAddSleep"
+                android:id="@+id/imSleepIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="10dp"
@@ -543,7 +543,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
-                android:text="7"
+                android:text="0"
                 android:textColor="@color/secondaryText"
                 android:textSize="36sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView101"
@@ -619,7 +619,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
-                android:text="356"
+                android:text="0"
                 android:textColor="@color/secondaryText"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/pbDashboardFood"
@@ -684,7 +684,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily=" "
-                android:text="50%"
+                android:text="0%"
                 android:textColor="@color/whiteText"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="@+id/pbDashboardWkProgress"
@@ -693,7 +693,7 @@
                 app:layout_constraintTop_toTopOf="@+id/pbDashboardWkProgress" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/imAddSleep"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="10dp"

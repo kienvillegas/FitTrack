@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +32,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +50,7 @@ public class signIn extends AppCompatActivity {
     Button btnSignIn;
     EditText etSignInEmail, etSignInPasssword;
     TextView tvSignUp, tvForgotPassword;
+    ProgressBar pbSignIn;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -54,128 +63,242 @@ public class signIn extends AppCompatActivity {
         etSignInPasssword = findViewById(R.id.etSignInPassword);
         tvSignUp = findViewById(R.id.tvSignUp);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
+        pbSignIn = findViewById(R.id.pbSignIn);
         mAuth = FirebaseAuth.getInstance();
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email, password;
+        CollectionReference userRef = db.collection("users");
 
-                email = String.valueOf(etSignInEmail.getText()).trim();
-                password = String.valueOf(etSignInPasssword.getText()).trim();
+        pbSignIn.setVisibility(View.GONE);
+        btnSignIn.setVisibility(View.VISIBLE);
+        tvForgotPassword.setVisibility(View.VISIBLE);
 
-                try{
-                    if(email.isEmpty()){
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignInEmail.setBackground(drawable);
+
+        btnSignIn.setOnClickListener(v -> {
+            pbSignIn.setVisibility(View.VISIBLE);
+            btnSignIn.setVisibility(View.GONE);
+            etSignInEmail.setError(null);
+            etSignInPasssword.setError(null);
+            etSignInEmail.setBackgroundResource(R.drawable.text_field_bg_white);
+            etSignInPasssword.setBackgroundResource(R.drawable.text_field_bg_white);
+
+
+            String email, password;
+
+            email = String.valueOf(etSignInEmail.getText()).trim();
+            password = String.valueOf(etSignInPasssword.getText()).trim();
+
+            try{
+                if (email.isEmpty()) {
+                        pbSignIn.setVisibility(View.GONE);
+                        btnSignIn.setVisibility(View.VISIBLE);
+
+                        etSignInEmail.setBackgroundResource(R.drawable.text_field_red);
+                        etSignInEmail.setError("Required");
+                        etSignInEmail.requestFocus();
+                        return;
+                     }
+
+                    if (password.isEmpty()) {
+                        pbSignIn.setVisibility(View.GONE);
+                        btnSignIn.setVisibility(View.VISIBLE);
+
+                        etSignInPasssword.setBackgroundResource(R.drawable.text_field_red);
+                        etSignInPasssword.setError("Required");
+                        etSignInPasssword.requestFocus();
+                        return;
                     }
 
-                    if(password.isEmpty()){
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignInPasssword.setBackground(drawable);
+                    if (!email.endsWith("@gmail.com")) {
+                        pbSignIn.setVisibility(View.GONE);
+                        btnSignIn.setVisibility(View.VISIBLE);
+
+                        etSignInEmail.setError("Invalid Email Format");
+                        etSignInEmail.requestFocus();
+                        return;
                     }
 
-                    if(email.isEmpty() || password.isEmpty()){
-                        Toast.makeText(signIn.this, "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mAuth.signInWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(Task<AuthResult> task) {
-                                        String userId = task.getResult().getUser().getUid();
-                                        if (task.isSuccessful()) {
-                                            DocumentReference docRef = db.collection("users").document(userId);
-                                            Map<String, Object> userData = new HashMap<>();
-                                            userData.put("isOnline", "true");
-                                            docRef.update(userData)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void unused) {
-                                                            Log.d(TAG, "isOnline has been set to true");
-                                                        }
-                                                    }).addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.e(TAG, "Failed to set isOnline to true");
-                                                        }
-                                                    });
-                                            Log.d(TAG, "createUserWithEmail:success");
-                                            Intent intent = new Intent(getApplicationContext(), dashboardPage.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(signIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                    }
-                }catch(Exception e){
-                    Toast.makeText(signIn.this, "An error occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                    userRef.whereEqualTo("email", email).get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                Log.d(TAG, "Successful colleciton query");
+                                if(!queryDocumentSnapshots.isEmpty()) {
+                                    Log.d(TAG, "Email is found in the collection");
+                                    mAuth.signInWithEmailAndPassword(email, password)
+                                            .addOnSuccessListener(authResult -> {
+                                                pbSignIn.setVisibility(View.GONE);
+                                                btnSignIn.setVisibility(View.VISIBLE);
+                                                etSignInEmail.setText("");
+                                                etSignInPasssword.setText("");
 
-        tvSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), signUp.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = etSignInEmail.getText().toString().trim();
+                                                Intent intent = new Intent(getApplicationContext(), dashboardPage.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }).addOnFailureListener(e -> {
+                                                pbSignIn.setVisibility(View.GONE);
+                                                btnSignIn.setVisibility(View.VISIBLE);
 
-                try{
-                    if(!email.isEmpty()){
-                        mAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(signIn.this, "Reset Password Link has been sent to your email", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                if(e instanceof FirebaseAuthException){
-                                    FirebaseAuthException firebaseAuthException = (FirebaseAuthException) e;
-                                    String errorCode = firebaseAuthException.getErrorCode();
-                                    String errorMessage;
+                                                if(e instanceof  FirebaseAuthException){
+                                                    FirebaseAuthException firebaseAuthException = (FirebaseAuthException) e;
+                                                    String errorCode = firebaseAuthException.getErrorCode();
 
-                                    int resourceId = R.drawable.text_field_red;
-                                    Drawable drawable = getResources().getDrawable(resourceId);
+                                                    switch (errorCode){
+                                                        case "ERROR_INVALID_CREDENTIAL":
+                                                            etSignInPasssword.setBackgroundResource(R.drawable.text_field_red);
+                                                            etSignInPasssword.setError("Incorrect Password");
+                                                            etSignInPasssword.requestFocus();
+                                                            break;
+                                                        case "ERROR_WRONG_PASSWORD":
+                                                            etSignInPasssword.setBackgroundResource(R.drawable.text_field_red);
+                                                            etSignInPasssword.setError("Incorrect Password");
+                                                            etSignInPasssword.requestFocus();
+                                                            break;
+                                                        case "ERROR_INVALID_EMAIL":
+                                                            etSignInEmail.setBackgroundResource(R.drawable.text_field_red);
+                                                            etSignInEmail.setError("Incorrect Email");
+                                                            etSignInEmail.requestFocus();
+                                                            break;
+                                                        case "ERROR_USER_NOT_FOUND":
+                                                            etSignInEmail.setBackgroundResource(R.drawable.text_field_red);
+                                                            etSignInEmail.setError("User Not Found");
+                                                            etSignInEmail.requestFocus();
+                                                            break;
+                                                        default:
+                                                            Log.e(TAG, "Error Code: "  + errorCode);
+                                                    }
+                                                }
+                                            });
+                                }else {
+                                    pbSignIn.setVisibility(View.GONE);
+                                    btnSignIn.setVisibility(View.VISIBLE);
 
-                                    switch(errorCode){
-                                        case "ERROR_INVALID_EMAIL":
-                                            etSignInEmail.setBackground(drawable);
-                                            errorMessage = "Invalid email adress";
-                                            break;
-                                        case "ERROR_USER_NOT_FOUND":
-                                            etSignInEmail.setBackground(drawable);
-                                            errorMessage = "User does not exist";
-                                            break;
-                                        default:
-                                            errorMessage = "Authentication failed: " + firebaseAuthException.getLocalizedMessage();
-                                    }
-                                    Log.e(TAG, "Firebase authentication failed: " + errorMessage);
-                                }else{
-                                    Log.e(TAG, "Forgot Password Error: " + e.getMessage(), e);
-                                    Toast.makeText(signIn.this, "Failed to send the link to you account", Toast.LENGTH_SHORT).show();
+                                    etSignInEmail.setBackgroundResource(R.drawable.text_field_red);
+                                    etSignInEmail.setError("User Not Found");
+                                    etSignInEmail.requestFocus();
+                                    Log.e(TAG, "No Documents found linked to that email, " + email);
                                 }
-                            }
-                        });
-                    }else{
-                        int resourceId = R.drawable.text_field_red;
-                        Drawable drawable = getResources().getDrawable(resourceId);
-                        etSignInEmail.setBackground(drawable);
-                    }
-                }catch (Exception e){
-                    Toast.makeText(signIn.this, "An Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }).addOnFailureListener(e -> {
+                                pbSignIn.setVisibility(View.GONE);
+                                btnSignIn.setVisibility(View.VISIBLE);
+
+                                Log.e(TAG, "Error Occurred Searching Through Collection: " + e.getMessage());
+                            });
+            }catch(Exception e){
+                pbSignIn.setVisibility(View.GONE);
+                btnSignIn.setVisibility(View.VISIBLE);
+                etSignInEmail.setText("");
+                etSignInPasssword.setText("");
+                Toast.makeText(signIn.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        tvSignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), signUp.class);
+            startActivity(intent);
+            finish();
+        });
+        tvForgotPassword.setOnClickListener(v -> {
+            pbSignIn.setVisibility(View.VISIBLE);
+            btnSignIn.setVisibility(View.GONE);
+            tvForgotPassword.setVisibility(View.GONE);
+            etSignInEmail.setError(null);
+
+            String email = etSignInEmail.getText().toString().trim();
+            Log.d(TAG, "Email entered:" + email);
+
+            try{
+                if (email.isEmpty()) {
+                    pbSignIn.setVisibility(View.GONE);
+                    btnSignIn.setVisibility(View.VISIBLE);
+                    tvForgotPassword.setVisibility(View.VISIBLE);
+
+                    etSignInEmail.setBackgroundResource(R.drawable.text_field_red);
+                    etSignInEmail.setError("Required");
+                    etSignInEmail.requestFocus();
+                    return;
                 }
+
+                if (!email.endsWith("@gmail.com")) {
+                    pbSignIn.setVisibility(View.GONE);
+                    btnSignIn.setVisibility(View.VISIBLE);
+                    tvForgotPassword.setVisibility(View.VISIBLE);
+
+                    etSignInEmail.setError("Invalid Email Format");
+                    etSignInEmail.requestFocus();
+                    return;
+                }
+
+                userRef.whereEqualTo("email", email).get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            if(!queryDocumentSnapshots.isEmpty()){
+                                Log.e(TAG, "Document found linked to the email");
+                                mAuth.sendPasswordResetEmail(email)
+                                        .addOnSuccessListener(unused -> {
+                                            Log.d(TAG, "Password reset email sent successfully to: " + email);
+
+                                            pbSignIn.setVisibility(View.GONE);
+                                            btnSignIn.setVisibility(View.VISIBLE);
+                                            tvForgotPassword.setVisibility(View.VISIBLE);
+                                            etSignInEmail.setText("");
+
+                                            Toast.makeText(signIn.this, "Reset Password Link has been sent to your email", Toast.LENGTH_SHORT).show();
+                                        }).addOnFailureListener(e -> {
+                                            Log.d(TAG, "Query successful. Retrieved documents: " + queryDocumentSnapshots.size());
+                                            Log.e(TAG, "Failed to send password reset email: " + e.getMessage(), e);
+
+                                            pbSignIn.setVisibility(View.GONE);
+                                            btnSignIn.setVisibility(View.VISIBLE);
+                                            tvForgotPassword.setVisibility(View.VISIBLE);
+                                            etSignInEmail.setText("");
+
+                                            if(e instanceof FirebaseAuthException) {
+                                                FirebaseAuthException firebaseAuthException = (FirebaseAuthException) e;
+                                                String errorCode = firebaseAuthException.getErrorCode();
+
+                                                Log.e(TAG, "FirebaseAuthException ErrorCode: " + errorCode);
+
+
+                                                int resourceId = R.drawable.text_field_red;
+                                                Drawable drawable = getResources().getDrawable(resourceId);
+
+                                                switch (errorCode) {
+                                                    case "ERROR_INVALID_EMAIL":
+                                                        etSignInEmail.setBackground(drawable);
+                                                        etSignInEmail.setError("Invalid Email Format");
+                                                        etSignInEmail.requestFocus();
+                                                        break;
+                                                    case "ERROR_USER_NOT_FOUND":
+                                                        etSignInEmail.setBackground(drawable);
+                                                        etSignInEmail.setError("User Not Found");
+                                                        etSignInEmail.requestFocus();
+                                                        break;
+                                                    default:
+                                                        Log.e(TAG, "Unknown error code: " + errorCode);
+                                                }
+                                            }
+                                        });
+                            }else{
+                                pbSignIn.setVisibility(View.GONE);
+                                btnSignIn.setVisibility(View.VISIBLE);
+                                tvForgotPassword.setVisibility(View.VISIBLE);
+
+                                etSignInEmail.setBackgroundResource(R.drawable.text_field_red);
+                                etSignInEmail.setError("User Not Found");
+                                etSignInEmail.requestFocus();
+
+                                Log.e(TAG, "No Documents found linked to that email");
+                            }
+                        }).addOnFailureListener(e -> {
+                            pbSignIn.setVisibility(View.GONE);
+                            btnSignIn.setVisibility(View.VISIBLE);
+                            tvForgotPassword.setVisibility(View.VISIBLE);
+
+                            Log.e(TAG, "Error executing Firestore query: " + e.getMessage(), e);
+                        });
+            }catch (Exception e){
+                pbSignIn.setVisibility(View.GONE);
+                btnSignIn.setVisibility(View.VISIBLE);
+                tvForgotPassword.setVisibility(View.VISIBLE);
+
+                Toast.makeText(signIn.this, "An Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -187,9 +310,8 @@ public class signIn extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int resourceId = R.drawable.text_field_bg_white;
-                Drawable drawable = getResources().getDrawable(resourceId);
-                etSignInEmail.setBackground(drawable);
+                etSignInEmail.setBackgroundResource(R.drawable.text_field_bg_white);
+                etSignInEmail.setError(null);
             }
 
             @Override
@@ -206,9 +328,8 @@ public class signIn extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int resourceId = R.drawable.text_field_bg_white;
-                Drawable drawable = getResources().getDrawable(resourceId);
-                etSignInPasssword.setBackground(drawable);
+                etSignInPasssword.setBackgroundResource(R.drawable.text_field_bg_white);
+                etSignInPasssword.setError(null);
             }
 
             @Override

@@ -109,7 +109,7 @@ public class inProgressActivityFragment extends Fragment {
 
         btnInProgressDone.setOnClickListener(v -> {
             Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd-yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
             String currentDate = dateFormat.format(date);
             try{
                 if (countDownTimer != null) {
@@ -144,14 +144,31 @@ public class inProgressActivityFragment extends Fragment {
         });
 
         btnInProgressCancel.setOnClickListener(v -> {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            countDownTimer.cancel();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            Fragment newFragment = new startActivityFragment();
-            fragmentTransaction.replace(R.id.fragmentContainerView2, newFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View  cancelActConfirmation =  LayoutInflater.from(getActivity()).inflate(R.layout.cancel_activity_confirmation, null);
+            cancelActConfirmation.setBackgroundResource(R.drawable.confirmation_bg);
+            builder.setView(cancelActConfirmation);
+            AlertDialog dialog = builder.create();
+
+            Button btnCancel, btnConfirm;
+            btnCancel = cancelActConfirmation.findViewById(R.id.btnCancelActNo);
+            btnConfirm = cancelActConfirmation.findViewById(R.id.btnCancelActYes);
+
+            btnCancel.setOnClickListener(v1 -> {
+                dialog.dismiss();
+            });
+
+            btnConfirm.setOnClickListener(v1 -> {
+                dialog.dismiss();
+                countDownTimer.cancel();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Fragment newFragment = new viewActivityFragment();
+                fragmentTransaction.replace(R.id.fragmentContainerView2, newFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            });
+            dialog.show();
         });
         return view;
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profileCalorie">
+    tools:context=".profileCalorieFragment">
 
     <TextView
         android:id="@+id/textView47"
@@ -13,7 +13,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_semi_bold"
-        android:text="This week's Progress"
+        android:text="This Week Progress"
         android:textColor="@color/primaryText"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:fontFamily="@font/outfit_semi_bold"
-        android:text="3,565"
+        android:text="0"
         android:textColor="@color/primaryText"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -62,6 +62,7 @@
         android:id="@+id/textView50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="13dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Kcal"
@@ -71,10 +72,10 @@
         app:layout_constraintTop_toTopOf="@+id/tvProfileCalorieTaken" />
 
     <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/caloriesBarChart"
+        android:id="@+id/calorieBarChart"
         android:layout_width="372dp"
         android:layout_height="300dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rectangle_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +89,7 @@
         android:src="@drawable/rectangle_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caloriesBarChart" />
+        app:layout_constraintTop_toBottomOf="@+id/calorieBarChart" />
 
     <TextView
         android:id="@+id/textView51"
@@ -129,7 +130,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/btn_mid_rounded_primary"
+        android:backgroundTint="@color/primary"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Set Goal"
         android:textColor="@color/btnText"
@@ -155,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
-        android:text="2,000"
+        android:text="0"
         android:textColor="@color/secondaryText"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView31"
@@ -179,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_semi_bold"
-        android:text="14,000"
+        android:text="0"
         android:textColor="@color/secondaryText"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView32"

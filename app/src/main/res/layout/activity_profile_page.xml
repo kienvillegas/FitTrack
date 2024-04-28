@@ -7,10 +7,12 @@
     android:background="@color/backgroundColor"
     android:orientation="vertical"
     tools:context=".profilePage">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
@@ -47,8 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/outfit_semi_bold"
-                android:text="Wednesday, March 20"
                 android:textColor="@color/tertiaryDarkText"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
@@ -58,6 +60,8 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="120dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView22"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/settings_icon" />
@@ -74,7 +78,7 @@
                 tools:layout_editor_absoluteX="20dp">
 
                 <TextView
-                    android:id="@+id/tab1"
+                    android:id="@+id/stepTab"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -83,10 +87,10 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Steps"
-                    android:textColor="@color/btnText" />
+                    android:textColor="@color/whiteText" />
 
                 <TextView
-                    android:id="@+id/tab2"
+                    android:id="@+id/waterTab"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -94,10 +98,10 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Water"
-                    android:textColor="@color/tertiaryText" />
+                    android:textColor="@color/tertiaryDarkText" />
 
                 <TextView
-                    android:id="@+id/tab3"
+                    android:id="@+id/calorieTab"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -105,10 +109,10 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Calorie"
-                    android:textColor="@color/tertiaryText" />
+                    android:textColor="@color/tertiaryDarkText" />
 
                 <TextView
-                    android:id="@+id/tab4"
+                    android:id="@+id/sleepTab"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -116,13 +120,14 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Sleep"
-                    android:textColor="@color/tertiaryText" />
+                    android:textColor="@color/tertiaryDarkText" />
             </LinearLayout>
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragmentContainerView"
                 android:name="com.example.fittrack.profileStepsFragment"
-                android:layout_width="410dp"
-                android:layout_height="725dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/custom_tab_layout" />

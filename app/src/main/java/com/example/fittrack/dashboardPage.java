@@ -45,6 +45,7 @@ public class dashboardPage extends AppCompatActivity {
             imAddWalk = findViewById(R.id.imAddWalk);
             imAddWater = findViewById(R.id.imAddWater);
             imAddFood = findViewById(R.id.imAddFood);
+            imAddSleep= findViewById(R.id.imAddSleep);
 
             tvDayMonDate = findViewById(R.id.tvDayMonDate);
             tvMonYr = findViewById(R.id.tvMonYr);
@@ -109,29 +110,25 @@ public class dashboardPage extends AppCompatActivity {
             Toast.makeText(this, "An Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
-        imAddWalk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
-                startActivity(intent);
-            }
+        imAddWalk.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
+            startActivity(intent);
         });
 
-        imAddWater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
-                startActivity(intent);
-            }
+        imAddWater.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
+            startActivity(intent);
         });
 
-        imAddFood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
-                startActivity(intent);
-            }
+        imAddFood.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
         });
+        imAddSleep.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
+            startActivity(intent);
+        });
+
     }
 
     private void setWeeklyCalendar(){

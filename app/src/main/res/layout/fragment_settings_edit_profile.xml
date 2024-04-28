@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".settingsFragment">
+
+    <ImageView
+        android:id="@+id/imageView84"
+        android:layout_width="372dp"
+        android:layout_height="380dp"
+        android:src="@drawable/rectangle_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView85"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toTopOf="@+id/imageView84"
+        app:srcCompat="@drawable/user_icon" />
+
+    <TextView
+        android:id="@+id/tvSettingsUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Username"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView84"
+        app:layout_constraintStart_toEndOf="@+id/imageView85"
+        app:layout_constraintTop_toTopOf="@+id/imageView84" />
+
+    <ImageView
+        android:id="@+id/imageView86"
+        android:layout_width="372sp"
+        android:layout_height="2sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView84"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/tvSettingsUsername"
+        app:srcCompat="@drawable/line_divider_pink" />
+
+    <TextView
+        android:id="@+id/textView158"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Account Settings"
+        android:textColor="@color/tertiaryDarkText"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/imageView86" />
+
+    <TextView
+        android:id="@+id/textView159"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Edit Profile"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView158" />
+
+    <ImageView
+        android:id="@+id/imSettingsEditProfile"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView158"
+        app:srcCompat="@drawable/arrow_down_icon" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Username:"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView159" />
+
+    <EditText
+        android:id="@+id/etEditProfileUsername"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/text_field_bg_grey"
+        android:ems="10"
+        android:fontFamily="@font/poppins_light"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Email"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/etEditProfileUsername" />
+
+    <EditText
+        android:id="@+id/etEditProfileEmail"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/text_field_bg_grey"
+        android:ems="10"
+        android:fontFamily="@font/poppins_light"
+        android:hint="@string/email"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <Button
+        android:id="@+id/btnEditProfileSave"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/primary"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Save Changes"
+        android:textColor="@color/btnText"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView84"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/etEditProfileEmail" />
+
+    <ImageView
+        android:id="@+id/imEditUsername"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/edit_icon"
+        app:layout_constraintStart_toEndOf="@+id/etEditProfileUsername"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <ImageView
+        android:id="@+id/imEditEmail"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/edit_icon"
+        app:layout_constraintStart_toEndOf="@+id/etEditProfileEmail"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,7 +68,8 @@
         android:inputType="number"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textColor="@color/tertiaryText"
+        android:textColor="@color/primaryText"
+        android:textColorHint="@color/tertiaryDarkText"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,8 +79,7 @@
         android:id="@+id/btnAddSteps"
         android:layout_width="372dp"
         android:layout_height="60dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/btn_mid_rounded_white"
+        android:backgroundTint="@color/secondary"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Add Steps"
         android:textColor="@color/secondaryText"
@@ -124,7 +124,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="2,300"
+        android:text="0"
         android:textColor="@color/secondaryText"
         android:textColorLink="@color/primary"
         android:textSize="21sp"
@@ -181,21 +181,21 @@
 
     <ImageView
         android:id="@+id/imageView74"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="@+id/pbCalorieTracker"
-        app:layout_constraintEnd_toEndOf="@+id/pbCalorieTracker"
-        app:layout_constraintStart_toStartOf="@+id/pbCalorieTracker"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/pbCalorieTracker"
-        app:layout_constraintVertical_bias="0.41"
         app:srcCompat="@drawable/steps_icon" />
 
     <TextView
         android:id="@+id/tvStepsTrackerPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/outfit_bold"
-        android:text="100%"
+        android:text="0%"
         android:textColor="@color/secondaryText"
         android:textSize="21sp"
         android:textStyle="bold"
@@ -243,6 +243,16 @@
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvStepsTrackerGoal"
         app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
+
+    <ProgressBar
+        android:id="@+id/pbAddSteps"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etStepTrackerInput" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

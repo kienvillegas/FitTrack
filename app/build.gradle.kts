@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-firestore")
+    implementation("com.github.AnyChart:AnyChart-Android:1.1.5")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(libs.gridlayout)
     testImplementation(libs.junit)

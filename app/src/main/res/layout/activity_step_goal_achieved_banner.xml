@@ -12,7 +12,6 @@
         android:layout_width="420dp"
         android:layout_height="500dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/rectangle_shape_not_rounded" />
@@ -73,7 +72,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView65"
-        app:layout_constraintStart_toEndOf="@+id/imageView66"
+        app:layout_constraintStart_toStartOf="@+id/imageView65"
         app:layout_constraintTop_toTopOf="@+id/imageView65" />
 
     <ImageView
@@ -121,7 +120,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="4,000"
+        android:text="0"
         android:textColor="@color/secondaryText"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView65"
@@ -136,7 +135,7 @@
         android:layout_marginStart="140dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="steps"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/secondaryText"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/imageView65"
         app:layout_constraintTop_toBottomOf="@+id/textView116" />
@@ -154,7 +153,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView116" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/pbStepBanner"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -162,7 +161,7 @@
         android:background="@drawable/circle_shape"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/circle_progress_bar"
+        android:progressDrawable="@drawable/circle_progress_bar_primary"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/imageView65"
         app:layout_constraintStart_toStartOf="@+id/imageView65"
@@ -173,22 +172,23 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/pbStepBanner"
+        app:layout_constraintStart_toStartOf="@+id/pbStepBanner"
+        app:layout_constraintTop_toTopOf="@+id/pbStepBanner"
         app:srcCompat="@drawable/steps_icon" />
 
     <TextView
         android:id="@+id/tvStepBannerPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/outfit_bold"
-        android:text="100%"
+        android:text="0%"
         android:textColor="@color/secondaryText"
         android:textSize="21sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/pbStepBanner"
+        app:layout_constraintStart_toStartOf="@+id/pbStepBanner"
         app:layout_constraintTop_toBottomOf="@+id/imageView68" />
 
     <TextView
@@ -202,7 +202,7 @@
         android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />
 
     <TextView
         android:id="@+id/tvStepBannerGoal"
@@ -215,7 +215,7 @@
         android:textColor="@color/primaryText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/textView121"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />
 
     <TextView
         android:id="@+id/textView123"
@@ -228,14 +228,14 @@
         android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvStepBannerGoal"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />
 
     <Button
         android:id="@+id/btnStepBannerShare"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_mid_rounded_primary"
+        android:backgroundTint="@color/primary"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Share to Friends"
         android:textColor="@color/btnText"
@@ -248,10 +248,10 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/btn_mid_rounded_red"
+        android:backgroundTint="@color/secondary"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Not Now"
-        android:textColor="@color/btnCancelColor"
+        android:textColor="@color/secondaryText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStepBannerShare" />
