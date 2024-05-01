@@ -47,6 +47,7 @@ import java.util.Map;
 
 public class signIn extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
     Button btnSignIn;
     EditText etSignInEmail, etSignInPasssword;
     TextView tvSignUp, tvForgotPassword;
