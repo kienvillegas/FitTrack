@@ -60,7 +60,7 @@ public class actStepTracker extends AppCompatActivity {
             dataManager.saveCurrentDateTime();
             storedDate[0] = dataManager.getStoredDate();
         }
-        pbStepTracker = findViewById(R.id.pbCalorieTracker);
+        pbStepTracker = findViewById(R.id.pbStepTracker);
         imBackBtn = findViewById(R.id.imStepTrackerBack);
 
         tvStepTrackerTaken = findViewById(R.id.tvStepTackerTaken);
@@ -143,9 +143,11 @@ public class actStepTracker extends AppCompatActivity {
                                             });
                                 }else{
                                     Log.e(TAG, storedDate[0] + " is not equal to " + currentDate);
+                                    dataManager.saveCurrentDateTime();
+
                                     dailyStepTaken = Integer.parseInt(inputStep);
                                     Map<String, Object> stepTaken = new HashMap<>();
-                                    stepTaken.put("dailySleepTaken", dailyStepTaken);
+                                    stepTaken.put("dailyStepTaken", dailyStepTaken);
 
                                     docRef.update(stepTaken)
                                             .addOnSuccessListener(unused -> {
@@ -261,11 +263,11 @@ public class actStepTracker extends AppCompatActivity {
                     boolean isStepDailyGoal = documentSnapshot.getBoolean("isStepDailyGoal");
 
                     if (!storedDateTime.equals(currentDateTime)) {
-                        updateCalorieGoalStatus(docRef, false);
+                        updateStepGoalStatus(docRef, false);
                     }
 
                     if (!isStepDailyGoal && dailyStepTaken >= steDailyGoal) {
-                        updateCalorieGoalStatus(docRef, true);
+                        updateStepGoalStatus(docRef, true);
 
                         Intent intent = new Intent(getApplicationContext(), bannerStepGoalAchieved.class);
                         startActivity(intent);
@@ -276,7 +278,7 @@ public class actStepTracker extends AppCompatActivity {
                 });
     }
 
-    private void updateCalorieGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
+    private void updateStepGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
         Map<String, Object> goalData = new HashMap<>();
         goalData.put("isStepDailyGoal", isGoalAchieved);
 

@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imCalorieTrackerBack" />
+        app:layout_constraintTop_toBottomOf="@+id/imSleepTrackerBack" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -216,7 +216,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etSleepTrackerInput" />
 
     <ImageView
-        android:id="@+id/imCalorieTrackerBack"
+        android:id="@+id/imSleepTrackerBack"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"

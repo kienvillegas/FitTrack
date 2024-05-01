@@ -163,7 +163,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ProgressBar
-        android:id="@+id/pbCalorieTracker"
+        android:id="@+id/pbStepTracker"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -186,7 +186,7 @@
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pbCalorieTracker"
+        app:layout_constraintTop_toTopOf="@+id/pbStepTracker"
         app:srcCompat="@drawable/steps_icon" />
 
     <TextView
@@ -215,7 +215,7 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
+        app:layout_constraintTop_toBottomOf="@+id/pbStepTracker" />
 
     <TextView
         android:id="@+id/tvStepsTrackerGoal"
@@ -229,7 +229,7 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
+        app:layout_constraintTop_toBottomOf="@+id/pbStepTracker" />
 
     <TextView
         android:id="@+id/textView144"
@@ -242,7 +242,7 @@
         android:textColor="@color/tertiaryDarkText"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvStepsTrackerGoal"
-        app:layout_constraintTop_toBottomOf="@+id/pbCalorieTracker" />
+        app:layout_constraintTop_toBottomOf="@+id/pbStepTracker" />
 
     <ProgressBar
         android:id="@+id/pbAddSteps"

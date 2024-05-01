@@ -3,9 +3,15 @@ package com.example.fittrack;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -22,6 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -32,6 +41,9 @@ public class bannerSleepGoalAchieved extends AppCompatActivity {
     Button btnSleepBannerShare, btnSleepBannerCancel;
     ProgressBar pbSleepBanner;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    ImageView imBannerSleepAchievement;
+    Drawable drawable;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,56 +52,72 @@ public class bannerSleepGoalAchieved extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String userId = currentUser.getUid();
-
-        tvSleepBannerTaken = findViewById(R.id.tvSleepBannerTaken);
-        tvSleepBannerUsername = findViewById(R.id.tvSleepBannerUsername);
-        tvSleepBannerPercent = findViewById(R.id.tvSleepBannerPercent);
-        tvSleepBannerGoal = findViewById(R.id.tvSleepBannerGoal);
+//
+//        tvSleepBannerTaken = findViewById(R.id.tvSleepBannerTaken);
+//        tvSleepBannerUsername = findViewById(R.id.tvSleepBannerUsername);
+//        tvSleepBannerPercent = findViewById(R.id.tvSleepBannerPercent);
+//        tvSleepBannerGoal = findViewById(R.id.tvSleepBannerGoal);
         btnSleepBannerShare = findViewById(R.id.btnSleepBannerShare);
         btnSleepBannerCancel = findViewById(R.id.btnSleepBannerCancel);
-        pbSleepBanner = findViewById(R.id.pbCalorieBanner);
+//        pbSleepBanner = findViewById(R.id.pbCalorieBanner);
         imBackBtn = findViewById(R.id.imCalorieBannerBack);
+        imBannerSleepAchievement = findViewById(R.id.imBannerSleepAchievement);
 
-        DocumentReference docRef = db.collection("users").document(userId);
-        docRef.get().addOnSuccessListener(documentSnapshot -> {
-            if(documentSnapshot.exists()){
-                String username;
-                int dailySleepTaken, sleepDailyGoal, sleepPercent;
-                username = documentSnapshot.getString("name");
-                dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
-                sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal").intValue();
-
-                if (sleepDailyGoal != 0) {
-                    sleepPercent = Math.min((int) (((double) dailySleepTaken / sleepDailyGoal) * 100), 100);
-                } else {
-                    sleepPercent = 0;
-                }
-
-                String formattedSleepTaken = NumberFormat.getInstance(Locale.US).format(dailySleepTaken);
-                String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(sleepDailyGoal);
-
-                tvSleepBannerUsername.setText(username);
-                tvSleepBannerTaken.setText(formattedSleepTaken + " Hours");
-                tvSleepBannerPercent.setText(String.valueOf(sleepPercent) + "%");
-                tvSleepBannerGoal.setText(String.valueOf(formattedDailyGoal));
-                pbSleepBanner.setMax(100);
-                pbSleepBanner.setProgress(sleepPercent);
-            }else{
-                Log.e(TAG, "Document does not exist");
-            }
-        }).addOnFailureListener(e -> {
-            Log.e(TAG, "An error occurred: " + e.getMessage());
-        });
+//        DocumentReference docRef = db.collection("users").document(userId);
+//        docRef.get().addOnSuccessListener(documentSnapshot -> {
+//            if(documentSnapshot.exists()){
+//                String username;
+//                int dailySleepTaken, sleepDailyGoal, sleepPercent;
+//                username = documentSnapshot.getString("name");
+//                dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
+//                sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal").intValue();
+//
+//                if (sleepDailyGoal != 0) {
+//                    sleepPercent = Math.min((int) (((double) dailySleepTaken / sleepDailyGoal) * 100), 100);
+//                } else {
+//                    sleepPercent = 0;
+//                }
+//
+//                String formattedSleepTaken = NumberFormat.getInstance(Locale.US).format(dailySleepTaken);
+//                String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(sleepDailyGoal);
+//
+//                tvSleepBannerUsername.setText(username);
+//                tvSleepBannerTaken.setText(formattedSleepTaken + " Hours");
+//                tvSleepBannerPercent.setText(String.valueOf(sleepPercent) + "%");
+//                tvSleepBannerGoal.setText(String.valueOf(formattedDailyGoal));
+//                pbSleepBanner.setMax(100);
+//                pbSleepBanner.setProgress(sleepPercent);
+//            }else{
+//                Log.e(TAG, "Document does not exist");
+//            }
+//        }).addOnFailureListener(e -> {
+//            Log.e(TAG, "An error occurred: " + e.getMessage());
+//        });
         imBackBtn.setOnClickListener(view -> onBackPressed());
 
         btnSleepBannerShare.setOnClickListener(v -> {
-            Uri imageUri = Uri.parse("res/image/penguin.gif");
+            Drawable drawable = imBannerSleepAchievement.getDrawable();
+            if (drawable instanceof BitmapDrawable) {
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-            Intent shareIntent = new Intent(Intent.ACTION_SENDTO);
-            shareIntent.setType("image/gif");
-            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-            startActivity(Intent.createChooser(shareIntent, "Share GIF via"));
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("image/jpeg");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
+                Uri imageUri = Uri.parse(path);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                startActivity(Intent.createChooser(shareIntent, "Share Image"));
+            }
         });
+
+        btnSleepBannerCancel.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
+            startActivity(intent);
+            finish();
+        });
+
+
     }
     public void onBackPressed() {
         super.onBackPressed();

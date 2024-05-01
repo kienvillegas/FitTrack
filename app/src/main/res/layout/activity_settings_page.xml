@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/rectangle_filled_shape" />
 
     <ImageView
-        android:id="@+id/imageView82"
+        android:id="@+id/imSettingsBack"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
@@ -38,7 +38,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView82"
+        app:layout_constraintTop_toBottomOf="@+id/imSettingsBack"
         app:srcCompat="@drawable/settings_icon" />
 
     <TextView
@@ -52,7 +52,7 @@
         android:textColor="@color/primaryText"
         android:textSize="32sp"
         app:layout_constraintStart_toEndOf="@+id/imageView83"
-        app:layout_constraintTop_toBottomOf="@+id/imageView82" />
+        app:layout_constraintTop_toBottomOf="@+id/imSettingsBack" />
 
     <Button
         android:id="@+id/btnSignOut"

@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,6 +84,8 @@ public class activityPage extends AppCompatActivity {
     }
 
     private void fetchStepData(String userId, String storedDateTime) {
+        hideContentView();
+
         String currentDate = getCurrentDateTime();
         DocumentReference docRef = db.collection("users").document(userId);
 
@@ -108,18 +112,29 @@ public class activityPage extends AppCompatActivity {
     }
 
     private void updateStepUI(@Nullable DocumentSnapshot documentSnapshot) {
-        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM, dd", Locale.getDefault());
+        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
         Date date = new Date();
         String currentDate = dayMonDate.format(date);
 
-        int stepDailyGoal;
+        showContentView();
 
-        stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
         if (documentSnapshot != null) {
-            int dailyStepTaken,stepPercent;
+            int stepDailyGoal = 0;
+            Long stepDailyGoalLong = documentSnapshot.getLong("stepDailyGoal");
+            if (stepDailyGoalLong != null) {
+                stepDailyGoal = stepDailyGoalLong.intValue();
+            }
+            String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(stepDailyGoal);
 
-            dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+            int dailyStepTaken = 0;
+            Long dailyStepTakenLong = documentSnapshot.getLong("dailyStepTaken");
+            if (dailyStepTakenLong != null) {
+                dailyStepTaken = dailyStepTakenLong.intValue();
+            }
 
+            Log.d(TAG, "Step Daily Goal:  " + stepDailyGoal);
+
+            int stepPercent;
             if (stepDailyGoal != 0) {
                 stepPercent = Math.min((int) (((double) dailyStepTaken / stepDailyGoal) * 100), 100);
             } else {
@@ -127,7 +142,6 @@ public class activityPage extends AppCompatActivity {
             }
 
             String formattedStepTaken = NumberFormat.getInstance(Locale.US).format(dailyStepTaken);
-            String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(stepDailyGoal);
 
             tvActDayMonDate.setText(currentDate);
             tvActStepTaken.setText(formattedStepTaken);
@@ -136,14 +150,23 @@ public class activityPage extends AppCompatActivity {
             pbActStep.setMax(100);
             pbActStep.setProgress(stepPercent);
         } else {
-            String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(stepDailyGoal);
+            int stepDailyGoal = 0;
+            String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(stepDailyGoal);
+
+            int dailyStepTaken = 0;
+
+            Log.d(TAG, "Step Daily Goal:  " + stepDailyGoal);
+
+            int stepPercent = 0;
+
+            String formattedStepTaken = NumberFormat.getInstance(Locale.US).format(dailyStepTaken);
 
             tvActDayMonDate.setText(currentDate);
-            tvActStepTaken.setText(0);
+            tvActStepTaken.setText(formattedStepTaken);
             tvActStepGoal.setText(formattedDailyGoal);
-            tvActStepPercent.setText(0 + "%");
+            tvActStepPercent.setText(String.valueOf(stepPercent) + "%");
             pbActStep.setMax(100);
-            pbActStep.setProgress(0);
+            pbActStep.setProgress(stepPercent);
         }
     }
     private String getCurrentDateTime(){
@@ -206,6 +229,73 @@ public class activityPage extends AppCompatActivity {
                 long hours = minutes / 60;
                 return hours + " hr";
             }
+        }
+    }
+
+    private void hideContentView() {
+        try {
+            int[] imageViewIds = {R.id.imageView12, R.id.imageView74, R.id.imageView22};
+            int[] textViewIds = {R.id.textView5, R.id.textView8, R.id.tvActStepTaken, R.id.textView11, R.id.textView12, R.id.textView16, R.id.textView17, R.id.textView25, R.id.tvDateTimeRecentAct, R.id.tvActStepGoal, R.id.tvActStepPercent};
+            int[] progressBarIds = {R.id.pbActStep};
+            int[] fragmentIds = {R.id.fragmentContainerView2};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+
+            for (int id : progressBarIds) {
+                ProgressBar progressBar = findViewById(id);
+                progressBar.setVisibility(View.GONE);
+            }
+
+            for (int id : fragmentIds) {
+                FragmentContainerView fragmentContainerView = findViewById(id);
+                fragmentContainerView.setVisibility(View.GONE);
+            }
+
+            ProgressBar pbActivityContent = findViewById(R.id.pbActivityContent);
+            pbActivityContent.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView() {
+        try {
+            int[] imageViewIds = {R.id.imageView12, R.id.imageView74, R.id.imageView22};
+            int[] textViewIds = {R.id.textView5, R.id.textView8, R.id.tvActStepTaken, R.id.textView11, R.id.textView12, R.id.textView16, R.id.textView17, R.id.textView25, R.id.tvDateTimeRecentAct, R.id.tvActStepGoal, R.id.tvActStepPercent};
+            int[] progressBarIds = {R.id.pbActStep};
+            int[] fragmentIds = {R.id.fragmentContainerView2};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : progressBarIds) {
+                ProgressBar progressBar = findViewById(id);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : fragmentIds) {
+                FragmentContainerView fragmentContainerView = findViewById(id);
+                fragmentContainerView.setVisibility(View.VISIBLE);
+            }
+            ProgressBar pbActivityContent = findViewById(R.id.pbActivityContent);
+            pbActivityContent.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

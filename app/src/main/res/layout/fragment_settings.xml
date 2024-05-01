@@ -26,18 +26,18 @@
             app:layout_constraintTop_toTopOf="@+id/imageView84"
             app:srcCompat="@drawable/user_icon" />
 
-        <TextView
-            android:id="@+id/tvSettingsUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/outfit_medium"
-            android:text="Username"
-            android:textColor="@color/primaryText"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView84"
-            app:layout_constraintStart_toEndOf="@+id/imageView85"
-            app:layout_constraintTop_toTopOf="@+id/imageView84" />
+    <TextView
+        android:id="@+id/tvSettingsUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView84"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toTopOf="@+id/imageView84" />
 
         <ImageView
             android:id="@+id/imageView86"
@@ -49,56 +49,56 @@
             app:layout_constraintTop_toBottomOf="@+id/tvSettingsUsername"
             app:srcCompat="@drawable/line_divider_pink" />
 
-        <TextView
-            android:id="@+id/textView158"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/outfit_medium"
-            android:text="Account Settings"
-            android:textColor="@color/tertiaryDarkText"
-            app:layout_constraintStart_toStartOf="@+id/imageView84"
-            app:layout_constraintTop_toBottomOf="@+id/imageView86" />
+    <TextView
+        android:id="@+id/textView158"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Account Settings"
+        android:textColor="@color/tertiaryDarkText"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/imageView86" />
 
-        <TextView
-            android:id="@+id/textView159"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/outfit_medium"
-            android:text="Edit Profile"
-            android:textColor="@color/primaryText"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView84"
-            app:layout_constraintTop_toBottomOf="@+id/textView158" />
+    <TextView
+        android:id="@+id/textView159"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Edit Profile"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView158" />
 
-        <TextView
-            android:id="@+id/textView160"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/outfit_medium"
-            android:text="Change Password"
-            android:textColor="@color/primaryText"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView84"
-            app:layout_constraintTop_toBottomOf="@+id/textView159" />
+    <TextView
+        android:id="@+id/textView160"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Change Password"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView159" />
 
-        <TextView
-            android:id="@+id/textView161"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/outfit_medium"
-            android:text="Notifications"
-            android:textColor="@color/primaryText"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView84"
-            app:layout_constraintTop_toBottomOf="@+id/textView160" />
+    <TextView
+        android:id="@+id/textView161"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Notifications"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/textView160" />
 
         <ImageView
             android:id="@+id/imSettingsEditProfile"
@@ -140,18 +140,18 @@
             app:layout_constraintTop_toBottomOf="@+id/textView161"
             app:srcCompat="@drawable/line_divider" />
 
-        <TextView
-            android:id="@+id/textView162"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/outfit_medium"
-            android:text="More"
-            android:textColor="@color/tertiaryDarkText"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView109"
-            app:layout_constraintTop_toBottomOf="@+id/imageView109" />
+    <TextView
+        android:id="@+id/textView162"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="More"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView109"
+        app:layout_constraintTop_toBottomOf="@+id/imageView109" />
 
     <TextView
         android:id="@+id/textView185"
@@ -159,7 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_medium"
+        android:fontFamily="@font/outfit_semi_bold"
         android:text="Design"
         android:textColor="@color/primaryText"
         android:textSize="18sp"

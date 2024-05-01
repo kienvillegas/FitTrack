@@ -3,8 +3,12 @@ package com.example.fittrack;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,13 +33,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public class bannerCalorieGoalAchieved extends AppCompatActivity {
     FirebaseAuth mAuth;
-    ImageView imBackBtn;
+    ImageView imBackBtn, imBannerCalorieAchievement;
     TextView tvCalorieBannerTaken, tvCalorieBannerUsername, tvCalorieBannerPercent, tvCalorieBannerGoal;
     Button btnCalorieBannerShare, btnCalorieBannerCancel;
     ProgressBar pbCalorieBanner;
@@ -49,59 +54,68 @@ public class bannerCalorieGoalAchieved extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String userId = currentUser.getUid();
 
-        tvCalorieBannerTaken = findViewById(R.id.tvCalorieBannerTaken);
-        tvCalorieBannerUsername = findViewById(R.id.tvCalorieBannerUsername);
-        tvCalorieBannerPercent = findViewById(R.id.tvCalorieBannerPercent);
-        tvCalorieBannerGoal = findViewById(R.id.tvCalorieBannerGoal);
+//        tvCalorieBannerTaken = findViewById(R.id.tvCalorieBannerTaken);
+//        tvCalorieBannerUsername = findViewById(R.id.tvCalorieBannerUsername);
+//        tvCalorieBannerPercent = findViewById(R.id.tvCalorieBannerPercent);
+//        tvCalorieBannerGoal = findViewById(R.id.tvCalorieBannerGoal);
         btnCalorieBannerShare = findViewById(R.id.btnCalorieBannerShare);
         btnCalorieBannerCancel = findViewById(R.id.btnCalorieBannerCancel);
-        pbCalorieBanner = findViewById(R.id.pbCalorieBanner);
+//        pbCalorieBanner = findViewById(R.id.pbCalorieBanner);
         imBackBtn = findViewById(R.id.imCalorieBannerBack);
-
-            DocumentReference docRef = db.collection("users").document(userId);
-        docRef.get().addOnSuccessListener(documentSnapshot -> {
-            if(documentSnapshot.exists()){
-                String username;
-                int dailyCalorieTaken, calorieDailyGoal, caloriePercent;
-                username = documentSnapshot.getString("name");
-                dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
-                calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
-
-                if (calorieDailyGoal != 0) {
-                    caloriePercent = Math.min((int) (((double) dailyCalorieTaken / calorieDailyGoal) * 100), 100);
-                } else {
-                    caloriePercent = 0;
-                }
-
-                String formattedCalorieTaken = NumberFormat.getInstance(Locale.US).format(dailyCalorieTaken);
-                String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(calorieDailyGoal);
-
-                tvCalorieBannerUsername.setText(username);
-                tvCalorieBannerTaken.setText(formattedCalorieTaken + " Kcal");
-                tvCalorieBannerPercent.setText(String.valueOf(caloriePercent) + "%");
-                tvCalorieBannerGoal.setText(formattedDailyGoal);
-                pbCalorieBanner.setMax(100);
-                pbCalorieBanner.setProgress(caloriePercent);
-            }else{
-                Log.e(TAG, "Document does not exist");
-            }
-        }).addOnFailureListener(e -> {
-            Log.e(TAG, "An error occurred: " + e.getMessage());
-        });
+        imBannerCalorieAchievement = findViewById(R.id.imBannerCalorieAchievement);
+//            DocumentReference docRef = db.collection("users").document(userId);
+//        docRef.get().addOnSuccessListener(documentSnapshot -> {
+//            if(documentSnapshot.exists()){
+//                String username;
+//                int dailyCalorieTaken, calorieDailyGoal, caloriePercent;
+//                username = documentSnapshot.getString("name");
+//                dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
+//                calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
+//
+//                if (calorieDailyGoal != 0) {
+//                    caloriePercent = Math.min((int) (((double) dailyCalorieTaken / calorieDailyGoal) * 100), 100);
+//                } else {
+//                    caloriePercent = 0;
+//                }
+//
+//                String formattedCalorieTaken = NumberFormat.getInstance(Locale.US).format(dailyCalorieTaken);
+//                String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(calorieDailyGoal);
+//
+//                tvCalorieBannerUsername.setText(username);
+//                tvCalorieBannerTaken.setText(formattedCalorieTaken + " Kcal");
+//                tvCalorieBannerPercent.setText(String.valueOf(caloriePercent) + "%");
+//                tvCalorieBannerGoal.setText(formattedDailyGoal);
+//                pbCalorieBanner.setMax(100);
+//                pbCalorieBanner.setProgress(caloriePercent);
+//            }else{
+//                Log.e(TAG, "Document does not exist");
+//            }
+//        }).addOnFailureListener(e -> {
+//            Log.e(TAG, "An error occurred: " + e.getMessage());
+//        });
 
         imBackBtn.setOnClickListener(view -> onBackPressed());
 
         btnCalorieBannerShare.setOnClickListener(v -> {
-            String imagePath = "res/drawable/motivation.jpg";
-            File imageFile = new File(imagePath);
+            Drawable drawable = imBannerCalorieAchievement.getDrawable();
+            if (drawable instanceof BitmapDrawable) {
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-            Uri imageUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", imageFile);
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("image/jpeg");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
+                Uri imageUri = Uri.parse(path);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                startActivity(Intent.createChooser(shareIntent, "Share Image"));
+            }
+        });
 
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("image/*");
-            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-
-            startActivity(Intent.createChooser(shareIntent, "Share Image via"));
+        btnCalorieBannerCancel.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
+            finish();
         });
     }
     @Override

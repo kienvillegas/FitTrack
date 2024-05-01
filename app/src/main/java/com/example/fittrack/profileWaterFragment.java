@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -69,7 +71,7 @@ public class profileWaterFragment extends Fragment {
 
             if(userId != null){
                 Log.d(TAG, "Fragment is attached");
-
+                hideContentView();
                 fetchWaterData(userId);
 
                 DocumentReference weeklyWaterRef = db.collection("weekly_water").document(userId);
@@ -77,6 +79,8 @@ public class profileWaterFragment extends Fragment {
                         .addOnSuccessListener(documentSnapshot -> {
                             if(isAdded()){
                                 if(documentSnapshot.exists()){
+                                    showContentView();
+
                                     int monWater, tueWater, wedWater, thuWater, friWater, satWater, sunWater;
                                     monWater = documentSnapshot.getLong("mon").intValue();
                                     tueWater = documentSnapshot.getLong("tue").intValue();
@@ -201,4 +205,74 @@ public class profileWaterFragment extends Fragment {
                     Log.e(TAG, "An error occurred: " + e.getMessage());
                 });
     }
+    private void hideContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView38, R.id.tvProfileWaterTaken, R.id.textView40, R.id.textView41, R.id.textView42, R.id.tvProfileWaterDailyGoal, R.id.textView44, R.id.tvProfileWaterWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView25, R.id.imageView26, R.id.imageView28};
+            int[] chartIds = {R.id.waterBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.GONE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileWaterSetGoal);
+            button.setVisibility(View.GONE);
+
+            ProgressBar pbProfileWater = fragmentView.findViewById(R.id.pbProfileWater);
+            pbProfileWater.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView38, R.id.tvProfileWaterTaken, R.id.textView40, R.id.textView41, R.id.textView42, R.id.tvProfileWaterDailyGoal, R.id.textView44, R.id.tvProfileWaterWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView25, R.id.imageView26, R.id.imageView28};
+            int[] chartIds = {R.id.waterBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.VISIBLE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileWaterSetGoal);
+            button.setVisibility(View.VISIBLE);
+
+            ProgressBar pbProfileWater = fragmentView.findViewById(R.id.pbProfileWater);
+            pbProfileWater.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

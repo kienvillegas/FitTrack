@@ -19,28 +19,38 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.CollationElementIterator;
 import java.util.HashMap;
 import java.util.Map;
 
 public class settingsEditProfileFragment extends Fragment {
     FirebaseAuth mAuth;
-    TextView tvSettingsUsername;
-    ImageView imEditUsername, imEditEmail, imEditProfile;
-    EditText etEditProfileUsername, etEditProfileEmail;
-    Button btnEditProfileSave;
+    TextView tvEditProfileUsername;
+    ImageView imEditProfile;
+    EditText etEditProfileUsername, etEditProfileEmail, etEditProfilePassword;
+    Button btnEditProfileUsername, btnEditProfileEmail;
+    ProgressBar pbEditProfileEmail, pbEditProfileUsername;
 
-    private boolean isEditUsernameEnabled, isEditEmailEnabled = false;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth.AuthStateListener authStateListener;
+
 
 
     public settingsEditProfileFragment() {
@@ -59,25 +69,31 @@ public class settingsEditProfileFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String userId = currentUser.getUid();
 
-        tvSettingsUsername = view.findViewById(R.id.tvSettingsUsername);
-        imEditUsername = view.findViewById(R.id.imEditUsername);
-        imEditEmail = view.findViewById(R.id.imEditEmail);
+        tvEditProfileUsername = view.findViewById(R.id.tvEditProfileUsername);
         etEditProfileUsername = view.findViewById(R.id.etEditProfileUsername);
         etEditProfileEmail = view.findViewById(R.id.etEditProfileEmail);
-        btnEditProfileSave = view.findViewById(R.id.btnEditProfileSave);
+        imEditProfile = view.findViewById(R.id.imEditProfile);
+        etEditProfilePassword = view.findViewById(R.id.etEditProfilePassword);
+        btnEditProfileUsername = view.findViewById(R.id.btnEditProfileUsername);
+        btnEditProfileEmail = view.findViewById(R.id.btnEditProfileEmail);
+        pbEditProfileEmail = view.findViewById(R.id.pbEditProfileEmail);
+        pbEditProfileUsername = view.findViewById(R.id.pbEditProfileUsername);
 
+        pbEditProfileUsername.setVisibility(View.GONE);
+        pbEditProfileEmail.setVisibility(View.GONE);
+        btnEditProfileUsername.setVisibility(View.VISIBLE);
+        btnEditProfileEmail.setVisibility(View.VISIBLE);
 
-        if(isEditUsernameEnabled){
-            etEditProfileUsername.setEnabled(true);
-        }else{
-            etEditProfileUsername.setEnabled(false);
-        }
+        CollectionReference collRef = db.collection("users");
+        DocumentReference userRef = db.collection("users").document(userId);
+        DocumentReference docRef = db.collection("users").document(userId);
 
-        if(isEditEmailEnabled){
-            etEditProfileEmail.setEnabled(true);
-        }else{
-            etEditProfileEmail.setEnabled(false);
-        }
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            String username = documentSnapshot.getString("name");
+            tvEditProfileUsername.setText(username);
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, e.getMessage());
+        });
 
         imEditProfile.setOnClickListener(v -> {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -88,43 +104,184 @@ public class settingsEditProfileFragment extends Fragment {
             fragmentTransaction.commit();
         });
 
-        imEditUsername.setOnClickListener(v -> {
-            isEditUsernameEnabled = !isEditUsernameEnabled;
-            if (isEditUsernameEnabled) {
-                imEditUsername.setImageResource(R.drawable.done_edit_icon);
-            } else {
-                imEditUsername.setImageResource(R.drawable.edit_icon);
-            }
-        });
+        btnEditProfileUsername.setOnClickListener(v -> {
+            pbEditProfileUsername.setVisibility(View.VISIBLE);
+            btnEditProfileUsername.setVisibility(View.GONE);
+            etEditProfileUsername.setBackgroundResource(R.drawable.text_field_bg_grey);
+            etEditProfileUsername.setError(null);
 
-        imEditEmail.setOnClickListener(v -> {
-            isEditEmailEnabled = !isEditEmailEnabled;
-            if (isEditEmailEnabled) {
-                imEditEmail.setImageResource(R.drawable.done_edit_icon);
-            } else {
-                imEditEmail.setImageResource(R.drawable.edit_icon);
-            }
-        });
+            String username = etEditProfileUsername.getText().toString().trim();
 
-        btnEditProfileSave.setOnClickListener(v -> {
-            String newUsername, newEmail;
-            newUsername = etEditProfileUsername.getText().toString().trim();
-            newEmail = etEditProfileEmail.getText().toString().trim();
-
-            if(newUsername.isEmpty() && newEmail.isEmpty()){
+            if(username.isEmpty()){
+                pbEditProfileUsername.setVisibility(View.GONE);
+                btnEditProfileUsername.setVisibility(View.VISIBLE);
+                etEditProfileUsername.setBackgroundResource(R.drawable.text_field_red);
+                etEditProfileUsername.setError("Required");
+                etEditProfileUsername.requestFocus();
                 return;
             }
 
-            if(newUsername.length() < 5){
+            if(username.length() < 5){
+                pbEditProfileUsername.setVisibility(View.GONE);
+                btnEditProfileUsername.setVisibility(View.VISIBLE);
+                etEditProfileUsername.setBackgroundResource(R.drawable.text_field_red);
                 etEditProfileUsername.setError("Minimum of 5 Characters");
-            }else{
-                checkUsernameUniqueness(newUsername, userId);
+                etEditProfileUsername.requestFocus();
+                return;
             }
 
-            if(Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
-                checkForExistingEmail(newEmail, userId);
-            }else{
+            try{
+                collRef.whereEqualTo("name", username).get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            Log.d(TAG, "Successfully colleciton query");
+                            if(!queryDocumentSnapshots.isEmpty()){
+                                Log.d(TAG, "Username Already Taken");
+
+                                pbEditProfileUsername.setVisibility(View.GONE);
+                                btnEditProfileUsername.setVisibility(View.VISIBLE);
+
+                                etEditProfileUsername.setBackgroundResource(R.drawable.text_field_red);
+                                etEditProfileUsername.setError("Username Already Exist");
+                                etEditProfileUsername.requestFocus();
+                            }else{
+                                Log.d(TAG, "There's no account with the username: " + username);
+
+                                userRef.update("name", username)
+                                        .addOnSuccessListener(unused -> {
+                                            pbEditProfileUsername.setVisibility(View.GONE);
+                                            btnEditProfileUsername.setVisibility(View.VISIBLE);
+
+                                            Log.d(TAG, "Successfully updated username to " + username);
+                                            etEditProfileUsername.setText(username);
+                                        }).addOnFailureListener(e -> {
+                                            pbEditProfileUsername.setVisibility(View.GONE);
+                                            btnEditProfileUsername.setVisibility(View.VISIBLE);
+
+                                            Log.e(TAG, "Failed to update username to " + username);
+                                        });
+                            }
+                        }).addOnFailureListener(e -> {
+                            pbEditProfileUsername.setVisibility(View.GONE);
+                            btnEditProfileUsername.setVisibility(View.VISIBLE);
+
+                            Log.e(TAG,"Failed to find username: " +  e.getMessage());
+                        });
+            }catch(Exception e){
+                pbEditProfileUsername.setVisibility(View.GONE);
+                btnEditProfileUsername.setVisibility(View.VISIBLE);
+
+                Log.e(TAG, e.getMessage());
+            }
+        });
+
+        btnEditProfileEmail.setOnClickListener(v -> {
+            pbEditProfileEmail.setVisibility(View.VISIBLE);
+            btnEditProfileEmail.setVisibility(View.GONE);
+
+            etEditProfilePassword.setBackgroundResource(R.drawable.text_field_bg_grey);
+            etEditProfileEmail.setBackgroundResource(R.drawable.text_field_bg_grey);
+            etEditProfileEmail.setError(null);
+            etEditProfilePassword.setError(null);
+
+            String newEmail, password;
+            newEmail = etEditProfileEmail.getText().toString().trim();
+            password = etEditProfilePassword.getText().toString().trim();
+
+            if(newEmail.isEmpty()){
+                pbEditProfileEmail.setVisibility(View.GONE);
+                btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                etEditProfileEmail.setBackgroundResource(R.drawable.text_field_red);
+                etEditProfileEmail.setError("Required");
+                etEditProfileEmail.requestFocus();
+                return;
+            }
+
+            if(password.isEmpty()){
+                pbEditProfileEmail.setVisibility(View.GONE);
+                btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                etEditProfilePassword.setBackgroundResource(R.drawable.text_field_red);
+                etEditProfilePassword.setError("Required");
+                etEditProfilePassword.requestFocus();
+                return;
+            }
+
+            if(!newEmail.endsWith("@gmail.com")){
+                pbEditProfileEmail.setVisibility(View.GONE);
+                btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                etEditProfileEmail.setBackgroundResource(R.drawable.text_field_red);
                 etEditProfileEmail.setError("Invalid Email Format");
+                etEditProfileEmail.requestFocus();
+                return;
+            }
+
+            try{
+                AuthCredential credential = EmailAuthProvider.getCredential(currentUser.getEmail(), password);
+                collRef.whereEqualTo("email", newEmail).get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            if(!queryDocumentSnapshots.isEmpty()){
+                                Log.d(TAG, "Email Already In Use");
+
+                                pbEditProfileEmail.setVisibility(View.GONE);
+                                btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                                etEditProfileEmail.setBackgroundResource(R.drawable.text_field_red);
+                                etEditProfileEmail.setError("Email Already in Use");
+                                etEditProfileEmail.requestFocus();
+                            }else{
+                                Log.d(TAG, "Email is not taken");
+
+                                currentUser.reauthenticate(credential)
+                                        .addOnCompleteListener(task -> {
+                                            if(task.isSuccessful()){
+                                                currentUser.verifyBeforeUpdateEmail(newEmail)
+                                                        .addOnCompleteListener(verifyTask -> {
+                                                            if(verifyTask.isSuccessful()){
+                                                                authStateListener = firebaseAuth -> {
+                                                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                                    if(user != null && user.isEmailVerified()){
+                                                                        Log.d(TAG, "Email has been successfully verified.");
+                                                                        pbEditProfileEmail.setVisibility(View.GONE);
+                                                                        btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                                                                        docRef.update("email", newEmail);
+                                                                        etEditProfileEmail.setText("");
+                                                                        etEditProfilePassword.setText("");
+
+                                                                        FirebaseAuth.getInstance().removeAuthStateListener(authStateListener);
+                                                                    }
+                                                                };
+                                                                FirebaseAuth.getInstance().addAuthStateListener(authStateListener);
+                                                            }else{
+                                                                pbEditProfileEmail.setVisibility(View.GONE);
+                                                                btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                                                                Log.e(TAG, "Error Updating Email: " + verifyTask.getException());
+                                                                Toast.makeText(requireContext(), "Failed to update email. Please try again later.", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                            }else{
+                                                Log.e(TAG, "Error ReAuthentication: " + task.getException());
+
+                                                pbEditProfileEmail.setVisibility(View.GONE);
+                                                btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                                                etEditProfilePassword.setBackgroundResource(R.drawable.text_field_red);
+                                                etEditProfilePassword.setError("Incorrect Password");
+                                                etEditProfilePassword.requestFocus();
+                                            }
+                                        });
+                            }
+                        }).addOnFailureListener(e -> {
+
+                        });
+            }catch(Exception e){
+                pbEditProfileEmail.setVisibility(View.GONE);
+                btnEditProfileEmail.setVisibility(View.VISIBLE);
+
+                Log.e(TAG, "Unknown Error Occurred: " + e.getMessage());
             }
         });
 
@@ -164,63 +321,24 @@ public class settingsEditProfileFragment extends Fragment {
             }
         });
 
+        etEditProfilePassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                etEditProfilePassword.setBackgroundResource(R.drawable.text_field_bg_grey);
+                etEditProfilePassword.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         return view;
     }
-
-    private void checkUsernameUniqueness(String newUsername, String userId) {
-        CollectionReference usersRef = db.collection("users");
-        DocumentReference docRef = db.collection("users").document(userId);
-
-        usersRef.whereEqualTo("name", newUsername)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().isEmpty()) {
-                            Map<String, Object> nameData = new HashMap<>();
-                            nameData.put("name", newUsername);
-
-                            docRef.update(nameData)
-                                    .addOnSuccessListener(unused -> {
-                                        Log.e(TAG, "Successfully Changed Username");
-                                    }).addOnFailureListener(e -> {
-                                        Log.e(TAG, e.getMessage());
-
-                                    });
-                        } else {
-                            etEditProfileUsername.setError("Username is already in use");
-                        }
-                    } else {
-                        Log.e(TAG, "An error ocurred: " + task.getException());
-                    }
-                });
-    }
-
-    private void checkForExistingEmail(String newEmail, String userId) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference usersRef = db.collection("users");
-        DocumentReference docRef = db.collection("users").document(userId);
-
-        usersRef.whereEqualTo("email", newEmail)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().isEmpty()) {
-                            Map<String, Object> emailData = new HashMap<>();
-                            emailData.put("email", newEmail);
-
-                            docRef.update(emailData)
-                                    .addOnSuccessListener(unused -> {
-                                        Log.e(TAG, "Successfully Changed Email");
-                                    }).addOnFailureListener(e -> {
-                                        Log.e(TAG, e.getMessage());
-                                    });
-                        } else {
-                            etEditProfileUsername.setError("email is already in use");
-                        }
-                    } else {
-                        Log.e(TAG, "An error ocurred: " + task.getException());
-                    }
-                });
-    }
-
 }

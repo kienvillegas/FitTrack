@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -64,7 +66,7 @@ public class profileStepsFragment extends Fragment {
             barChart = view.findViewById(R.id.stepBarChart);
             if(userId != null){
                 Log.d(TAG, "Fragment is attached");
-
+                hideContentView();
                 fetchStepData(userId);
 
                 DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
@@ -72,6 +74,8 @@ public class profileStepsFragment extends Fragment {
                         .addOnSuccessListener(documentSnapshot -> {
                            if(isAdded()){
                                if(documentSnapshot.exists()){
+                                   showContentView();
+
                                    int monStep, tueStep, wedStep, thuStep, friStep, satStep, sunStep;
 
                                    monStep = documentSnapshot.getLong("mon").intValue();
@@ -198,4 +202,75 @@ public class profileStepsFragment extends Fragment {
                     Log.e(TAG, "An error occurred: " + e.getMessage());
                 });
     }
+
+    private void hideContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView29, R.id.tvProfileStepTaken, R.id.textView31, R.id.textView32, R.id.textView33, R.id.tvProfileStepDailyGoal, R.id.textView35, R.id.tvProfileStepWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView20, R.id.imageView21, R.id.imageView23};
+            int[] chartIds = {R.id.stepBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.GONE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileStepSetGoal);
+            button.setVisibility(View.GONE);
+
+            ProgressBar pbProfileStep = fragmentView.findViewById(R.id.pbProfileStep);
+            pbProfileStep.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView29, R.id.tvProfileStepTaken, R.id.textView31, R.id.textView32, R.id.textView33, R.id.tvProfileStepDailyGoal, R.id.textView35, R.id.tvProfileStepWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView20, R.id.imageView21, R.id.imageView23};
+            int[] chartIds = {R.id.stepBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.VISIBLE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileStepSetGoal);
+            button.setVisibility(View.VISIBLE);
+
+            ProgressBar pbProfileStep = fragmentView.findViewById(R.id.pbProfileStep);
+            pbProfileStep.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

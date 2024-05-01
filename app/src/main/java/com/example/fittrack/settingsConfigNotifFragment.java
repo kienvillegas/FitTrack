@@ -1,64 +1,100 @@
 package com.example.fittrack;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link settingsConfigNotifFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class settingsConfigNotifFragment extends Fragment {
+    TextView tvConfiNotifUsername;
+    ImageView imConfigNotifEditProfile, imConfigNotifChangePass, imConfigNotif, imConfigNotifDesign;
+    Switch sConfigNotif;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     public settingsConfigNotifFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment settingsConfigNotifFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static settingsConfigNotifFragment newInstance(String param1, String param2) {
-        settingsConfigNotifFragment fragment = new settingsConfigNotifFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings_config_notif, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings_config_notif, container, false);
+        tvConfiNotifUsername = view.findViewById(R.id.tvConfigNotifUsername);
+        imConfigNotifEditProfile = view.findViewById(R.id.imConfigNotifEditProfile);
+        imConfigNotifChangePass = view.findViewById(R.id.imConfigNotifChangePass);
+        imConfigNotif = view.findViewById(R.id.imConfigNotif);
+        imConfigNotifDesign = view.findViewById(R.id.imConfigNotifDesign);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userId = currentUser.getUid();
+
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            String username = documentSnapshot.getString("name");
+            tvConfiNotifUsername.setText(username);
+
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, e.getMessage());
+        });
+
+        imConfigNotifEditProfile.setOnClickListener(v -> {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment newFragment = new settingsEditProfileFragment();
+            fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+
+        imConfigNotifChangePass.setOnClickListener(v -> {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment newFragment = new settingsChangePasswordFragment();
+            fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+
+        imConfigNotif.setOnClickListener(v -> {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment newFragment = new settingsFragment();
+            fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+
+        imConfigNotifDesign.setOnClickListener(v -> {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment newFragment = new settingsDesignFragment();
+            fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+
+        return view;
     }
 }

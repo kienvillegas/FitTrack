@@ -27,16 +27,15 @@
         app:srcCompat="@drawable/user_icon" />
 
     <TextView
-        android:id="@+id/tvSettingsUsername"
+        android:id="@+id/tvConfigNotifUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_medium"
-        android:text="Username"
         android:textColor="@color/primaryText"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
-        app:layout_constraintStart_toEndOf="@+id/imageView85"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
         app:layout_constraintTop_toTopOf="@+id/imageView84" />
 
     <ImageView
@@ -46,7 +45,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
         app:layout_constraintStart_toStartOf="@+id/imageView84"
-        app:layout_constraintTop_toBottomOf="@+id/tvSettingsUsername"
+        app:layout_constraintTop_toBottomOf="@+id/tvConfigNotifUsername"
         app:srcCompat="@drawable/line_divider_pink" />
 
     <TextView
@@ -101,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView160" />
 
     <ImageView
-        android:id="@+id/imSettingsEditProfile"
+        android:id="@+id/imConfigNotifEditProfile"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
@@ -111,24 +110,24 @@
         app:srcCompat="@drawable/arrow_right_black" />
 
     <ImageView
-        android:id="@+id/imSettingsChangePass"
+        android:id="@+id/imConfigNotifChangePass"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
-        app:layout_constraintTop_toBottomOf="@+id/imSettingsEditProfile"
+        app:layout_constraintTop_toBottomOf="@+id/imConfigNotifEditProfile"
         app:srcCompat="@drawable/arrow_right_black" />
 
     <ImageView
-        android:id="@+id/imSettingsNotifications"
+        android:id="@+id/imConfigNotif"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
-        app:layout_constraintTop_toBottomOf="@+id/imSettingsChangePass"
-        app:srcCompat="@drawable/arrow_right_black" />
+        app:layout_constraintTop_toBottomOf="@+id/imConfigNotifChangePass"
+        app:srcCompat="@drawable/arrow_down_icon" />
 
     <ImageView
         android:id="@+id/imageView109"
@@ -160,14 +159,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_medium"
-        android:text="Change Theme"
+        android:text="Design"
         android:textColor="@color/primaryText"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/imageView109"
         app:layout_constraintTop_toBottomOf="@+id/textView162" />
 
     <ImageView
-        android:id="@+id/imSettingsChangeTheme"
+        android:id="@+id/imConfigNotifDesign"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
@@ -190,11 +189,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView161" />
 
     <Switch
-        android:id="@+id/sNotif"
+        android:id="@+id/sConfigNotif"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
-        app:layout_constraintTop_toBottomOf="@+id/imSettingsNotifications" />
+        app:layout_constraintTop_toBottomOf="@+id/imConfigNotif" />
 </androidx.constraintlayout.widget.ConstraintLayout>

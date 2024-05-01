@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -69,7 +71,7 @@ public class  profileSleepFragment extends Fragment {
             barChart = view.findViewById(R.id.sleepBarChart);
             if(userId != null){
                 Log.d(TAG, "Fragment is attached");
-
+                hideContentView();
                 fetchSleepData(userId);
 
                 DocumentReference weeklySleepRef = db.collection("weekly_sleep").document(userId);
@@ -77,6 +79,8 @@ public class  profileSleepFragment extends Fragment {
                         .addOnSuccessListener(documentSnapshot -> {
                             if(isAdded()){
                                 if(documentSnapshot.exists()){
+                                    showContentView();
+
                                     int monSleep, tueSleep, wedSleep, thuSleep, friSleep, satSleep, sunSleep;
 
                                     monSleep = documentSnapshot.getLong("mon").intValue();
@@ -202,5 +206,75 @@ public class  profileSleepFragment extends Fragment {
                 }).addOnFailureListener(e -> {
                     Log.e(TAG, "An error occurred: " + e.getMessage());
                 });
+    }
+
+    private void hideContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView55, R.id.tvProfileSleepTaken, R.id.textView59, R.id.textView60, R.id.textView61, R.id.tvProfileSleepDailyGoal, R.id.textView63, R.id.tvProfileSleepWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView34, R.id.imageView36, R.id.imageView37};
+            int[] chartIds = {R.id.sleepBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.GONE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileSleepSetGoal);
+            button.setVisibility(View.GONE);
+
+            ProgressBar pbProfileSleep = fragmentView.findViewById(R.id.pbProfileSleep);
+            pbProfileSleep.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView55, R.id.tvProfileSleepTaken, R.id.textView59, R.id.textView60, R.id.textView61, R.id.tvProfileSleepDailyGoal, R.id.textView63, R.id.tvProfileSleepWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView34, R.id.imageView36, R.id.imageView37};
+            int[] chartIds = {R.id.sleepBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.VISIBLE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileSleepSetGoal);
+            button.setVisibility(View.VISIBLE);
+
+            ProgressBar pbProfileSleep = fragmentView.findViewById(R.id.pbProfileSleep);
+            pbProfileSleep.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

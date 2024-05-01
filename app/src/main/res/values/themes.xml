@@ -1,24 +1,44 @@
-<resources>
+<resources  xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.FitTrack" parent="Theme.AppCompat.Light.NoActionBar">
-<!--                <item name="primary">@color/primary</item>-->
-<!--                <item name="primaryDark">@color/primaryDark</item>-->
-<!--                <item name="secondary">@color/secondary</item>-->
-<!--                <item name="tertiary">@color/tertiary</item>-->
-<!--                <item name="tertiaryDark">@color/tertiaryDark</item>-->
-
-<!--                <item name="primaryText">@color/primaryText</item>-->
-<!--                <item name="secondaryText">@color/secondaryText</item>-->
-<!--                <item name="secondaryDarkText">@color/secondaryDarkText</item>-->
-<!--                <item name="tertiaryText">@color/tertiaryText</item>-->
-<!--                <item name="terDarkText">@color/tertiaryDarkText</item>-->
-<!--                <item name="whiteText">@color/whiteText</item>-->
-<!--                <item name="btnText">@color/btnText</item>-->
-
-<!--                <item name="backTabsColor">@color/backTabsColor</item>-->
-<!--                <item name="backgroundColor">@color/backgroundColor</item>-->
-<!--                <item name="btnCancelColor">@color/backgroundCancelColor</item>-->
+<!--        &lt;!&ndash; Default color attributes &ndash;&gt;-->
+<!--        <item name="violet">?attr/violet</item>-->
+<!--        <item name="violetDark">?attr/violetDark</item>-->
+<!--        <item name="secondary">?attr/secondary</item>-->
+<!--        <item name="tertiary">?attr/tertiary</item>-->
+<!--        <item name="tertiaryDark">?attr/tertiaryDark</item>-->
+<!--        &lt;!&ndash; Text color attributes &ndash;&gt;-->
+<!--        <item name="primaryText">?attr/primaryText</item>-->
+<!--        <item name="violetText">?attr/violetText</item>-->
+<!--        <item name="violetDarkText">?attr/violetDarkText</item>-->
+<!--        <item name="tertiaryText">?attr/tertiaryText</item>-->
+<!--        <item name="tertiaryDarkText">?attr/tertiaryDarkText</item>-->
+<!--        <item name="whiteText">?attr/whiteText</item>-->
+<!--        <item name="btnText">?attr/btnText</item>-->
+<!--        &lt;!&ndash; Background color attributes &ndash;&gt;-->
+<!--        <item name="backTabsColor">?attr/backTabsColor</item>-->
+<!--        <item name="backgroundColor">?attr/backgroundColor</item>-->
+<!--        <item name="btnCancelColor">?attr/btnCancelColor</item>-->
     </style>
 
-    <style name="Theme.FitTrack" parent="Base.Theme.FitTrack" />
+<!--    <style name="Theme.Orange" parent="Base.Theme.FitTrack">-->
+<!--        &lt;!&ndash; Default color attributes &ndash;&gt;-->
+<!--        <item name="violet">?attr/orange</item>-->
+<!--        <item name="violetDark">?attr/orangeDark</item>-->
+<!--        <item name="secondary">?attr/secondary</item>-->
+<!--        <item name="tertiary">?attr/tertiary</item>-->
+<!--        <item name="tertiaryDark">?attr/tertiaryDark</item>-->
+<!--        &lt;!&ndash; Text color attributes &ndash;&gt;-->
+<!--        <item name="primaryText">?attr/primaryText</item>-->
+<!--        <item name="violetText">?attr/orangeText</item>-->
+<!--        <item name="violetDarkText">?attr/orangeDarkText</item>-->
+<!--        <item name="tertiaryText">?attr/tertiaryText</item>-->
+<!--        <item name="tertiaryDarkText">?attr/tertiaryDarkText</item>-->
+<!--        <item name="whiteText">?attr/whiteText</item>-->
+<!--        <item name="btnText">?attr/btnText</item>-->
+<!--        &lt;!&ndash; Background color attributes &ndash;&gt;-->
+<!--        <item name="backTabsColor">?attr/backTabsColor</item>-->
+<!--        <item name="backgroundColor">?attr/backgroundColor</item>-->
+<!--        <item name="btnCancelColor">?attr/btnCancelColor</item>-->
+<!--    </style>-->
 </resources>

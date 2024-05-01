@@ -1,32 +1,44 @@
 package com.example.fittrack;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.common.subtyping.qual.Bottom;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class dashboardPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     ImageView imAddWalk, imAddWater, imAddFood, imAddSleep;
     TextView tvDayMonDate, tvMonYr, tvDayOne, tvDayTwo, tvDayThree, tvDayFour, tvDayFive, tvDaySix, tvDaySeven;
@@ -34,19 +46,47 @@ public class dashboardPage extends AppCompatActivity {
     private TextView[] dayTextViews = new TextView[7];
     private TextView[] dateTextViews = new TextView[7];
     private ImageView[] bgImageView = new ImageView[7];
+
+    TextView  tvStepPercent, tvCaloriePercent, tvSleepHours, tvWaterIntake, tvWeeklyPercent;
+    ProgressBar pbDashboardStep, pbDashboardFood, pbDashboardWkProgress, pbDashboardContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_page);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userId = currentUser.getUid();
+
+        DocumentReference docRef = db.collection("users").document(userId);
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavDashboard);
+        imAddWalk = findViewById(R.id.imAddWalk);
+        imAddWater = findViewById(R.id.imAddWater);
+        imAddFood = findViewById(R.id.imAddFood);
+        imAddSleep= findViewById(R.id.imAddSleep);
+
+        tvStepPercent = findViewById(R.id.tvDashboardStepPercent);
+        tvCaloriePercent = findViewById(R.id.tvDashboardCaloriePercent);
+        tvSleepHours = findViewById(R.id.tvDashboardSleep);
+        tvWaterIntake = findViewById(R.id.tvDashboardWater);
+        tvWeeklyPercent = findViewById(R.id.tvDashboardWkPercent);
+
+        pbDashboardFood = findViewById(R.id.pbDashboardFood);
+        pbDashboardStep = findViewById(R.id.pbDashboardStep);
+        pbDashboardWkProgress = findViewById(R.id.pbDashboardWkProgress);
+
+        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
+        Date date = new Date();
+        String currentDate = dayMonDate.format(date);
+
+        fetchStepData(docRef);
+        fetchWaterData(docRef);
+        fetchCalorieData(docRef);
+        fetchSleepData(docRef);
+        fetchWeeklyData(docRef);
 
         try{
-            mAuth = FirebaseAuth.getInstance();
-            BottomNavigationView bottomNav = findViewById(R.id.bottomNavDashboard);
-            imAddWalk = findViewById(R.id.imAddWalk);
-            imAddWater = findViewById(R.id.imAddWater);
-            imAddFood = findViewById(R.id.imAddFood);
-            imAddSleep= findViewById(R.id.imAddSleep);
-
             tvDayMonDate = findViewById(R.id.tvDayMonDate);
             tvMonYr = findViewById(R.id.tvMonYr);
             tvDayOne = findViewById(R.id.tvDayOne);
@@ -89,6 +129,7 @@ public class dashboardPage extends AppCompatActivity {
             bgImageView[5] = findViewById(R.id.imDaySixBg);
             bgImageView[6] = findViewById(R.id.imDaySevenBg);
 
+            tvDayMonDate.setText(currentDate);
             setWeeklyCalendar();
             bottomNav.setSelectedItemId(R.id.nav_dashboard);
 
@@ -128,7 +169,6 @@ public class dashboardPage extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
             startActivity(intent);
         });
-
     }
 
     private void setWeeklyCalendar(){
@@ -167,6 +207,215 @@ public class dashboardPage extends AppCompatActivity {
                 currentDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
                 currentDate.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH);
     }
+
+    private void fetchStepData(DocumentReference docRef){
+        hideContentView();
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int dailyStepTaken, stepDailyGoal, stepPercent;
+            dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+            stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+
+            if (stepDailyGoal != 0) {
+                stepPercent = Math.min((int) (((double) dailyStepTaken / stepDailyGoal) * 100), 100);
+            } else {
+                stepPercent = 0;
+            }
+            showContentView();
+
+            tvStepPercent.setText(String.valueOf(stepPercent) + "%");
+            pbDashboardStep.setMax(100);
+            pbDashboardStep.setProgress(stepPercent);
+
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch Step Data: " + e.getMessage());
+        });
+    }
+
+    private void fetchWaterData(DocumentReference docRef){
+        hideContentView();
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int dailyWaterTaken;
+            dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken").intValue();
+
+            showContentView();
+
+            String formattedDailyWater = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
+            tvWaterIntake.setText(formattedDailyWater);
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch Water Data: " + e.getMessage());
+        });
+    }
+
+    private void fetchCalorieData(DocumentReference docRef){
+        hideContentView();
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int dailyCalorieTaken, calorieDailyGoal, caloriePercent ;
+            dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
+            calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
+
+            if (calorieDailyGoal != 0) {
+                caloriePercent = Math.min((int) (((double) dailyCalorieTaken / calorieDailyGoal) * 100), 100);
+            } else {
+                caloriePercent = 0;
+            }
+            showContentView();
+
+            tvCaloriePercent.setText(String.valueOf(caloriePercent) + "%");
+            pbDashboardFood.setMax(100);
+            pbDashboardFood.setProgress(caloriePercent);
+
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch Calorie Data: " + e.getMessage());
+        });
+    }
+
+    private void fetchSleepData(DocumentReference docRef){
+        hideContentView();
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int dailySleepTaken;
+            dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
+            showContentView();
+
+            String formattedDailySleep = NumberFormat.getNumberInstance(Locale.US).format(dailySleepTaken);
+            tvSleepHours.setText(formattedDailySleep);
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch Sleep Data: " + e.getMessage());
+        });
+    }
+
+    private void fetchWeeklyData(DocumentReference docRef){
+        hideContentView();
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            Log.d(TAG, "Successfully fetched weekly data");
+
+            int weeklyStepTaken, weeklyWaterTaken, weeklyCalorieTaken, weeklySleepTaken;
+            int stepWeeklyGoal, waterWeeklyGoal, calorieWeeklyGoal, sleepWeeklyGoal;
+            int weeklyProgressPercent;
+            double stepProgress, waterProgress, sleepProgress, calorieProgress, averageProgress;
+
+            weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
+            weeklyWaterTaken = documentSnapshot.getLong("weeklyWaterTaken").intValue();
+            weeklyCalorieTaken = documentSnapshot.getLong("weeklyCalorieTaken").intValue();
+            weeklySleepTaken = documentSnapshot.getLong("weeklySleepTaken").intValue();
+
+            stepWeeklyGoal = documentSnapshot.getLong("stepWeeklyGoal").intValue();
+            waterWeeklyGoal = documentSnapshot.getLong("waterWeeklyGoal").intValue();
+            calorieWeeklyGoal = documentSnapshot.getLong("calorieWeeklyGoal").intValue();
+            sleepWeeklyGoal = documentSnapshot.getLong("sleepWeeklyGoal").intValue();
+
+            stepProgress = (double) weeklyStepTaken / stepWeeklyGoal;
+             waterProgress = (double) weeklyWaterTaken / waterWeeklyGoal;
+             calorieProgress = (double) weeklyCalorieTaken / calorieWeeklyGoal;
+             sleepProgress = (double) weeklySleepTaken / sleepWeeklyGoal;
+             averageProgress = (stepProgress + waterProgress + calorieProgress + sleepProgress) / 4;
+             weeklyProgressPercent = (int) (averageProgress * 100);
+             weeklyProgressPercent = Math.min(weeklyProgressPercent, 100);
+
+             Log.d(TAG, "Weekly Progress Percent" + String.valueOf(weeklyProgressPercent));
+
+            showContentView();
+
+            pbDashboardWkProgress.setMax(100);
+             pbDashboardWkProgress.setProgress(weeklyProgressPercent);
+             tvWeeklyPercent.setText(String.valueOf(weeklyProgressPercent) + "%");
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, e.getMessage());
+        });
+    }
+
+    private void hideContentView() {
+        try {
+            // Hide all ImageViews
+            int[] imageViewIds = {R.id.imageView98, R.id.imageView99, R.id.imageView100, R.id.imageView101,
+                    R.id.imageView102, R.id.imAddWalk, R.id.imageView104, R.id.imAddWater, R.id.imSleepIcon,
+                    R.id.imAddFood, R.id.imageView110, R.id.imageView107};
+
+            for (int id : imageViewIds) {
+                View view = findViewById(id);
+                if (view instanceof ImageView) {
+                    ImageView imageView = (ImageView) view;
+                    imageView.setVisibility(View.GONE);
+                }
+            }
+
+            // Hide all TextViews
+            int[] textViewIds = {R.id.textView178, R.id.textView181, R.id.textView184, R.id.textView153,
+                    R.id.tvDashboardStepPercent, R.id.textView180, R.id.tvDashboardWater, R.id.textView183,
+                    R.id.tvDashboardSleep, R.id.textView187, R.id.tvDashboardCaloriePercent, R.id.textView190,
+                    R.id.tvDashboardWkPercent, R.id.textView188};
+
+            for (int id : textViewIds) {
+                View view = findViewById(id);
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    textView.setVisibility(View.GONE);
+                }
+            }
+
+            int[] progressBarIds = {R.id.pbDashboardWkProgress, R.id.pbDashboardFood, R.id.pbDashboardStep};
+
+            for(int id : progressBarIds){
+                View view = findViewById(id);
+                if(view instanceof ProgressBar){
+                    ProgressBar progressBar = (ProgressBar) view;
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+
+            ProgressBar progressBar = findViewById(R.id.pbDashboardContent);
+            progressBar.setVisibility(View.VISIBLE);
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView() {
+        try {
+            int[] imageViewIds = {R.id.imageView98, R.id.imageView99, R.id.imageView100, R.id.imageView101,
+                    R.id.imageView102, R.id.imAddWalk, R.id.imageView104, R.id.imAddWater, R.id.imSleepIcon,
+                    R.id.imAddFood, R.id.imageView110, R.id.imageView107};
+
+            for (int id : imageViewIds) {
+                View view = findViewById(id);
+                if (view instanceof ImageView) {
+                    ImageView imageView = (ImageView) view;
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            int[] textViewIds = {R.id.textView178, R.id.textView181, R.id.textView184, R.id.textView153,
+                    R.id.tvDashboardStepPercent, R.id.textView180, R.id.tvDashboardWater, R.id.textView183,
+                    R.id.tvDashboardSleep, R.id.textView187, R.id.tvDashboardCaloriePercent, R.id.textView190,
+                    R.id.tvDashboardWkPercent, R.id.textView188};
+
+            for (int id : textViewIds) {
+                View view = findViewById(id);
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    textView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            int[] progressBarIds = {R.id.pbDashboardWkProgress, R.id.pbDashboardFood, R.id.pbDashboardStep};
+
+            for(int id : progressBarIds){
+                View view = findViewById(id);
+                if(view instanceof ProgressBar){
+                    ProgressBar progressBar = (ProgressBar) view;
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }
+
+            ProgressBar progressBar = findViewById(R.id.pbDashboardContent);
+            progressBar.setVisibility(View.GONE);
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();

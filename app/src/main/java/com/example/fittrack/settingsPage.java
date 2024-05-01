@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,11 +22,13 @@ public class settingsPage extends AppCompatActivity {
     Button btnSignOut;
     Dialog dialog;
     Button btnSignOutCancel, btnSignOutConfirm;
+    ImageView imSettingsBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_page);
         btnSignOut = findViewById(R.id.btnSignOut);
+        imSettingsBack = findViewById(R.id.imSettingsBack);
 
         dialog = new Dialog(settingsPage.this);
         dialog.setContentView(R.layout.sign_out_confirmation);
@@ -52,5 +55,11 @@ public class settingsPage extends AppCompatActivity {
             finish();
         });
 
+        imSettingsBack.setOnClickListener(view -> onBackPressed());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

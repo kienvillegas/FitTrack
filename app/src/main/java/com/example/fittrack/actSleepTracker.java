@@ -65,7 +65,7 @@ public class actSleepTracker extends AppCompatActivity {
             storedDate[0] = dataManager.getStoredDate();
         }
 
-        imBackBtn = findViewById(R.id.imCalorieTrackerBack);
+        imBackBtn = findViewById(R.id.imSleepTrackerBack);
         tvSleepTrackerTaken = findViewById(R.id.tvSleepTrackerTaken);
         tvSleepTrackerPercent = findViewById(R.id.tvSleepTrackerPercent);
         tvSleepTrackerGoal = findViewById(R.id.tvSleepTrackerGoal);
@@ -91,79 +91,99 @@ public class actSleepTracker extends AppCompatActivity {
 
                     etSleepTrackerInput.setBackgroundResource(R.drawable.text_field_red);
                     etSleepTrackerInput.setError("Please enter hours of sleep");
-                } else {
-                    DocumentReference docRef = db.collection("users").document(userId);
-                    docRef.get().addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            int sleepPercent, dailySleepTaken, weeklySleepTaken, sleepDailyGoal;
-                            dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
-                            weeklySleepTaken = documentSnapshot.getLong("weeklySleepTaken").intValue();
-                            sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal").intValue();
+                    return;
+                }
 
-                                dailySleepTaken += Integer.parseInt(inputSleep);
-                                weeklySleepTaken += Integer.parseInt(inputSleep);
+                if(Integer.parseInt(inputSleep) > 8){
+                    pbAddHours.setVisibility(View.GONE);
+                    btnAddHours.setVisibility(View.VISIBLE);
 
-                                saveWeeklySleep(userId, day, dailySleepTaken);
-                                checkGoalAchievement(dailySleepTaken, sleepDailyGoal, userId, storedDate[0]);
-                                if (sleepDailyGoal != 0) {
-                                    sleepPercent = Math.min((int) (((double) dailySleepTaken / sleepDailyGoal) * 100), 100);
-                                } else {
-                                    sleepPercent = 0;
-                                }
+                    etSleepTrackerInput.setBackgroundResource(R.drawable.text_field_red);
+                    etSleepTrackerInput.setError("Maximum of 8 Hours sleep");
+                    return;
+                }
 
-                                Map<String, Object> sleep = new HashMap<>();
-                                sleep.put("dailySleepTaken", dailySleepTaken);
-                                sleep.put("weeklySleepTaken", weeklySleepTaken);
+                DocumentReference docRef = db.collection("users").document(userId);
+                docRef.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        int sleepPercent, dailySleepTaken, weeklySleepTaken, sleepDailyGoal;
+                        dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
+                        weeklySleepTaken = documentSnapshot.getLong("weeklySleepTaken").intValue();
+                        sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal").intValue();
 
-                                tvSleepTrackerTaken.setText(Integer.toString(dailySleepTaken) + " Hours");
-                                tvSleepTrackerPercent.setText(Integer.toString(sleepPercent) + "%");
-                                pbSleepTracker.setMax(100);
-                                pbSleepTracker.setProgress(sleepPercent);
-
-                                if(storedDate[0].equals(currentDate) || storedDate[0] == null || storedDate[0].isEmpty()) {
-                                    docRef.update(sleep)
-                                            .addOnSuccessListener(unused -> {
-                                                Toast.makeText(actSleepTracker.this, "Successfully entered hours of sleep taken", Toast.LENGTH_SHORT).show();
-                                                dataManager.saveCurrentDateTime();
-                                                pbAddHours.setVisibility(View.GONE);
-                                                btnAddHours.setVisibility(View.VISIBLE);
-                                                etSleepTrackerInput.setText("");
-                                                Log.d(TAG, "Successfully added " + inputSleep);
-                                            }).addOnFailureListener(e -> {
-                                                pbAddHours.setVisibility(View.GONE);
-                                                btnAddHours.setVisibility(View.VISIBLE);
-
-                                                Log.e(TAG, "Failed to add " + inputSleep);
-                                                Toast.makeText(actSleepTracker.this, "Failed to enter hours of sleep taken", Toast.LENGTH_SHORT).show();
-                                    });
-                                }else{
-                                    Log.d(TAG, storedDate[0] + " is not equal to " + currentDate);
-
-                                    dailySleepTaken = Integer.parseInt(inputSleep);
-                                    Map<String, Object> calorieTaken = new HashMap<>();
-                                    calorieTaken.put("dailySleepTaken", dailySleepTaken);
-
-                                    docRef.update(calorieTaken)
-                                            .addOnSuccessListener(unused -> {
-                                                pbAddHours.setVisibility(View.GONE);
-                                                btnAddHours.setVisibility(View.VISIBLE);
-
-                                                Log.d(TAG, "Successfully updated daily sleep taken");
-                                            }).addOnFailureListener(e -> {
-                                                pbAddHours.setVisibility(View.GONE);
-                                                btnAddHours.setVisibility(View.VISIBLE);
-
-                                                Log.e(TAG, "Failed to update daily sleep taken");
-                                            });
-                                }
-                        } else {
+                        if(dailySleepTaken >= sleepDailyGoal){
                             pbAddHours.setVisibility(View.GONE);
                             btnAddHours.setVisibility(View.VISIBLE);
-
-                            Log.e(TAG, "Document does not exist");
+                            etSleepTrackerInput.setError("Maximum limit reached");
+                            return;
                         }
-                    }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
-                }
+
+                        dailySleepTaken += Integer.parseInt(inputSleep);
+                        weeklySleepTaken += Integer.parseInt(inputSleep);
+
+                        saveWeeklySleep(userId, day, dailySleepTaken);
+                        checkGoalAchievement(dailySleepTaken, sleepDailyGoal, userId, storedDate[0]);
+                        if (sleepDailyGoal != 0) {
+                            sleepPercent = Math.min((int) (((double) dailySleepTaken / sleepDailyGoal) * 100), 100);
+                        } else {
+                            sleepPercent = 0;
+                        }
+
+                        Map<String, Object> sleep = new HashMap<>();
+                        sleep.put("dailySleepTaken", dailySleepTaken);
+                        sleep.put("weeklySleepTaken", weeklySleepTaken);
+
+                        tvSleepTrackerTaken.setText(Integer.toString(dailySleepTaken) + " Hours");
+                        tvSleepTrackerPercent.setText(Integer.toString(sleepPercent) + "%");
+                        pbSleepTracker.setMax(100);
+                        pbSleepTracker.setProgress(sleepPercent);
+
+                        if(storedDate[0].equals(currentDate) || storedDate[0] == null || storedDate[0].isEmpty()) {
+                            docRef.update(sleep)
+                                    .addOnSuccessListener(unused -> {
+                                        Toast.makeText(actSleepTracker.this, "Successfully entered hours of sleep taken", Toast.LENGTH_SHORT).show();
+                                        dataManager.saveCurrentDateTime();
+                                        pbAddHours.setVisibility(View.GONE);
+                                        btnAddHours.setVisibility(View.VISIBLE);
+                                        etSleepTrackerInput.setText("");
+                                        Log.d(TAG, "Successfully added " + inputSleep);
+                                    }).addOnFailureListener(e -> {
+                                        pbAddHours.setVisibility(View.GONE);
+                                        btnAddHours.setVisibility(View.VISIBLE);
+
+                                        Log.e(TAG, "Failed to add " + inputSleep);
+                                        Toast.makeText(actSleepTracker.this, "Failed to enter hours of sleep taken", Toast.LENGTH_SHORT).show();
+                                    });
+                        }else{
+                            Log.d(TAG, storedDate[0] + " is not equal to " + currentDate);
+                            dataManager.saveCurrentDateTime();
+
+                            dailySleepTaken = Integer.parseInt(inputSleep);
+                            Map<String, Object> sleepTaken = new HashMap<>();
+
+                            sleepTaken.put("dailySleepTaken", dailySleepTaken);
+
+                            docRef.update(sleepTaken)
+                                    .addOnSuccessListener(unused -> {
+                                        pbAddHours.setVisibility(View.GONE);
+                                        btnAddHours.setVisibility(View.VISIBLE);
+
+                                        Log.d(TAG, "Successfully updated daily sleep taken");
+                                    }).addOnFailureListener(e -> {
+                                        pbAddHours.setVisibility(View.GONE);
+                                        btnAddHours.setVisibility(View.VISIBLE);
+
+                                        Log.e(TAG, "Failed to update daily sleep taken");
+                                    });
+                        }
+                    } else {
+                        pbAddHours.setVisibility(View.GONE);
+                        btnAddHours.setVisibility(View.VISIBLE);
+
+                        Log.e(TAG, "Document does not exist");
+                    }
+                }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
+
             } catch (Exception e) {
                 pbAddHours.setVisibility(View.GONE);
                 btnAddHours.setVisibility(View.VISIBLE);
@@ -253,11 +273,11 @@ public class actSleepTracker extends AppCompatActivity {
                     boolean isSleepDailyGoal = documentSnapshot.getBoolean("isSleepDailyGoal");
 
                     if (!storedDateTime.equals(currentDateTime)) {
-                        updateCalorieGoalStatus(docRef, false);
+                        updateSleepGoalStatus(docRef, false);
                     }
 
                     if (!isSleepDailyGoal && dailySleepTaken >= sleepDailyGoal) {
-                        updateCalorieGoalStatus(docRef, true);
+                        updateSleepGoalStatus(docRef, true);
 
                         Intent intent = new Intent(getApplicationContext(), bannerSleepGoalAchieved.class);
                         startActivity(intent);
@@ -268,7 +288,7 @@ public class actSleepTracker extends AppCompatActivity {
                 });
     }
 
-    private void updateCalorieGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
+    private void updateSleepGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
         Map<String, Object> goalData = new HashMap<>();
         goalData.put("isSleepDailyGoal", isGoalAchieved);
 

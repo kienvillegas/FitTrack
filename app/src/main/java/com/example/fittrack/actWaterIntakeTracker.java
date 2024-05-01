@@ -137,9 +137,9 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                             water.put("weeklyWaterTaken", weeklyWaterTaken);
 
                             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(waterDailyGoal);
-                            String formattedSleepTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
+                            String formattedWaterTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
 
-                            tvWaterTrackerTaken.setText(formattedSleepTaken + " ml");
+                            tvWaterTrackerTaken.setText(formattedWaterTaken + " ml");
                             tvWaterTrackerGoal.setText(formattedDailyGoal);
                             tvWaterTrackerPercent.setText(String.valueOf(waterPercent) + "%");
                             pbWaterTracker.setMax(100);
@@ -165,6 +165,7 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                                         });
                             }else {
                                 Log.d(TAG, storedDate[0] + " is not equal to " + currentDate);
+                                dataManager.saveCurrentDateTime();
 
                                 dailyWaterTaken = glassWaterML * inputCounter[0];;
                                 Map<String, Object> watertaken = new HashMap<>();
@@ -298,11 +299,11 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                     boolean isWaterDailyGoal = documentSnapshot.getBoolean("isWaterDailyGoal");
 
                     if (!storedDateTime.equals(currentDateTime)) {
-                        updateCalorieGoalStatus(docRef, false);
+                        updateWaterGoalStatus(docRef, false);
                     }
 
                     if (!isWaterDailyGoal && dailyWaterTaken >= waterDailyGoal) {
-                        updateCalorieGoalStatus(docRef, true);
+                        updateWaterGoalStatus(docRef, true);
 
                         Intent intent = new Intent(getApplicationContext(), bannerWaterGoalAchieved.class);
                         startActivity(intent);
@@ -313,7 +314,7 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                 });
     }
 
-    private void updateCalorieGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
+    private void updateWaterGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
         Map<String, Object> goalData = new HashMap<>();
         goalData.put("isWaterDailyGoal", isGoalAchieved);
 

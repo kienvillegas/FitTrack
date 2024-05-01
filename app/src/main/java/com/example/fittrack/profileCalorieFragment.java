@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -63,6 +65,8 @@ public class profileCalorieFragment extends Fragment {
             btnProfileCalorieSetGoal = view.findViewById(R.id.btnProfileCalorieSetGoal);
             barChart = view.findViewById(R.id.calorieBarChart);
             if(userId != null){
+                hideContentView();
+
                 Log.d(TAG, "Fragment is attached");
                 fetchWaterData(userId);
                 DocumentReference weeklyCalorieRef = db.collection("weekly_calorie").document(userId);
@@ -70,6 +74,8 @@ public class profileCalorieFragment extends Fragment {
                         .addOnSuccessListener(documentSnapshot -> {
                             if(isAdded()){
                                 if(documentSnapshot.exists()){
+                                    showContentView();
+
                                     int monCalorie, tueCalorie, wedCalorie, thuCalorie, friCalorie, satCalorie, sunCalorie;
                                     monCalorie = documentSnapshot.getLong("mon").intValue();
                                     tueCalorie = documentSnapshot.getLong("tue").intValue();
@@ -192,5 +198,75 @@ public class profileCalorieFragment extends Fragment {
                 }).addOnFailureListener(e -> {
                     Log.e(TAG, "An error occurred: " + e.getMessage());
                 });
+    }
+
+    private void hideContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView48, R.id.tvProfileCalorieTaken, R.id.textView50, R.id.textView51, R.id.textView52, R.id.tvProfileCaloreiDailyGoal, R.id.textView54, R.id.tvProfileCalorieWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView30, R.id.imageView31, R.id.imageView32};
+            int[] chartIds = {R.id.calorieBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.GONE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileCalorieSetGoal);
+            button.setVisibility(View.GONE);
+
+            ProgressBar pbProfileCalorie = fragmentView.findViewById(R.id.pbProfileCalorie);
+            pbProfileCalorie.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView() {
+        try {
+            if (getView() == null) return; // Ensure fragment is attached
+
+            int[] textViewIds = {R.id.textView48, R.id.tvProfileCalorieTaken, R.id.textView50, R.id.textView51, R.id.textView52, R.id.tvProfileCaloreiDailyGoal, R.id.textView54, R.id.tvProfileCalorieWeeklyGoal};
+            int[] imageViewIds = {R.id.imageView30, R.id.imageView31, R.id.imageView32};
+            int[] chartIds = {R.id.calorieBarChart};
+
+            View fragmentView = getView();
+
+            for (int id : textViewIds) {
+                TextView textView = fragmentView.findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : imageViewIds) {
+                ImageView imageView = fragmentView.findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : chartIds) {
+                BarChart barChart = fragmentView.findViewById(id);
+                barChart.setVisibility(View.VISIBLE);
+            }
+
+            Button button = fragmentView.findViewById(R.id.btnProfileCalorieSetGoal);
+            button.setVisibility(View.VISIBLE);
+
+            ProgressBar pbProfileCalorie = fragmentView.findViewById(R.id.pbProfileCalorie);
+            pbProfileCalorie.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

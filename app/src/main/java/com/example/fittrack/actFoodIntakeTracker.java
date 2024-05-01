@@ -139,6 +139,7 @@ public class actFoodIntakeTracker extends AppCompatActivity {
                                             });
                                 }else{
                                     Log.d(TAG, storedDate[0] + " is not equal to " + currentDate);
+                                    dataManager.saveCurrentDateTime();
 
                                     dailyCalorieTaken = Integer.parseInt(inputCalorie);
                                     Map<String, Object> calorieTaken = new HashMap<>();

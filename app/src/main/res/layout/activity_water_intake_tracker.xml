@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text=" ml"
+        android:text="0 mL"
         android:textColor="@color/primary"
         android:textColorLink="@color/primary"
         android:textSize="21sp"

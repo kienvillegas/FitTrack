@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--&lt;!&ndash;     Violet Theme&ndash;&gt;-->
+<!--    <attr format="color" name="violet" />-->
+<!--    <attr format="color" name="violetDark" />-->
+<!--    <attr format="color" name="secondary" />-->
+<!--    <attr format="color" name="tertiary" />-->
+<!--    <attr format="color" name="tertiaryDark" />-->
+
+<!--    <attr format="color" name="primaryText" />-->
+<!--    <attr format="color|reference" name="violetText" />-->
+<!--    <attr format="color" name="violetDarkText" />-->
+<!--    <attr format="color" name="tertiaryText" />-->
+<!--    <attr format="color" name="tertiaryDarkText" />-->
+<!--    <attr format="color" name="whiteText" />-->
+<!--    <attr format="color" name="btnText" />-->
+
+<!--    <attr format="color" name="backTabsColor" />-->
+<!--    <attr format="color" name="backgroundColor" />-->
+<!--    <attr format="color" name="btnCancelColor" />-->
+
+<!--    &lt;!&ndash; Orange Theme &ndash;&gt;-->
+<!--    <attr format="color" name="orange" />-->
+<!--    <attr format="color" name="orangeDark" />-->
+<!--    <attr format="color" name="orangeText" />-->
+<!--    <attr format="color" name="orangeDarkText" />-->
+
+<!--    &lt;!&ndash; Green Theme &ndash;&gt;-->
+<!--    <attr format="color" name="green" />-->
+<!--    <attr format="color" name="greenDark" />-->
+<!--    <attr format="color" name="greenText" />-->
+<!--    <attr format="color" name="greenDarkText" />-->
+</resources>

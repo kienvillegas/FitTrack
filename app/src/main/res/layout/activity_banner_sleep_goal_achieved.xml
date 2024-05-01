@@ -27,192 +27,192 @@
         app:layout_constraintTop_toTopOf="@+id/imageView5"
         app:srcCompat="@drawable/arrow_left_white" />
 
-    <TextView
-        android:id="@+id/textView130"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Goal Achieved! Congratulations"
-        android:textAlignment="center"
-        android:textColor="@color/whiteText"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imCalorieBannerBack" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView130"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Goal Achieved! Congratulations"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/whiteText"-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imCalorieBannerBack" />-->
 
-    <ImageView
-        android:id="@+id/imageView75"
-        android:layout_width="372dp"
-        android:layout_height="440dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView130"
-        app:srcCompat="@drawable/rectangle_shape" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView75"-->
+<!--        android:layout_width="372dp"-->
+<!--        android:layout_height="440dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView130"-->
+<!--        app:srcCompat="@drawable/rectangle_shape" />-->
 
-    <ImageView
-        android:id="@+id/imageView76"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toTopOf="@+id/imageView75"
-        app:srcCompat="@drawable/user_icon" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView76"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView75"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/imageView75"-->
+<!--        app:srcCompat="@drawable/user_icon" />-->
 
-    <TextView
-        android:id="@+id/tvSleepBannerUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Username"
-        android:textColor="@color/primaryText"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView75"
-        app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toTopOf="@+id/imageView75" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvSleepBannerUsername"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Username"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView75"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView75"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/imageView75" />-->
 
-    <ImageView
-        android:id="@+id/imageView77"
-        android:layout_width="373dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView75"
-        app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toBottomOf="@+id/tvSleepBannerUsername"
-        app:srcCompat="@drawable/line_divider" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView77"-->
+<!--        android:layout_width="373dp"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView75"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView75"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvSleepBannerUsername"-->
+<!--        app:srcCompat="@drawable/line_divider" />-->
 
-    <TextView
-        android:id="@+id/textView135"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Sleep Tracker"
-        android:textColor="@color/primaryText"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView75"
-        app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toBottomOf="@+id/imageView77" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView135"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Sleep Tracker"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView75"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView75"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageView77" />-->
 
-    <TextView
-        android:id="@+id/textView136"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="You have slept"
-        android:textColor="@color/primaryText"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView75"
-        app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toBottomOf="@+id/textView135" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView136"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:text="You have slept"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="21sp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView75"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView75"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView135" />-->
 
-    <TextView
-        android:id="@+id/tvSleepBannerTaken"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="0 Hours "
-        android:textColor="@color/secondaryText"
-        android:textSize="21sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toBottomOf="@+id/textView136" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvSleepBannerTaken"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="120dp"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:text="0 Hours "-->
+<!--        android:textColor="@color/secondaryText"-->
+<!--        android:textSize="21sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView75"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView136" />-->
 
-    <TextView
-        android:id="@+id/textView138"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="today"
-        android:textColor="@color/primaryText"
-        android:textSize="21sp"
-        app:layout_constraintStart_toEndOf="@+id/tvSleepBannerTaken"
-        app:layout_constraintTop_toBottomOf="@+id/textView136" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView138"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:text="today"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="21sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/tvSleepBannerTaken"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView136" />-->
 
-    <ProgressBar
-        android:id="@+id/pbCalorieBanner"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/circle_shape"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/circle_progress_bar_primary"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSleepBannerTaken" />
+<!--    <ProgressBar-->
+<!--        android:id="@+id/pbCalorieBanner"-->
+<!--        style="?android:attr/progressBarStyleHorizontal"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@drawable/circle_shape"-->
+<!--        android:max="100"-->
+<!--        android:progress="0"-->
+<!--        android:progressDrawable="@drawable/circle_progress_bar_primary"-->
+<!--        android:textAlignment="center"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvSleepBannerTaken" />-->
 
-    <ImageView
-        android:id="@+id/imageView78"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/pbCalorieBanner"
-        app:layout_constraintStart_toStartOf="@+id/pbCalorieBanner"
-        app:layout_constraintTop_toTopOf="@+id/pbCalorieBanner"
-        app:srcCompat="@drawable/moon_icon" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView78"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/pbCalorieBanner"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/pbCalorieBanner"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/pbCalorieBanner"-->
+<!--        app:srcCompat="@drawable/moon_icon" />-->
 
-    <TextView
-        android:id="@+id/tvSleepBannerPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/outfit_bold"
-        android:text="0%"
-        android:textColor="@color/secondaryText"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/pbCalorieBanner"
-        app:layout_constraintStart_toStartOf="@+id/pbCalorieBanner"
-        app:layout_constraintTop_toBottomOf="@+id/imageView78" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvSleepBannerPercent"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:fontFamily="@font/outfit_bold"-->
+<!--        android:text="0%"-->
+<!--        android:textColor="@color/secondaryText"-->
+<!--        android:textSize="21sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/pbCalorieBanner"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/pbCalorieBanner"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageView78" />-->
 
-    <TextView
-        android:id="@+id/textView140"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Daily Goal"
-        android:textColor="@color/tertiaryDarkText"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView75"
-        app:layout_constraintTop_toBottomOf="@+id/pbCalorieBanner" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView140"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="124dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Daily Goal"-->
+<!--        android:textColor="@color/tertiaryDarkText"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView75"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pbCalorieBanner" />-->
 
-    <TextView
-        android:id="@+id/tvSleepBannerGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="2,000"
-        android:textColor="@color/primaryText"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView140"
-        app:layout_constraintTop_toBottomOf="@+id/pbCalorieBanner" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvSleepBannerGoal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="2,000"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView140"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pbCalorieBanner" />-->
 
-    <TextView
-        android:id="@+id/textView142"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Hours"
-        android:textColor="@color/tertiaryDarkText"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/tvSleepBannerGoal"
-        app:layout_constraintTop_toBottomOf="@+id/pbCalorieBanner" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView142"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Hours"-->
+<!--        android:textColor="@color/tertiaryDarkText"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/tvSleepBannerGoal"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pbCalorieBanner" />-->
 
     <Button
         android:id="@+id/btnSleepBannerShare"
@@ -225,7 +225,7 @@
         android:textColor="@color/btnText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView75" />
+        app:layout_constraintTop_toBottomOf="@+id/imBannerSleepAchievement" />
 
     <Button
         android:id="@+id/btnSleepBannerCancel"
@@ -239,5 +239,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSleepBannerShare" />
+
+    <ImageView
+        android:id="@+id/imBannerSleepAchievement"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sleepachievement"
+        tools:layout_editor_absoluteX="-16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/outfit_semi_bold"
-                android:text="Wednesday, March 20"
                 android:textColor="@color/tertiaryDarkText"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView79"
@@ -345,6 +344,8 @@
                 android:layout_height="200dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView99"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView90"
                 app:srcCompat="@drawable/rectangle_filled_shape" />
@@ -355,6 +356,8 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="41dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView98"
                 app:layout_constraintTop_toBottomOf="@+id/imageView90"
                 app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
@@ -365,6 +368,8 @@
                 android:layout_height="200dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="43dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView101"
                 app:layout_constraintTop_toBottomOf="@+id/imageView99"
                 app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
@@ -375,6 +380,8 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView100"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView98"
                 app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
@@ -413,14 +420,15 @@
                 app:srcCompat="@drawable/plus_white_icon" />
 
             <ProgressBar
-                android:id="@+id/pbDashboardWalk"
+                android:id="@+id/pbDashboardStep"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="@drawable/circle_white"
+                android:background="@drawable/circle_small_shape_dark_primary"
+                android:backgroundTint="@color/primaryDark"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/circle_progress_bar"
+                android:progressDrawable="@drawable/circle_small_progress_bar_white"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView98"
                 app:layout_constraintEnd_toEndOf="@+id/imageView98"
@@ -428,17 +436,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView178" />
 
             <TextView
-                android:id="@+id/tvDashboardWalk"
+                android:id="@+id/tvDashboardStepPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="0"
                 android:textColor="@color/whiteText"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/pbDashboardWalk"
-                app:layout_constraintEnd_toEndOf="@+id/pbDashboardWalk"
-                app:layout_constraintStart_toStartOf="@+id/pbDashboardWalk"
-                app:layout_constraintTop_toTopOf="@+id/pbDashboardWalk"
+                app:layout_constraintBottom_toBottomOf="@+id/pbDashboardStep"
+                app:layout_constraintEnd_toEndOf="@+id/pbDashboardStep"
+                app:layout_constraintStart_toStartOf="@+id/pbDashboardStep"
+                app:layout_constraintTop_toTopOf="@+id/pbDashboardStep"
                 app:layout_constraintVertical_bias="0.4" />
 
             <TextView
@@ -449,9 +457,9 @@
                 android:text="steps"
                 android:textColor="@color/secondaryDarkText"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/pbDashboardWalk"
-                app:layout_constraintStart_toStartOf="@+id/pbDashboardWalk"
-                app:layout_constraintTop_toBottomOf="@+id/tvDashboardWalk" />
+                app:layout_constraintEnd_toEndOf="@+id/pbDashboardStep"
+                app:layout_constraintStart_toStartOf="@+id/pbDashboardStep"
+                app:layout_constraintTop_toBottomOf="@+id/tvDashboardStepPercent" />
 
             <ImageView
                 android:id="@+id/imageView104"
@@ -493,7 +501,7 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="0"
                 android:textColor="@color/secondaryText"
-                android:textSize="36sp"
+                android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView99"
                 app:layout_constraintEnd_toEndOf="@+id/imageView99"
                 app:layout_constraintHorizontal_bias="0.29"
@@ -507,13 +515,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/outfit_semi_bold"
-                android:text="ml"
+                android:text="mL"
                 android:textColor="@color/primaryText"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView99"
                 app:layout_constraintStart_toEndOf="@+id/tvDashboardWater"
                 app:layout_constraintTop_toBottomOf="@+id/textView181"
-                app:layout_constraintVertical_bias="0.6" />
+                app:layout_constraintVertical_bias="0.5" />
 
             <TextView
                 android:id="@+id/textView184"
@@ -545,7 +553,7 @@
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="0"
                 android:textColor="@color/secondaryText"
-                android:textSize="36sp"
+                android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView101"
                 app:layout_constraintEnd_toEndOf="@+id/imageView101"
                 app:layout_constraintHorizontal_bias="0.3"
@@ -564,7 +572,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageView101"
                 app:layout_constraintStart_toEndOf="@+id/tvDashboardSleep"
                 app:layout_constraintTop_toBottomOf="@+id/textView184"
-                app:layout_constraintVertical_bias="0.6" />
+                app:layout_constraintVertical_bias="0.5" />
 
             <ImageView
                 android:id="@+id/imageView107"
@@ -604,10 +612,11 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="@drawable/circle_small_shape"
+                android:background="@drawable/circle_small_shape_grey"
+                android:backgroundTint="@color/tertiaryDark"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/circle_progress_bar"
+                android:progressDrawable="@drawable/circle_small_progress_bar_primary"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView100"
                 app:layout_constraintEnd_toEndOf="@+id/imageView100"
@@ -615,7 +624,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView188" />
 
             <TextView
-                android:id="@+id/tvDashboardFood"
+                android:id="@+id/tvDashboardCaloriePercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
@@ -634,25 +643,25 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="Kcal"
-                android:textColor="@color/tertiaryText"
+                android:textColor="@color/tertiaryDarkText"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/pbDashboardFood"
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="@+id/pbDashboardFood"
-                app:layout_constraintTop_toBottomOf="@+id/tvDashboardFood" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDashboardCaloriePercent" />
 
             <ImageView
                 android:id="@+id/imageView110"
                 android:layout_width="372dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="28dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/rectangle_shape"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView101"
-                app:srcCompat="@drawable/dashboard_img" />
+                app:srcCompat="@drawable/weeklyprogressbg" />
 
 
             <TextView
@@ -660,27 +669,32 @@
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="Your Weekly Progress"
                 android:textColor="@color/whiteText"
                 android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/imageView110"
                 app:layout_constraintTop_toTopOf="@+id/imageView110" />
 
             <ProgressBar
                 android:id="@+id/pbDashboardWkProgress"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:indeterminateDrawable="@drawable/circle_white"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/circle_small_shape_white"
+                android:backgroundTint="@color/secondary"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/circle_small_progress_bar_primary"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/imageView110"
                 app:layout_constraintTop_toTopOf="@+id/imageView110" />
 
             <TextView
-                android:id="@+id/textView154"
+                android:id="@+id/tvDashboardWkPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily=" "
@@ -701,6 +715,17 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView101"
                 app:layout_constraintTop_toTopOf="@+id/imageView101"
                 app:srcCompat="@drawable/plus_icon" />
+
+            <ProgressBar
+                android:id="@+id/pbDashboardContent"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressDrawable="@drawable/circle_small_progress_bar_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView90" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView

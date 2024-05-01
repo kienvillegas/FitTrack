@@ -26,209 +26,209 @@
         app:layout_constraintTop_toTopOf="@+id/imageView62"
         app:srcCompat="@drawable/arrow_left_white" />
 
-    <TextView
-        android:id="@+id/textView113"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Goal Achieved! Congratulations"
-        android:textAlignment="center"
-        android:textColor="@color/whiteText"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView62"
-        app:layout_constraintTop_toBottomOf="@+id/imStepBannerBack" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView113"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Goal Achieved! Congratulations"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/whiteText"-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView62"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imStepBannerBack" />-->
 
-    <ImageView
-        android:id="@+id/imageView65"
-        android:layout_width="372dp"
-        android:layout_height="440dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView113"
-        app:srcCompat="@drawable/rectangle_shape" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView65"-->
+<!--        android:layout_width="372dp"-->
+<!--        android:layout_height="440dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView113"-->
+<!--        app:srcCompat="@drawable/rectangle_shape" />-->
 
-    <ImageView
-        android:id="@+id/imageView66"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toTopOf="@+id/imageView65"
-        app:srcCompat="@drawable/user_icon" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView66"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/imageView65"-->
+<!--        app:srcCompat="@drawable/user_icon" />-->
 
-    <TextView
-        android:id="@+id/tvStepBannerUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Username"
-        android:textColor="@color/primaryText"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView65"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toTopOf="@+id/imageView65" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvStepBannerUsername"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Username"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView65"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/imageView65" />-->
 
-    <ImageView
-        android:id="@+id/imageView67"
-        android:layout_width="372dp"
-        android:layout_height="2sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="28dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView62"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/tvStepBannerUsername"
-        app:srcCompat="@drawable/line_divider_pink" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView67"-->
+<!--        android:layout_width="372dp"-->
+<!--        android:layout_height="2sp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="28dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView62"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvStepBannerUsername"-->
+<!--        app:srcCompat="@drawable/line_divider_pink" />-->
 
-    <TextView
-        android:id="@+id/textView115"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Step Tracker"
-        android:textColor="@color/primaryText"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView65"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/imageView67" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView115"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Step Tracker"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView65"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageView67" />-->
 
-    <TextView
-        android:id="@+id/textView116"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="You have walked"
-        android:textColor="@color/primaryText"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/textView115" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView116"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="88dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:text="You have walked"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView115" />-->
 
-    <TextView
-        android:id="@+id/tvStepBannerTaken"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="0"
-        android:textColor="@color/secondaryText"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView65"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView116"
-        app:layout_constraintTop_toBottomOf="@+id/textView115" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvStepBannerTaken"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:text="0"-->
+<!--        android:textColor="@color/secondaryText"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView65"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView116"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView115" />-->
 
-    <TextView
-        android:id="@+id/textView118"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="steps"
-        android:textColor="@color/secondaryText"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/textView116" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView118"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="140dp"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:text="steps"-->
+<!--        android:textColor="@color/secondaryText"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView116" />-->
 
-    <TextView
-        android:id="@+id/textView119"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="today"
-        android:textColor="@color/primaryText"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView118"
-        app:layout_constraintTop_toBottomOf="@+id/textView116" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView119"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:text="today"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView118"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView116" />-->
 
-    <ProgressBar
-        android:id="@+id/pbStepBanner"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/circle_shape"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/circle_progress_bar_primary"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/imageView65"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/textView119" />
+<!--    <ProgressBar-->
+<!--        android:id="@+id/pbStepBanner"-->
+<!--        style="?android:attr/progressBarStyleHorizontal"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@drawable/circle_shape"-->
+<!--        android:max="100"-->
+<!--        android:progress="0"-->
+<!--        android:progressDrawable="@drawable/circle_progress_bar_primary"-->
+<!--        android:textAlignment="center"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView65"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView119" />-->
 
-    <ImageView
-        android:id="@+id/imageView68"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/pbStepBanner"
-        app:layout_constraintStart_toStartOf="@+id/pbStepBanner"
-        app:layout_constraintTop_toTopOf="@+id/pbStepBanner"
-        app:srcCompat="@drawable/steps_icon" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView68"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/pbStepBanner"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/pbStepBanner"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/pbStepBanner"-->
+<!--        app:srcCompat="@drawable/steps_icon" />-->
 
-    <TextView
-        android:id="@+id/tvStepBannerPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/outfit_bold"
-        android:text="0%"
-        android:textColor="@color/secondaryText"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/pbStepBanner"
-        app:layout_constraintStart_toStartOf="@+id/pbStepBanner"
-        app:layout_constraintTop_toBottomOf="@+id/imageView68" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvStepBannerPercent"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:fontFamily="@font/outfit_bold"-->
+<!--        android:text="0%"-->
+<!--        android:textColor="@color/secondaryText"-->
+<!--        android:textSize="21sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/pbStepBanner"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/pbStepBanner"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageView68" />-->
 
-    <TextView
-        android:id="@+id/textView121"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="Daily Goal"
-        android:textColor="@color/tertiaryDarkText"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView65"
-        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView121"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="124dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="Daily Goal"-->
+<!--        android:textColor="@color/tertiaryDarkText"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView65"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />-->
 
-    <TextView
-        android:id="@+id/tvStepBannerGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="4,000"
-        android:textColor="@color/primaryText"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView121"
-        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvStepBannerGoal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="4,000"-->
+<!--        android:textColor="@color/primaryText"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView121"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />-->
 
-    <TextView
-        android:id="@+id/textView123"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="steps"
-        android:textColor="@color/tertiaryDarkText"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/tvStepBannerGoal"
-        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView123"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/outfit_semi_bold"-->
+<!--        android:text="steps"-->
+<!--        android:textColor="@color/tertiaryDarkText"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/tvStepBannerGoal"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pbStepBanner" />-->
 
     <Button
         android:id="@+id/btnStepBannerShare"
@@ -241,7 +241,7 @@
         android:textColor="@color/btnText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView65" />
+        app:layout_constraintTop_toBottomOf="@+id/imBannerStepAchievement" />
 
     <Button
         android:id="@+id/btnStepBannerCancel"
@@ -255,5 +255,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStepBannerShare" />
+
+    <ImageView
+        android:id="@+id/imBannerStepAchievement"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/stepachievement"
+        tools:layout_editor_absoluteX="169dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

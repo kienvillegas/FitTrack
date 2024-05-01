@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +42,7 @@ public class profilePage extends AppCompatActivity {
         tvProfileDayMonDate = findViewById(R.id.tvProfileDayMonDate);
         bottomNav.setSelectedItemId(R.id.nav_profile);
 
-        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM, dd", Locale.getDefault());
+        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
         Date date = new Date();
         String currentDate = dayMonDate.format(date);
         tvProfileDayMonDate.setText(currentDate);

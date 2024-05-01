@@ -165,6 +165,16 @@ public class signUp extends AppCompatActivity {
                         return;
                     }
 
+                    if(password.length() < 8){
+                        pbSignUp.setVisibility(View.GONE);
+                        btnSignUp .setVisibility(View.VISIBLE);
+
+                        etSignUpPassword.setBackgroundResource(R.drawable.text_field_red);
+                        etSignUpPassword.setError("Atleast 8 Characters");
+                        etSignUpPassword.requestFocus();
+                        return;
+                    }
+
                     if(!email.endsWith("@gmail.com")){
                         pbSignUp.setVisibility(View.GONE);
                         btnSignUp .setVisibility(View.VISIBLE);
@@ -212,8 +222,8 @@ public class signUp extends AppCompatActivity {
                                 userData.put("calorieWeeklyGoal", 14000);
                                 userData.put("dailyCalorieTaken", 0);
                                 userData.put("weeklyCalorieTaken", 0);
-                                userData.put("sleepDailyGoal", 2000);
-                                userData.put("sleepWeeklyGoal", 14000);
+                                userData.put("sleepDailyGoal", 10);
+                                userData.put("sleepWeeklyGoal", 56);
                                 userData.put("dailySleepTaken", 0);
                                 userData.put("weeklySleepTaken", 0);
                                 userData.put("isStepDailyGoal", false);
