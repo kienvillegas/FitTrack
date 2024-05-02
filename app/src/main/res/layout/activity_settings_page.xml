@@ -58,6 +58,7 @@
         android:id="@+id/btnSignOut"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:background="@drawable/btn_mid_rounded"
         android:backgroundTint="@color/secondary"
         android:fontFamily="@font/outfit_medium"
         android:text="SIgn Out"

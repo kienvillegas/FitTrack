@@ -28,7 +28,7 @@
         android:layout_marginEnd="261dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/sign_up"
-        android:textColor="@color/secondaryDarkText"
+        android:textColor="?attr/colorPrimaryDark"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +122,8 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
-        android:backgroundTint="@color/primary"
+        android:background="@drawable/btn_mid_rounded"
+        android:backgroundTint="?attr/colorPrimary"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/sign_up"
         android:textColor="@color/btnText"
@@ -149,28 +150,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="Already have a account? "
         android:textColor="@color/primaryText"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpCPassword" />
 
     <TextView
         android:id="@+id/tvSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/sign_in"
         android:textColor="@color/whiteText"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpCPassword" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

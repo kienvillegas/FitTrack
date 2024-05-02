@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
+        android:fontFamily="@font/outfit_medium"
         android:textColor="@color/primaryText"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
+        android:fontFamily="@font/outfit_medium"
         android:text="Account Settings"
         android:textColor="@color/tertiaryDarkText"
         app:layout_constraintStart_toStartOf="@+id/imageView84"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
+        android:fontFamily="@font/outfit_medium"
         android:text="Edit Profile"
         android:textColor="@color/primaryText"
         android:textSize="18sp"
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
+        android:fontFamily="@font/outfit_medium"
         android:text="Change Password"
         android:textColor="@color/primaryText"
         android:textSize="18sp"
@@ -93,10 +93,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
+        android:fontFamily="@font/outfit_medium"
         android:text="Notifications"
         android:textColor="@color/primaryText"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/imageView84"
         app:layout_constraintTop_toBottomOf="@+id/textView160" />
 
@@ -120,15 +121,16 @@
             app:layout_constraintTop_toBottomOf="@+id/imSettingsEditProfile"
             app:srcCompat="@drawable/arrow_right_black" />
 
-        <ImageView
-            android:id="@+id/imSettingsNotifications"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView84"
-            app:layout_constraintTop_toBottomOf="@+id/imSettingsChangePass"
-            app:srcCompat="@drawable/arrow_right_black" />
+    <ImageView
+        android:id="@+id/imSettingsNotifications"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/imSettingsChangePass"
+        app:srcCompat="@drawable/arrow_right_black" />
 
         <ImageView
             android:id="@+id/imageView109"
@@ -146,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_semi_bold"
+        android:fontFamily="@font/outfit_medium"
         android:text="More"
         android:textColor="@color/tertiaryDarkText"
         android:textSize="14sp"
@@ -159,7 +161,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_semi_bold"
+        android:fontFamily="@font/outfit_medium"
         android:text="Design"
         android:textColor="@color/primaryText"
         android:textSize="18sp"

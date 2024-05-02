@@ -19,14 +19,14 @@
     <color name="btnCancelColor">#FF5757</color>
 
 <!--    Secondary Theme -->
-    <color name="orange">#FFBD80</color>
-    <color name="orangeDark">#EBA747</color>
-    <color name="orangeText">#FFBD80</color>
-    <color name="orangeDarkText">#EBA747</color>
+    <color name="orange">#009688</color>
+    <color name="orangeDark">#00796B</color>
+    <color name="orangeText">#009688</color>
+    <color name="orangeDarkText">#00796B</color>
 
 <!--    Third Theme -->
-    <color name="green">#99FF80</color>
-    <color name="greenDark">#68EB47</color>
-    <color name="greenText">#99FF80</color>
-    <color name="greenDarkText">#68EB47</color>
+    <color name="green">#3F51B5</color>
+    <color name="greenDark">#303F9F</color>
+    <color name="greenText">#3F51B5</color>
+    <color name="greenDarkText">#303F9F</color>
 </resources>

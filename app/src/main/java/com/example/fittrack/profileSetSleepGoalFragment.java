@@ -26,7 +26,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -67,6 +69,8 @@ public class profileSetSleepGoalFragment extends Fragment {
         btnSetSleepGoal.setVisibility(View.VISIBLE);
         btnSetSleepCancel.setVisibility(View.VISIBLE);
 
+        DocumentReference docRef = db.collection("users").document(userId);
+
         int sleepDailyGoal, sleepWeeklyGoal;
         Bundle bundle = getArguments();
 
@@ -93,6 +97,10 @@ public class profileSetSleepGoalFragment extends Fragment {
             weeklyGoal = etSetSleepWeekly.getText().toString().trim();
 
             try {
+                List<Integer> dailyGoalList = new ArrayList<Integer>();
+                List<Integer> weeklyGoalList = new ArrayList<Integer>();
+                String formattedDailyGoal, formattedWeeklyGoal;
+
                 if (dailyGoal.isEmpty()) {
                     pbSetSleep.setVisibility(View.GONE);
                     btnSetSleepGoal.setVisibility(View.VISIBLE);
@@ -104,55 +112,45 @@ public class profileSetSleepGoalFragment extends Fragment {
                     return;
                 }
 
-                if (weeklyGoal.isEmpty()) {
-                    pbSetSleep.setVisibility(View.GONE);
-                    btnSetSleepGoal.setVisibility(View.VISIBLE);
-                    btnSetSleepCancel.setVisibility(View.VISIBLE);
-
-                    etSetSleepWeekly.setBackgroundResource(R.drawable.text_field_red);
-                    etSetSleepWeekly.setError("Required");
-                    etSetSleepWeekly.requestFocus();
-                    return;
+                if(weeklyGoal.isEmpty()){
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
                 }
 
-                if (!dailyGoal.isEmpty() && !dailyGoal.isEmpty()) {
-                    int dailyGoalInt = Integer.parseInt(dailyGoal);
-                    int weeklyGoalInt = Integer.parseInt(weeklyGoal);
-
-                    DocumentReference docRef = db.collection("users").document(userId);
-                    Map<String, Object> calorieData = new HashMap<>();
-                    calorieData.put("sleepDailyGoal", Integer.parseInt(dailyGoal));
-                    calorieData.put("sleepWeeklyGoal", Integer.parseInt(weeklyGoal));
-
-                    docRef.update(calorieData)
-                            .addOnSuccessListener(unused -> {
-                                Log.d(TAG, "Successfully updated sleep daily and weekly goal");
-                                String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalInt);
-                                String formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalInt);
-                                tvSetSleepDaily.setText(formattedDailyGoal);
-                                tvSetSleepWeekly.setText(formattedWeeklyGoal);
-                                etSetSleepDaily.setText("");
-                                etSetSleepWeekly.setText("");
-
-                                pbSetSleep.setVisibility(View.GONE);
-                                btnSetSleepGoal.setVisibility(View.VISIBLE);
-                                btnSetSleepCancel.setVisibility(View.VISIBLE);
-
-                                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                Fragment newFragment = new profileSleepFragment();
-                                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-                            }).addOnFailureListener(e -> {
-                                Log.e(TAG, "Failed to update sleep daily and weekly goal");
-                            });
-                } else {
-                    Toast.makeText(requireContext(), "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
-                    pbSetSleep.setVisibility(View.GONE);
-                    btnSetSleepGoal.setVisibility(View.VISIBLE);
-                    btnSetSleepCancel.setVisibility(View.VISIBLE);
+                if (!weeklyGoal.isEmpty()) {
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
+
+                formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
+                formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
+
+                Map<String, Object> sleepData = new HashMap<>();
+                sleepData.put("sleepDailyGoal", dailyGoalList.get(0));
+                sleepData.put("sleepWeeklyGoal", weeklyGoalList.get(0));
+
+                docRef.update(sleepData)
+                        .addOnSuccessListener(unused -> {
+                            Log.d(TAG, "Successfully updated sleep daily and weekly goal");
+
+                            tvSetSleepDaily.setText(formattedDailyGoal);
+                            tvSetSleepWeekly.setText(formattedWeeklyGoal);
+                            etSetSleepDaily.setText("");
+                            etSetSleepWeekly.setText("");
+
+                            pbSetSleep.setVisibility(View.GONE);
+                            btnSetSleepGoal.setVisibility(View.VISIBLE);
+                            btnSetSleepCancel.setVisibility(View.VISIBLE);
+
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Fragment newFragment = new profileSleepFragment();
+                            fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }).addOnFailureListener(e -> {
+                            Log.e(TAG, "Failed to update sleep daily and weekly goal");
+                        });
             } catch (Exception e) {
                 Log.e(TAG, "An error occurred: " + e.getMessage());
                 pbSetSleep.setVisibility(View.GONE);

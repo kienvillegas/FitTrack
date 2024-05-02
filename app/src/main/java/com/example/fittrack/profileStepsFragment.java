@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,8 +97,9 @@ public class profileStepsFragment extends Fragment {
                                    entries.add(new BarEntry(6, sunStep));
 
                                    BarDataSet dataSet = new BarDataSet(entries, "Bar Data");
-                                   int primary = ContextCompat.getColor(requireContext(), R.color.primary);
-                                   int tertiary = ContextCompat.getColor(requireContext(), R.color.tertiaryDark);
+                                   TypedValue typedValue = new TypedValue();
+                                   requireContext().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+                                   int primary = typedValue.data;                                   int tertiary = ContextCompat.getColor(requireContext(), R.color.tertiaryDark);
                                    dataSet.setColor(primary);
                                    dataSet.setDrawValues(false);
                                    BarData barData = new BarData(dataSet);

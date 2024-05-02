@@ -26,7 +26,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -70,6 +72,8 @@ public class profileSetCalorieGoalFragment extends Fragment {
         btnSetCalorieCancel.setVisibility(View.VISIBLE);
         btnSetCalorieGoal.setVisibility(View.VISIBLE);
 
+        DocumentReference docRef = db.collection("users").document(userId);
+
         int calorieDailyGoal, calorieWeeklyGoal;
         Bundle bundle = getArguments();
 
@@ -100,6 +104,11 @@ public class profileSetCalorieGoalFragment extends Fragment {
             weeklyGoal = etSetCalorieWeekly.getText().toString().trim();
 
             try{
+                List<Integer> dailyGoalList = new ArrayList<Integer>();
+                List<Integer> weeklyGoalList = new ArrayList<Integer>();
+
+                String formattedDailyGoal, formattedWeeklyGoal;
+
                 if(dailyGoal.isEmpty()){
                     pbSetCalorie.setVisibility(View.GONE);
                     btnSetCalorieCancel.setVisibility(View.VISIBLE);
@@ -111,56 +120,46 @@ public class profileSetCalorieGoalFragment extends Fragment {
                 }
 
                 if(weeklyGoal.isEmpty()){
-                    pbSetCalorie.setVisibility(View.GONE);
-                    btnSetCalorieCancel.setVisibility(View.VISIBLE);
-                    btnSetCalorieGoal.setVisibility(View.VISIBLE);
-
-                    etSetCalorieWeekly.setBackgroundResource(R.drawable.text_field_red);
-                    etSetCalorieWeekly.setError("Required");
-                    return;
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
                 }
 
-                if(!dailyGoal.isEmpty() && !dailyGoal.isEmpty()){
-                    int dailyGoalInt = Integer.parseInt(dailyGoal);
-                    int weeklyGoalInt = Integer.parseInt(weeklyGoal);
-
-                    DocumentReference docRef = db.collection("users").document(userId);
-                    Map<String, Object> calorieData = new HashMap<>();
-                    calorieData.put("calorieDailyGoal", Integer.parseInt(dailyGoal));
-                    calorieData.put("calorieWeeklyGoal", Integer.parseInt(weeklyGoal));
-
-                    docRef.update(calorieData)
-                            .addOnSuccessListener(unused -> {
-                                Log.d(TAG, "Successfully updated calorie daily and weekly goal");
-                                String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalInt);
-                                String formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalInt);
-
-                                tvSetCalorieDaily.setText(formattedDailyGoal);
-                                tvSetCalorieWeekly.setText(formattedWeeklyGoal);
-                                etSetCalorieDaily.setText("");
-                                etSetCalorieWeekly.setText("");
-                                pbSetCalorie.setVisibility(View.GONE);
-                                btnSetCalorieCancel.setVisibility(View.VISIBLE);
-                                btnSetCalorieGoal.setVisibility(View.VISIBLE);
-
-                                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                Fragment newFragment = new profileCalorieFragment();
-                                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-                            }).addOnFailureListener(e -> {
-                                Log.e(TAG, "Failed to update calorie daily and weekly goal");
-                                pbSetCalorie.setVisibility(View.GONE);
-                                btnSetCalorieCancel.setVisibility(View.VISIBLE);
-                                btnSetCalorieGoal.setVisibility(View.VISIBLE);
-                            });
-                }else{
-                    Toast.makeText(requireContext(), "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
-                    pbSetCalorie.setVisibility(View.GONE);
-                    btnSetCalorieCancel.setVisibility(View.VISIBLE);
-                    btnSetCalorieGoal.setVisibility(View.VISIBLE);
+                if (!weeklyGoal.isEmpty()) {
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
+
+                formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
+                formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
+
+                Map<String, Object> calorieData = new HashMap<>();
+                calorieData.put("calorieDailyGoal", dailyGoalList.get(0));
+                calorieData.put("calorieWeeklyGoal", weeklyGoalList.get(0));
+
+                docRef.update(calorieData)
+                        .addOnSuccessListener(unused -> {
+                            Log.d(TAG, "Successfully updated calorie daily and weekly goal");
+
+                            tvSetCalorieDaily.setText(formattedDailyGoal);
+                            tvSetCalorieWeekly.setText(formattedWeeklyGoal);
+                            etSetCalorieDaily.setText("");
+                            etSetCalorieWeekly.setText("");
+                            pbSetCalorie.setVisibility(View.GONE);
+                            btnSetCalorieCancel.setVisibility(View.VISIBLE);
+                            btnSetCalorieGoal.setVisibility(View.VISIBLE);
+
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Fragment newFragment = new profileCalorieFragment();
+                            fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }).addOnFailureListener(e -> {
+                            Log.e(TAG, "Failed to update calorie daily and weekly goal");
+                            pbSetCalorie.setVisibility(View.GONE);
+                            btnSetCalorieCancel.setVisibility(View.VISIBLE);
+                            btnSetCalorieGoal.setVisibility(View.VISIBLE);
+                        });
             }catch (Exception e){
                 Log.e(TAG, "An error occurred: " + e.getMessage());
                 pbSetCalorie.setVisibility(View.GONE);

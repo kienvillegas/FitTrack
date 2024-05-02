@@ -26,7 +26,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -66,6 +68,8 @@ public class profileSetWaterGoalFragment extends Fragment {
         btnSetWaterGoal.setVisibility(View.VISIBLE);
         btnSetWaterCancel.setVisibility(View.VISIBLE);
 
+        DocumentReference docRef = db.collection("users").document(userId);
+
         int waterDailyGoal, waterWeeklyGoal;
         Bundle bundle = getArguments();
 
@@ -92,6 +96,10 @@ public class profileSetWaterGoalFragment extends Fragment {
             weeklyGoal = etSetWaterWeekly.getText().toString().trim();
 
             try{
+                List<Integer> dailyGoalList = new ArrayList<>();
+                List<Integer> weeklyGoalList = new ArrayList<>();
+                String formattedDailyGoal, formattedWeeklyGoal;
+
                 if(dailyGoal.isEmpty()){
                     pbSetWater.setVisibility(View.GONE);
                     btnSetWaterGoal.setVisibility(View.VISIBLE);
@@ -104,56 +112,46 @@ public class profileSetWaterGoalFragment extends Fragment {
                 }
 
                 if(weeklyGoal.isEmpty()){
-                    pbSetWater.setVisibility(View.GONE);
-                    btnSetWaterGoal.setVisibility(View.VISIBLE);
-                    btnSetWaterCancel.setVisibility(View.VISIBLE);
-                    etSetWaterWeekly.setBackgroundResource(R.drawable.text_field_red);
-                    etSetWaterWeekly.setError("Required");
-                    etSetWaterWeekly.requestFocus();
-                    return;
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
                 }
 
-                if(!dailyGoal.isEmpty() && !dailyGoal.isEmpty()){
-                    int dailyGoalInt = Integer.parseInt(dailyGoal);
-                    int weeklyGoalInt = Integer.parseInt(weeklyGoal);
-
-                    DocumentReference docRef = db.collection("users").document(userId);
-                    Map<String, Object> waterData = new HashMap<>();
-                    waterData.put("waterDailyGoal", Integer.parseInt(dailyGoal));
-                    waterData.put("waterWeeklyGoal", Integer.parseInt(weeklyGoal));
-
-                    docRef.update(waterData)
-                            .addOnSuccessListener(unused -> {
-                                Log.d(TAG, "Successfully updated step daily and weekly goal");
-                                String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalInt);
-                                String formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalInt);
-                                tvSetWaterDaily.setText(formattedDailyGoal);
-                                tvSetWaterWeekly.setText(formattedWeeklyGoal);
-                                etSetWaterDaily.setText("");
-                                etSetWaterWeekly.setText("");
-
-                                pbSetWater.setVisibility(View.GONE);
-                                btnSetWaterGoal.setVisibility(View.VISIBLE);
-                                btnSetWaterCancel.setVisibility(View.VISIBLE);
-
-                                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                Fragment newFragment = new profileWaterFragment();
-                                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-                            }).addOnFailureListener(e -> {
-                                Log.e(TAG, "Failed to update step daily and weekly goal");
-                                pbSetWater.setVisibility(View.GONE);
-                                btnSetWaterGoal.setVisibility(View.VISIBLE);
-                                btnSetWaterCancel.setVisibility(View.VISIBLE);
-                            });
-                }else{
-                    Toast.makeText(requireContext(), "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
-                    pbSetWater.setVisibility(View.GONE);
-                    btnSetWaterGoal.setVisibility(View.VISIBLE);
-                    btnSetWaterCancel.setVisibility(View.VISIBLE);
+                if (!weeklyGoal.isEmpty()) {
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
+
+                formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
+                formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
+
+                Map<String, Object> waterData = new HashMap<>();
+                waterData.put("waterDailyGoal", dailyGoalList.get(0));
+                waterData.put("waterWeeklyGoal", weeklyGoalList.get(0));
+
+                docRef.update(waterData)
+                        .addOnSuccessListener(unused -> {
+                            Log.d(TAG, "Successfully updated water daily and weekly goal");
+                            tvSetWaterDaily.setText(formattedDailyGoal);
+                            tvSetWaterWeekly.setText(formattedWeeklyGoal);
+                            etSetWaterDaily.setText("");
+                            etSetWaterWeekly.setText("");
+
+                            pbSetWater.setVisibility(View.GONE);
+                            btnSetWaterCancel.setVisibility(View.VISIBLE);
+                            btnSetWaterGoal.setVisibility(View.VISIBLE);
+
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Fragment newFragment = new profileWaterFragment();
+                            fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }).addOnFailureListener(e -> {
+                            Log.e(TAG, "Failed to update water daily and weekly goal");
+                            pbSetWater.setVisibility(View.GONE);
+                            btnSetWaterCancel.setVisibility(View.VISIBLE);
+                            btnSetWaterGoal.setVisibility(View.VISIBLE);
+                        });
             }catch (Exception e){
                 Log.e(TAG, "An error occurred: " + e.getMessage());
                 pbSetWater.setVisibility(View.GONE);

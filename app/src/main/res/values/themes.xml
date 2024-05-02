@@ -1,44 +1,29 @@
 <resources  xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.FitTrack" parent="Theme.AppCompat.Light.NoActionBar">
-<!--        &lt;!&ndash; Default color attributes &ndash;&gt;-->
-<!--        <item name="violet">?attr/violet</item>-->
-<!--        <item name="violetDark">?attr/violetDark</item>-->
-<!--        <item name="secondary">?attr/secondary</item>-->
-<!--        <item name="tertiary">?attr/tertiary</item>-->
-<!--        <item name="tertiaryDark">?attr/tertiaryDark</item>-->
-<!--        &lt;!&ndash; Text color attributes &ndash;&gt;-->
-<!--        <item name="primaryText">?attr/primaryText</item>-->
-<!--        <item name="violetText">?attr/violetText</item>-->
-<!--        <item name="violetDarkText">?attr/violetDarkText</item>-->
-<!--        <item name="tertiaryText">?attr/tertiaryText</item>-->
-<!--        <item name="tertiaryDarkText">?attr/tertiaryDarkText</item>-->
-<!--        <item name="whiteText">?attr/whiteText</item>-->
-<!--        <item name="btnText">?attr/btnText</item>-->
-<!--        &lt;!&ndash; Background color attributes &ndash;&gt;-->
-<!--        <item name="backTabsColor">?attr/backTabsColor</item>-->
-<!--        <item name="backgroundColor">?attr/backgroundColor</item>-->
-<!--        <item name="btnCancelColor">?attr/btnCancelColor</item>-->
+    <style name="AppDefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+    </style>
+    <style name="AppOrangeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orangeDark</item>
+    </style>
+    <style name="AppGreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/greenDark</item>
     </style>
 
-<!--    <style name="Theme.Orange" parent="Base.Theme.FitTrack">-->
-<!--        &lt;!&ndash; Default color attributes &ndash;&gt;-->
-<!--        <item name="violet">?attr/orange</item>-->
-<!--        <item name="violetDark">?attr/orangeDark</item>-->
-<!--        <item name="secondary">?attr/secondary</item>-->
-<!--        <item name="tertiary">?attr/tertiary</item>-->
-<!--        <item name="tertiaryDark">?attr/tertiaryDark</item>-->
-<!--        &lt;!&ndash; Text color attributes &ndash;&gt;-->
-<!--        <item name="primaryText">?attr/primaryText</item>-->
-<!--        <item name="violetText">?attr/orangeText</item>-->
-<!--        <item name="violetDarkText">?attr/orangeDarkText</item>-->
-<!--        <item name="tertiaryText">?attr/tertiaryText</item>-->
-<!--        <item name="tertiaryDarkText">?attr/tertiaryDarkText</item>-->
-<!--        <item name="whiteText">?attr/whiteText</item>-->
-<!--        <item name="btnText">?attr/btnText</item>-->
-<!--        &lt;!&ndash; Background color attributes &ndash;&gt;-->
-<!--        <item name="backTabsColor">?attr/backTabsColor</item>-->
-<!--        <item name="backgroundColor">?attr/backgroundColor</item>-->
-<!--        <item name="btnCancelColor">?attr/btnCancelColor</item>-->
-<!--    </style>-->
+    <style name="BottomNavTextActiveStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/whiteText</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
+    <style name="BottomNavTextInactiveStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/tertiaryText</item>
+        <item name="android:fontFamily">@font/outfit_semi_bold</item>
+    </style>
+
 </resources>

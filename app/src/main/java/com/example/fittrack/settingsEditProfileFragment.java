@@ -100,7 +100,6 @@ public class settingsEditProfileFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new settingsFragment();
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
 
@@ -152,7 +151,8 @@ public class settingsEditProfileFragment extends Fragment {
                                             btnEditProfileUsername.setVisibility(View.VISIBLE);
 
                                             Log.d(TAG, "Successfully updated username to " + username);
-                                            etEditProfileUsername.setText(username);
+                                            tvEditProfileUsername.setText(username);
+                                            etEditProfileUsername.setText("");
                                         }).addOnFailureListener(e -> {
                                             pbEditProfileUsername.setVisibility(View.GONE);
                                             btnEditProfileUsername.setVisibility(View.VISIBLE);
@@ -243,10 +243,16 @@ public class settingsEditProfileFragment extends Fragment {
                                                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                                                     if(user != null && user.isEmailVerified()){
                                                                         Log.d(TAG, "Email has been successfully verified.");
+
+                                                                        docRef.update("email", newEmail).addOnSuccessListener(unused -> {
+                                                                            Log.d(TAG, "Email has been successfully updated: " + newEmail);
+                                                                        }).addOnFailureListener(e -> {
+                                                                            Log.e(TAG, "Failed to update email: " + e.getMessage());
+                                                                        });
+
                                                                         pbEditProfileEmail.setVisibility(View.GONE);
                                                                         btnEditProfileEmail.setVisibility(View.VISIBLE);
 
-                                                                        docRef.update("email", newEmail);
                                                                         etEditProfileEmail.setText("");
                                                                         etEditProfilePassword.setText("");
 
@@ -275,7 +281,7 @@ public class settingsEditProfileFragment extends Fragment {
                                         });
                             }
                         }).addOnFailureListener(e -> {
-
+                            Log.e(TAG, e.getMessage());
                         });
             }catch(Exception e){
                 pbEditProfileEmail.setVisibility(View.GONE);

@@ -5,6 +5,6 @@
         android:radius="20dp" />
     <stroke
         android:width="3dp"
-        android:color="@color/primary" />
+        android:color="?attr/colorPrimary" />
 <!--    <image_path>r</image_path>-->
 </shape>

@@ -98,6 +98,7 @@
         android:text="Notifications"
         android:textColor="@color/primaryText"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/imageView84"
         app:layout_constraintTop_toBottomOf="@+id/textView160" />
 
@@ -127,6 +128,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
         app:layout_constraintTop_toBottomOf="@+id/imDesignChangePass"
         app:srcCompat="@drawable/arrow_right_black" />
@@ -196,7 +198,9 @@
         android:layout_height="50dp"
         android:layout_marginStart="95dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/change_theme_default"
+        android:backgroundTint="@color/primary"
+        android:drawableBottom="@drawable/icon_check"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="@+id/imageView84"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
@@ -206,7 +210,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/change_theme_orange"
+        android:backgroundTint="@color/orange"
         app:layout_constraintStart_toEndOf="@+id/btnChangeThemeDefault"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
@@ -216,7 +220,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/change_theme_green"
+        android:backgroundTint="@color/green"
         app:layout_constraintStart_toEndOf="@+id/btnChangeThemeSecond"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
@@ -225,11 +229,15 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/primary"
+        android:background="@drawable/btn_mid_rounded"
+        android:backgroundTint="?attr/colorPrimary"
+        android:fontFamily="@font/outfit_medium"
         android:text="Save Changes"
         android:textColor="@color/btnText"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"
         app:layout_constraintStart_toStartOf="@+id/imageView84"
         app:layout_constraintTop_toBottomOf="@+id/btnChangeThemeSecond" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

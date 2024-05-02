@@ -31,7 +31,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.net.Inet4Address;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,6 +74,8 @@ public class profileSetStepsGoalFragment extends Fragment {
         btnSetStepCancel.setVisibility(View.VISIBLE);
         btnSetStepGoal.setVisibility(View.VISIBLE);
 
+        DocumentReference docRef = db.collection("users").document(userId);
+
         int stepDailyGoal, stepWeeklyGoal;
         Bundle bundle = getArguments();
 
@@ -99,6 +103,9 @@ public class profileSetStepsGoalFragment extends Fragment {
             weeklyGoal = etSetStepWeekly.getText().toString().trim();
 
             try{
+                List<Integer> dailyGoalList = new ArrayList<>();
+                List<Integer> weeklyGoalList = new ArrayList<>();
+
                 if(dailyGoal.isEmpty()){
                     pbSetStep.setVisibility(View.GONE);
                     btnSetStepCancel.setVisibility(View.VISIBLE);
@@ -112,59 +119,50 @@ public class profileSetStepsGoalFragment extends Fragment {
                 }
 
                 if(weeklyGoal.isEmpty()){
-                    pbSetStep.setVisibility(View.GONE);
-                    btnSetStepCancel.setVisibility(View.VISIBLE);
-                    btnSetStepGoal.setVisibility(View.VISIBLE);
-
-                    etSetStepWeekly.setBackgroundResource(R.drawable.text_field_red);
-                    etSetStepWeekly.setError("Required");
-                    etSetStepWeekly.requestFocus();
-
-                    return;
+                    Log.d(TAG, "Weekly Goal is empty");
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
                 }
-                
-                if(!dailyGoal.isEmpty() && !dailyGoal.isEmpty()){
-                    int dailyGoalInt = Integer.parseInt(dailyGoal);
-                    int weeklyGoalInt = Integer.parseInt(weeklyGoal);
 
-                    DocumentReference docRef = db.collection("users").document(userId);
-                    Map<String, Object> stepData = new HashMap<>();
-                    stepData.put("stepDailyGoal", dailyGoalInt);
-                    stepData.put("stepWeeklyGoal", weeklyGoalInt);
-
-                    docRef.update(stepData)
-                            .addOnSuccessListener(unused -> {
-                                Log.d(TAG, "Successfully updated step daily and weekly goal");
-                                String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalInt);
-                                String formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalInt);
-                                tvSetStepDaily.setText(formattedDailyGoal);
-                                tvSetStepWeekly.setText(formattedWeeklyGoal);
-                                etSetStepDaily.setText("");
-                                etSetStepWeekly.setText("");
-
-                                pbSetStep.setVisibility(View.GONE);
-                                btnSetStepCancel.setVisibility(View.VISIBLE);
-                                btnSetStepGoal.setVisibility(View.VISIBLE);
-
-                                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                Fragment newFragment = new profileStepsFragment();
-                                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-
-                            }).addOnFailureListener(e -> {
-                                Log.e(TAG, "Failed to update step daily and weekly goal");
-                                pbSetStep.setVisibility(View.GONE);
-                                btnSetStepCancel.setVisibility(View.VISIBLE);
-                                btnSetStepGoal.setVisibility(View.VISIBLE);
-                            });
-                }else{
-                    Toast.makeText(requireContext(), "Please fill in the missing fields", Toast.LENGTH_SHORT).show();
-                    pbSetStep.setVisibility(View.GONE);
-                    btnSetStepCancel.setVisibility(View.VISIBLE);
-                    btnSetStepGoal.setVisibility(View.VISIBLE);
+                if(!weeklyGoal.isEmpty()){
+                    Log.d(TAG, "Weekly Goal is empty");
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
+
+                String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
+                String formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
+
+                Map<String, Object> stepData = new HashMap<>();
+                stepData.put("stepDailyGoal", dailyGoalList.get(0));
+                stepData.put("stepWeeklyGoal", weeklyGoalList.get(0));
+
+                docRef.update(stepData)
+                        .addOnSuccessListener(unused -> {
+                            Log.d(TAG, "Successfully updated step daily and weekly goal");
+                            tvSetStepDaily.setText(formattedDailyGoal);
+                            tvSetStepWeekly.setText(formattedWeeklyGoal);
+                            etSetStepDaily.setText("");
+                            etSetStepWeekly.setText("");
+
+                            pbSetStep.setVisibility(View.GONE);
+                            btnSetStepCancel.setVisibility(View.VISIBLE);
+                            btnSetStepGoal.setVisibility(View.VISIBLE);
+
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Fragment newFragment = new profileStepsFragment();
+                            fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+
+                        }).addOnFailureListener(e -> {
+                            Log.e(TAG, "Failed to update step daily and weekly goal");
+                            pbSetStep.setVisibility(View.GONE);
+                            btnSetStepCancel.setVisibility(View.VISIBLE);
+                            btnSetStepGoal.setVisibility(View.VISIBLE);
+                        });
+
             }catch (Exception e){
                 Log.e(TAG, "An error occurred: " + e.getMessage());
                 pbSetStep.setVisibility(View.GONE);

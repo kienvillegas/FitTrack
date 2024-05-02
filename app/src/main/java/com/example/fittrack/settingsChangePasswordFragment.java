@@ -88,7 +88,6 @@ public class settingsChangePasswordFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new settingsFragment();
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
 
@@ -97,7 +96,6 @@ public class settingsChangePasswordFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new settingsEditProfileFragment();
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
 

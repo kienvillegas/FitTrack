@@ -4,8 +4,10 @@ import static android.content.ContentValues.TAG;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -46,6 +48,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class signUp extends AppCompatActivity {
+    private static final String THEME_PREF_KEY = "themePref";
+    private static final int THEME_DEFAULT = 0;
+    private static final int THEME_ORANGE = 1;
+    private static final int THEME_GREEN = 2;
     private FirebaseAuth mAuth;
 
     Button btnSignUp;
@@ -56,6 +62,8 @@ public class signUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        applyTheme();
+
         setContentView(R.layout.activity_sign_up);
         btnSignUp = findViewById(R.id.btnSignUp);
         tvSignIn = findViewById(R.id.tvSignIn);
@@ -215,14 +223,14 @@ public class signUp extends AppCompatActivity {
                                 userData.put("dailyStepTaken", 0);
                                 userData.put("weeklyStepTaken", 0);
                                 userData.put("waterDailyGoal", 2000);
-                                userData.put("waterWeeklyGoal", 140000);
+                                userData.put("waterWeeklyGoal", 14000);
                                 userData.put("dailyWaterTaken", 0);
                                 userData.put("weeklyWaterTaken", 0);
                                 userData.put("calorieDailyGoal", 2000);
                                 userData.put("calorieWeeklyGoal", 14000);
                                 userData.put("dailyCalorieTaken", 0);
                                 userData.put("weeklyCalorieTaken", 0);
-                                userData.put("sleepDailyGoal", 10);
+                                userData.put("sleepDailyGoal", 9);
                                 userData.put("sleepWeeklyGoal", 56);
                                 userData.put("dailySleepTaken", 0);
                                 userData.put("weeklySleepTaken", 0);
@@ -239,6 +247,7 @@ public class signUp extends AppCompatActivity {
                                                 Log.e(TAG, e.getMessage());
                                             }
                                         });
+
                                 weeklyStepRef.set(stepData);
                                 weeklyWaterRef.set(waterData);
                                 weeklyCalorieRef.set(calorieData);
@@ -368,6 +377,23 @@ public class signUp extends AppCompatActivity {
             }
         });
      }
+
+    private void applyTheme() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        int theme = prefs.getInt(THEME_PREF_KEY, 0);
+
+        Log.d(TAG, "Applying theme: " + theme);
+        switch (theme) {
+            case THEME_ORANGE:
+                setTheme(R.style.AppOrangeTheme);
+                break;
+            case THEME_GREEN:
+                setTheme(R.style.AppGreenTheme);
+                break;
+            default:
+                setTheme(R.style.AppDefaultTheme);
+        }
+    }
 
     @Override
     protected void onStart() {

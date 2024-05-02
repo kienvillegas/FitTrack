@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/change_theme_green"/>
+    <item android:gravity="center">
+        <bitmap
+            android:src="@drawable/theme_selected_icon"
+            android:gravity="center"/>
+    </item>
+</layer-list>

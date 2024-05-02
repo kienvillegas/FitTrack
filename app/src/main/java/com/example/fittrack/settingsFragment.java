@@ -50,7 +50,7 @@ public class settingsFragment extends Fragment {
 
         imSettingsEditProfile = view.findViewById(R.id.imSettingsEditProfile);
         imSettingsChangePass = view.findViewById(R.id.imSettingsChangePass);
-        imSettingsNotifications = view.findViewById(R.id.imSettingsNotifications);
+//        imSettingsNotifications = view.findViewById(R.id.imSettingsNotifications);
         imSettingsDesign = view.findViewById(R.id.imSettingsDesign);
         tvSettingsUsername = view.findViewById(R.id.tvSettingsUsername);
 
@@ -68,7 +68,6 @@ public class settingsFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new settingsEditProfileFragment();
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
         imSettingsChangePass.setOnClickListener(v -> {
@@ -76,23 +75,20 @@ public class settingsFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new settingsChangePasswordFragment();
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
-        imSettingsNotifications.setOnClickListener(v -> {
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            Fragment newFragment = new settingsConfigNotifFragment();
-            fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        });
+//        imSettingsNotifications.setOnClickListener(v -> {
+//            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            Fragment newFragment = new settingsConfigNotifFragment();
+//            fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
+//            fragmentTransaction.commit();
+//        });
         imSettingsDesign.setOnClickListener(v -> {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new settingsDesignFragment();
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
         return view;
