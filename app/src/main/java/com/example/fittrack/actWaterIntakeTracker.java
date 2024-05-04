@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -41,12 +42,17 @@ public class actWaterIntakeTracker extends AppCompatActivity {
     private static final int THEME_DEFAULT = 0;
     private static final int THEME_ORANGE = 1;
     private static final int THEME_GREEN = 2;
+
+    private static final int REQUEST_ACTIVITY_RECOGNITION_PERMISSION = 1;
+
     FirebaseAuth mAuth;
     ImageView imBackBtn, imIncWater, imDecWater;
     Button btnAddDrink;
-    TextView tvWaterTrackerTaken, tvWaterTrackerGoal, tvWaterTrackerPercent, tvWaterTrackerInputAmount;
+     TextView tvWaterTrackerTaken, tvWaterTrackerGoal, tvWaterTrackerPercent, tvWaterTrackerInputAmount;
     ProgressBar pbWaterTracker, pbAddDrink;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StepSensorManager stepSensorManager;
+
 
 
     @Override
@@ -60,7 +66,6 @@ public class actWaterIntakeTracker extends AppCompatActivity {
         String userId = currentUser.getUid();
         DataManager dataManager = new DataManager(this);
         final String[] storedDate = {dataManager.getStoredDate()};
-        String currentDate = getCurrentDateTime();
 
         if(storedDate[0] == null || storedDate[0].isEmpty()){
             dataManager.saveCurrentDateTime();
@@ -81,7 +86,7 @@ public class actWaterIntakeTracker extends AppCompatActivity {
         pbAddDrink.setVisibility(View.GONE);
         btnAddDrink.setVisibility(View.VISIBLE);
 
-        fetchWaterData(userId, storedDate[0]);
+        fetchWaterData(userId);
 
         final int[] inputCounter = {1};
         final int[] totalWaterAmount = new int[1];
@@ -118,11 +123,12 @@ public class actWaterIntakeTracker extends AppCompatActivity {
 
             int glassWaterML = 250;
             String day = getCurrentDay();
+
             try{
                 DocumentReference docRef = db.collection("users").document(userId);
                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        int waterPercent, dailyWaterTaken, weeklyWaterTaken, waterDailyGoal;
+                        int dailyWaterTaken, weeklyWaterTaken, waterDailyGoal;
                         dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken").intValue();
                         weeklyWaterTaken = documentSnapshot.getLong("weeklyWaterTaken").intValue();
                         waterDailyGoal = documentSnapshot.getLong("waterDailyGoal").intValue();
@@ -131,67 +137,32 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                             weeklyWaterTaken += glassWaterML * inputCounter[0];
 
                             saveWeeklyWaterIntake(userId, day, dailyWaterTaken);
-                            checkGoalAchievement(dailyWaterTaken, waterDailyGoal, userId, storedDate[0]);
-                            if (waterDailyGoal != 0) {
-                                waterPercent = Math.min((int) (((double) dailyWaterTaken / waterDailyGoal) * 100), 100);
-                            } else {
-                                waterPercent = 0;
-                            }
+                            checkGoalAchievement(dailyWaterTaken, waterDailyGoal, userId);
 
                             inputCounter[0] = 1;
                             totalWaterAmount[0] = glassWaterML;
+
                             Map<String, Object> water = new HashMap<>();
                             water.put("dailyWaterTaken", dailyWaterTaken);
                             water.put("weeklyWaterTaken", weeklyWaterTaken);
 
-                            String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(waterDailyGoal);
-                            String formattedWaterTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
+                            docRef.update(water)
+                                .addOnSuccessListener(unused -> {
+                                    fetchWaterData(userId);
+                                    dataManager.saveCurrentDateTime();
+                                    pbAddDrink.setVisibility(View.GONE);
+                                    btnAddDrink.setVisibility(View.VISIBLE);
 
-                            tvWaterTrackerTaken.setText(formattedWaterTaken + " ml");
-                            tvWaterTrackerGoal.setText(formattedDailyGoal);
-                            tvWaterTrackerPercent.setText(String.valueOf(waterPercent) + "%");
-                            pbWaterTracker.setMax(100);
-                            pbWaterTracker.setProgress(waterPercent);
+                                    Toast.makeText(actWaterIntakeTracker.this, "Successfully entered water taken", Toast.LENGTH_SHORT).show();
+                                    tvWaterTrackerInputAmount.setText("1x Glass 250ml");
+                                    Log.d(TAG, "Successfully added " + inputCounter);
+                                }).addOnFailureListener(e -> {
+                                    pbAddDrink.setVisibility(View.GONE);
+                                    btnAddDrink.setVisibility(View.VISIBLE);
 
-                            if(storedDate[0].equals(currentDate) || storedDate[0] == null || storedDate[0].isEmpty()){
-                                Log.d(TAG, storedDate[0] + " is equal to " + currentDate);
-                                docRef.update(water)
-                                        .addOnSuccessListener(unused -> {
-                                            dataManager.saveCurrentDateTime();
-                                            pbAddDrink.setVisibility(View.GONE);
-                                            btnAddDrink.setVisibility(View.VISIBLE);
-
-                                            Toast.makeText(actWaterIntakeTracker.this, "Successfully entered water taken", Toast.LENGTH_SHORT).show();
-                                            tvWaterTrackerInputAmount.setText("1x Glass 250ml");
-                                            Log.d(TAG, "Successfully added " + inputCounter);
-                                        }).addOnFailureListener(e -> {
-                                            pbAddDrink.setVisibility(View.GONE);
-                                            btnAddDrink.setVisibility(View.VISIBLE);
-
-                                            Log.e(TAG, "Failed to add " + inputCounter);
-                                            Toast.makeText(actWaterIntakeTracker.this, "Failed to enter water taken", Toast.LENGTH_SHORT).show();
-                                        });
-                            }else {
-                                Log.d(TAG, storedDate[0] + " is not equal to " + currentDate);
-                                dataManager.saveCurrentDateTime();
-
-                                dailyWaterTaken = glassWaterML * inputCounter[0];;
-                                Map<String, Object> watertaken = new HashMap<>();
-                                watertaken.put("dailyWaterTaken", dailyWaterTaken);
-
-                                docRef.update(watertaken)
-                                        .addOnSuccessListener(unused -> {
-                                            pbAddDrink.setVisibility(View.GONE);
-                                            btnAddDrink.setVisibility(View.VISIBLE);
-
-                                            Log.d(TAG, "Successfully update daily water taken");
-                                        }).addOnFailureListener(e -> {
-                                            pbAddDrink.setVisibility(View.GONE);
-                                            btnAddDrink.setVisibility(View.VISIBLE);
-
-                                            Log.e(TAG, "Failed to update daily water take");
-                                        });
-                            }
+                                    Log.e(TAG, "Failed to add " + inputCounter);
+                                    Toast.makeText(actWaterIntakeTracker.this, "Failed to enter water taken", Toast.LENGTH_SHORT).show();
+                                });
                     } else {
                         pbAddDrink.setVisibility(View.GONE);
                         btnAddDrink.setVisibility(View.VISIBLE);
@@ -215,100 +186,55 @@ public class actWaterIntakeTracker extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void fetchWaterData(String userId, String storedDateTime) {
-        String currentDate = getCurrentDateTime();
+    private void fetchWaterData(String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int waterDailyGoal, dailyWaterTaken, waterPercent;
+            waterDailyGoal = documentSnapshot.getLong("waterDailyGoal").intValue();
+            dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken").intValue();
 
-        if (storedDateTime.equals(currentDate)) {
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    updateWaterUI(documentSnapshot);
-                } else {
-                    Log.e(TAG, "Document does not exist");
-                }
-            }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
-        } else {
-            Map<String, Object> waterData = new HashMap<>();
-            waterData.put("dailyWaterTaken", 0);
-            docRef.update(waterData)
-                    .addOnSuccessListener(unused -> {
-                        Log.d(TAG, "Successfully updated dailyWaterTaken to zero");
-                    }).addOnFailureListener(e -> {
-                        Log.e(TAG, "Error updating dailyWaterTaken to zero");
-                    });
-
-            updateWaterUI(null);
-        }
-    }
-
-    private void updateWaterUI(@Nullable DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            int waterDailyGoal = documentSnapshot.getLong("waterDailyGoal") != null ? documentSnapshot.getLong("waterDailyGoal").intValue() : 0;
-            int dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken") != null ? documentSnapshot.getLong("dailyWaterTaken").intValue() : 0;
-
-            int waterPercent = 0;
             if (waterDailyGoal != 0) {
                 waterPercent = Math.min((int) (((double) dailyWaterTaken / waterDailyGoal) * 100), 100);
+            }else{
+                waterPercent = 0;
             }
 
             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(waterDailyGoal);
             String formattedWaterTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
 
-            tvWaterTrackerTaken.setText(formattedWaterTaken + " ml");
+            tvWaterTrackerTaken.setText(formattedWaterTaken);
             tvWaterTrackerGoal.setText(formattedDailyGoal);
             tvWaterTrackerPercent.setText(String.valueOf(waterPercent) + "%");
             pbWaterTracker.setMax(100);
             pbWaterTracker.setProgress(waterPercent);
-        } else {
-            Log.e(TAG, "Document snapshot is null or does not exist");
-        }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch calorie data");
+        });
     }
 
-//    private void updateWaterUI(@Nullable DocumentSnapshot documentSnapshot) {
-//        int waterDailyGoal;
-//
-//        waterDailyGoal = documentSnapshot.getLong("waterDailyGoal").intValue();
-//        if (documentSnapshot != null) {
-//            int dailyWaterTaken, waterPercent;
-//
-//            dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken").intValue();
-//
-//            if (waterDailyGoal != 0) {
-//                waterPercent = Math.min((int) (((double) dailyWaterTaken / waterDailyGoal) * 100), 100);
-//            } else {
-//                waterPercent = 0;
-//            }
-//            String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(waterDailyGoal);
-//            String formattedWaterTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
-//
-//            tvWaterTrackerTaken.setText(formattedWaterTaken + " ml");
-//            tvWaterTrackerGoal.setText(formattedDailyGoal);
-//            tvWaterTrackerPercent.setText(String.valueOf(waterPercent) + "%");
-//            pbWaterTracker.setMax(100);
-//            pbWaterTracker.setProgress(waterPercent);
-//        } else {
-//            String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(waterDailyGoal);
-//
-//            // Update UI with default values
-//            tvWaterTrackerTaken.setText("0 ml");
-//            tvWaterTrackerGoal.setText(formattedDailyGoal);
-//            tvWaterTrackerPercent.setText("0%");
-//            pbWaterTracker.setMax(100);
-//            pbWaterTracker.setProgress(0);
-//        }
-//    }
+    private void checkStepGoalAchievement(int dailyStepTaken, int steDailyGoal, String userId) {
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    boolean isStepDailyGoal = documentSnapshot.getBoolean("isStepDailyGoal");
 
-    private void checkGoalAchievement(int dailyWaterTaken, int waterDailyGoal, String userId, String storedDateTime) {
-        String currentDateTime = getCurrentDateTime();
+                    if (!isStepDailyGoal && dailyStepTaken >= steDailyGoal) {
+                        updateStepGoalStatus(docRef, true);
 
+                        Intent intent = new Intent(getApplicationContext(), bannerStepGoalAchieved.class);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching isStepDailyGoal: " + e.getMessage());
+                });
+    }
+
+    private void checkGoalAchievement(int dailyWaterTaken, int waterDailyGoal, String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
         docRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     boolean isWaterDailyGoal = documentSnapshot.getBoolean("isWaterDailyGoal");
-
-                    if (!storedDateTime.equals(currentDateTime)) {
-                        updateWaterGoalStatus(docRef, false);
-                    }
 
                     if (!isWaterDailyGoal && dailyWaterTaken >= waterDailyGoal) {
                         updateWaterGoalStatus(docRef, true);
@@ -335,6 +261,19 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                 });
     }
 
+    private void updateStepGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
+        Map<String, Object> goalData = new HashMap<>();
+        goalData.put("isStepDailyGoal", isGoalAchieved);
+
+        docRef.update(goalData)
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "Successfully updated isStepDailyGoal");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to update isStepDailyGoal: " + e.getMessage());
+                });
+    }
+
     private String getCurrentDay(){
         Date date = new Date();
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEE", Locale.getDefault());
@@ -348,6 +287,94 @@ public class actWaterIntakeTracker extends AppCompatActivity {
 
         return sdf.format(date);
     }
+
+    private void initializeStepSensor() {
+        Log.d(TAG, "initializeStepSensor");
+
+        stepSensorManager = new StepSensorManager(this, stepCount -> {
+            Log.d(TAG, "Listening...");
+
+            DataManager dataManager = new DataManager(actWaterIntakeTracker.this);
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String userId = currentUser.getUid();
+            String day = getCurrentDay();
+
+            DocumentReference docRef = db.collection("users").document(userId);
+            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                if(documentSnapshot.exists()){
+                    int dailyStepTaken, weeklyStepTaken, stepDailyGoal;
+
+                    dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+                    weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
+                    stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+
+                    dailyStepTaken += stepCount;
+                    weeklyStepTaken += stepCount;
+                    Log.d(TAG, "Daily Step Taken: " + dailyStepTaken);
+
+                    saveWeekSteps(userId, day, dailyStepTaken);
+                    checkStepGoalAchievement(dailyStepTaken, stepDailyGoal, userId);
+
+                    Map<String, Object> steps = new HashMap<>();
+                    steps.put("dailyStepTaken", dailyStepTaken);
+                    steps.put("weeklyStepTaken", weeklyStepTaken);
+
+                    docRef.update(steps).addOnSuccessListener(unused -> {
+                        Log.d(TAG, "Successfully updated dailyStepTaken and weeklyStepTaken");
+                        dataManager.saveCurrentDateTime();
+                    }).addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to update dailyStepTaken and weeklyStepTaken");
+                    });
+                }else{
+                    Log.e(TAG, "No such document");
+                }
+            }).addOnFailureListener(e -> {
+                Log.e(TAG, "Failed to fetch document: " + e.getMessage());
+            });
+        });
+        stepSensorManager.registerListener();
+    }
+
+
+    private void saveWeekSteps(String userId, String day, int dailyStepTaken){
+        DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
+        Map<String, Object> stepData = new HashMap<>();
+
+        switch (day){
+            case "Mon":
+                stepData.put("mon", dailyStepTaken);
+                break;
+            case "Tue":
+                stepData.put("tue", dailyStepTaken);
+                break;
+            case "Wed":
+                stepData.put("wed", dailyStepTaken);
+                break;
+            case "Thu":
+                stepData.put("thu", dailyStepTaken);
+                break;
+            case "Fri":
+                stepData.put("fri", dailyStepTaken);
+                break;
+            case "Sat":
+                stepData.put("sat", dailyStepTaken);
+                break;
+            case "Sun":
+                stepData.put("sun", dailyStepTaken);
+                break;
+            default:
+                Log.w(TAG, day + " is not available");
+        }
+
+        weeklyStepRef.update(stepData)
+                .addOnSuccessListener(unused -> {
+                    Log.i(TAG, "Successfully added " + stepData + " to Firestore");
+                }).addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to add " + stepData + " to Firestore");
+                });
+    }
+
 
     private void saveWeeklyWaterIntake(String userId, String day, int dailyWaterTaken){
         DocumentReference weeklyWaterRef = db.collection("weekly_water").document(userId);
@@ -409,6 +436,27 @@ public class actWaterIntakeTracker extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             currentUser.reload();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (stepSensorManager != null) {
+            stepSensorManager.unregisterListener();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_ACTIVITY_RECOGNITION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, initialize step sensor
+                initializeStepSensor();
+            } else {
+                // Permission denied, show a message or take appropriate action
+                Toast.makeText(this, "Permission denied. Step tracking won't work.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

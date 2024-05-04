@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -41,6 +42,7 @@ public class actFoodIntakeTracker extends AppCompatActivity {
     private static final int THEME_DEFAULT = 0;
     private static final int THEME_ORANGE = 1;
     private static final int THEME_GREEN = 2;
+    private static final int REQUEST_ACTIVITY_RECOGNITION_PERMISSION = 1;
 
     FirebaseAuth mAuth;
     ImageView imBackBtn;
@@ -49,6 +51,8 @@ public class actFoodIntakeTracker extends AppCompatActivity {
     ProgressBar pbCalorieTracker, pbAddCalories;
     Button btnAddCalories;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StepSensorManager stepSensorManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +65,7 @@ public class actFoodIntakeTracker extends AppCompatActivity {
         String userId = currentUser.getUid();
 
         DataManager dataManager = new DataManager(this);
-        final String[]
-                storedDate = {dataManager.getStoredDate()};
-        String currentDate = getCurrentDateTime();
+        final String[] storedDate = {dataManager.getStoredDate()};
 
         if(storedDate[0] == null || storedDate[0].isEmpty()){
             dataManager.saveCurrentDateTime();
@@ -82,7 +84,8 @@ public class actFoodIntakeTracker extends AppCompatActivity {
         pbAddCalories.setVisibility(View.GONE);
         btnAddCalories.setVisibility(View.VISIBLE);
 
-        fetchCalorieData(userId,storedDate[0]);
+        fetchCalorieData(userId);
+
         btnAddCalories.setOnClickListener(v -> {
             pbAddCalories.setVisibility(View.VISIBLE);
             btnAddCalories.setVisibility(View.GONE);
@@ -100,7 +103,7 @@ public class actFoodIntakeTracker extends AppCompatActivity {
                     DocumentReference docRef = db.collection("users").document(userId);
                     docRef.get().addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
-                            int caloriePercent, dailyCalorieTaken, weeklyCalorieTaken, calorieDailyGoal;
+                            int dailyCalorieTaken, weeklyCalorieTaken, calorieDailyGoal;
 
                              dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
                              weeklyCalorieTaken = documentSnapshot.getLong("weeklyCalorieTaken").intValue();
@@ -110,64 +113,31 @@ public class actFoodIntakeTracker extends AppCompatActivity {
                              weeklyCalorieTaken += Integer.parseInt(inputCalorie);
 
                              saveWeeklyCalorie(userId, day, dailyCalorieTaken);
-                             checkGoalAchievement(dailyCalorieTaken, calorieDailyGoal, userId, storedDate[0]);
+                             checkGoalAchievement(dailyCalorieTaken, calorieDailyGoal, userId);
 
-                             if (calorieDailyGoal != 0) {
-                                    caloriePercent = Math.min((int) (((double) dailyCalorieTaken / calorieDailyGoal) * 100), 100);
-                                } else {
-                                    caloriePercent = 0;
-                                }
+                            Map<String, Object> calories = new HashMap<>();
+                            calories.put("dailyCalorieTaken", dailyCalorieTaken);
+                            calories.put("weeklyCalorieTaken", weeklyCalorieTaken);
 
-                                Map<String, Object> calories = new HashMap<>();
-                                calories.put("dailyCalorieTaken", dailyCalorieTaken);
-                                calories.put("weeklyCalorieTaken", weeklyCalorieTaken);
+                            docRef.update(calories)
+                                    .addOnSuccessListener(unused -> {
+                                        fetchCalorieData(userId);
 
-                                if(storedDate[0].equals(currentDate) || storedDate[0] == null || storedDate[0].isEmpty()){
-                                    Log.d(TAG, storedDate[0] + " is equal to " + currentDate);
+                                        dataManager.saveCurrentDateTime();
 
-                                    tvCalorieTrackerTaken.setText(Integer.toString(dailyCalorieTaken) + " Kcal");
-                                    tvCalorieTrackerPercent.setText(Integer.toString(caloriePercent) + "%");
-                                    pbCalorieTracker.setMax(100);
-                                    pbCalorieTracker.setProgress(caloriePercent);
+                                        pbAddCalories.setVisibility(View.GONE);
+                                        btnAddCalories.setVisibility(View.VISIBLE);
 
-                                    docRef.update(calories)
-                                            .addOnSuccessListener(unused -> {
-                                                dataManager.saveCurrentDateTime();
+                                        Toast.makeText(actFoodIntakeTracker.this, "Successfully entered calories taken", Toast.LENGTH_SHORT).show();
+                                        etCalorieTrackerInput.setText("");
+                                        Log.d(TAG, "Successfully added " + inputCalorie);
+                                    }).addOnFailureListener(e -> {
+                                        pbAddCalories.setVisibility(View.GONE);
+                                        btnAddCalories.setVisibility(View.VISIBLE);
 
-                                                pbAddCalories.setVisibility(View.GONE);
-                                                btnAddCalories.setVisibility(View.VISIBLE);
-
-                                                Toast.makeText(actFoodIntakeTracker.this, "Successfully entered calories taken", Toast.LENGTH_SHORT).show();
-                                                etCalorieTrackerInput.setText("");
-                                                Log.d(TAG, "Successfully added " + inputCalorie);
-                                            }).addOnFailureListener(e -> {
-                                                pbAddCalories.setVisibility(View.GONE);
-                                                btnAddCalories.setVisibility(View.VISIBLE);
-
-                                                Log.e(TAG, "Failed to add " + inputCalorie);
-                                                Toast.makeText(actFoodIntakeTracker.this, "Failed to enter calories taken", Toast.LENGTH_SHORT).show();
-                                            });
-                                }else{
-                                    Log.d(TAG, storedDate[0] + " is not equal to " + currentDate);
-                                    dataManager.saveCurrentDateTime();
-
-                                    dailyCalorieTaken = Integer.parseInt(inputCalorie);
-                                    Map<String, Object> calorieTaken = new HashMap<>();
-                                    calorieTaken.put("dailyCalorieTaken", dailyCalorieTaken);
-
-                                    docRef.update(calorieTaken)
-                                            .addOnSuccessListener(unused -> {
-                                                pbAddCalories.setVisibility(View.GONE);
-                                                btnAddCalories.setVisibility(View.VISIBLE);
-
-                                                Log.d(TAG, "Successfully updated daily calorie taken");
-                                            }).addOnFailureListener(e -> {
-                                                pbAddCalories.setVisibility(View.GONE);
-                                                btnAddCalories.setVisibility(View.VISIBLE);
-
-                                                Log.e(TAG, "Failed to update daily calorie taken");
-                                            });
-                                }
+                                        Log.e(TAG, "Failed to add " + inputCalorie);
+                                        Toast.makeText(actFoodIntakeTracker.this, "Failed to enter calories taken", Toast.LENGTH_SHORT).show();
+                                    });
                         } else {
                             pbAddCalories.setVisibility(View.GONE);
                             btnAddCalories.setVisibility(View.VISIBLE);
@@ -209,66 +179,55 @@ public class actFoodIntakeTracker extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void fetchCalorieData(String userId, String storedDateTime) {
-        String currentDate = getCurrentDateTime();
+    private void fetchCalorieData(String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int calorieDailyGoal, dailyCalorieTaken, caloriePercent;
+            calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
+            dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
 
-        if (storedDateTime.equals(currentDate)) {
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    updateCalorieUI(documentSnapshot);
-                } else {
-                    Log.e(TAG, "Document does not exist");
-                }
-            }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
-        } else {
-            Map<String, Object> calorieData = new HashMap<>();
-            calorieData.put("dailyCalorieTaken", 0);
-            docRef.update(calorieData)
-                    .addOnSuccessListener(unused -> {
-                        Log.d(TAG, "Successfully updated dailyCalorieTaken to zero");
-                    }).addOnFailureListener(e -> {
-                        Log.e(TAG, "Error updating dailyCalorieTaken to zero");
-                    });
-
-            updateCalorieUI(null);
-        }
-    }
-
-    private void updateCalorieUI(@Nullable DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            int calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal") != null ? documentSnapshot.getLong("calorieDailyGoal").intValue() : 0;
-            int dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken") != null ? documentSnapshot.getLong("dailyCalorieTaken").intValue() : 0;
-
-            int caloriePercent = 0;
             if (calorieDailyGoal != 0) {
                 caloriePercent = Math.min((int) (((double) dailyCalorieTaken / calorieDailyGoal) * 100), 100);
+            }else{
+                caloriePercent = 0;
             }
 
             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(calorieDailyGoal);
             String formattedCalorieTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyCalorieTaken);
 
-            tvCalorieTrackerTaken.setText(formattedCalorieTaken + " Kcal");
+            tvCalorieTrackerTaken.setText(formattedCalorieTaken);
             tvCalorieTrackerGoal.setText(formattedDailyGoal);
             tvCalorieTrackerPercent.setText(String.valueOf(caloriePercent) + "%");
             pbCalorieTracker.setMax(100);
             pbCalorieTracker.setProgress(caloriePercent);
-        } else {
-            Log.e(TAG, "Document snapshot is null or does not exist");
-        }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch calorie data");
+        });
     }
 
-    private void checkGoalAchievement(int dailyCalorieTaken, int calorieDailyGoal, String userId, String storedDateTime) {
-        String currentDateTime = getCurrentDateTime();
+    private void checkStepGoalAchievement(int dailyStepTaken, int steDailyGoal, String userId) {
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    boolean isStepDailyGoal = documentSnapshot.getBoolean("isStepDailyGoal");
 
+                    if (!isStepDailyGoal && dailyStepTaken >= steDailyGoal) {
+                        updateStepGoalStatus(docRef, true);
+
+                        Intent intent = new Intent(getApplicationContext(), bannerStepGoalAchieved.class);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching isStepDailyGoal: " + e.getMessage());
+                });
+    }
+
+    private void checkGoalAchievement(int dailyCalorieTaken, int calorieDailyGoal, String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
         docRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     boolean isCalorieDailyGoal = documentSnapshot.getBoolean("isCalorieDailyGoal");
-
-                    if (!storedDateTime.equals(currentDateTime)) {
-                        updateCalorieGoalStatus(docRef, false);
-                    }
 
                     if (!isCalorieDailyGoal && dailyCalorieTaken >= calorieDailyGoal) {
                         updateCalorieGoalStatus(docRef, true);
@@ -295,6 +254,68 @@ public class actFoodIntakeTracker extends AppCompatActivity {
                 });
     }
 
+    private void updateStepGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
+        Map<String, Object> goalData = new HashMap<>();
+        goalData.put("isStepDailyGoal", isGoalAchieved);
+
+        docRef.update(goalData)
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "Successfully updated isStepDailyGoal");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to update isStepDailyGoal: " + e.getMessage());
+                });
+    }
+
+    private void initializeStepSensor() {
+        Log.d(TAG, "initializeStepSensor");
+
+        stepSensorManager = new StepSensorManager(this, stepCount -> {
+            Log.d(TAG, "Listening...");
+
+            DataManager dataManager = new DataManager(actFoodIntakeTracker.this);
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String userId = currentUser.getUid();
+            String day = getCurrentDay();
+
+            DocumentReference docRef = db.collection("users").document(userId);
+            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                if(documentSnapshot.exists()){
+                    int dailyStepTaken, weeklyStepTaken, stepDailyGoal;
+
+                    dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+                    weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
+                    stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+
+                    dailyStepTaken += stepCount;
+                    weeklyStepTaken += stepCount;
+                    Log.d(TAG, "Daily Step Taken: " + dailyStepTaken);
+
+                    saveWeekSteps(userId, day, dailyStepTaken);
+                    checkStepGoalAchievement(dailyStepTaken, stepDailyGoal, userId);
+
+                    Map<String, Object> steps = new HashMap<>();
+                    steps.put("dailyStepTaken", dailyStepTaken);
+                    steps.put("weeklyStepTaken", weeklyStepTaken);
+
+                    docRef.update(steps).addOnSuccessListener(unused -> {
+                        Log.d(TAG, "Successfully updated dailyStepTaken and weeklyStepTaken");
+                        dataManager.saveCurrentDateTime();
+                    }).addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to update dailyStepTaken and weeklyStepTaken");
+                    });
+                }else{
+                    Log.e(TAG, "No such document");
+                }
+            }).addOnFailureListener(e -> {
+                Log.e(TAG, "Failed to fetch document: " + e.getMessage());
+            });
+        });
+        stepSensorManager.registerListener();
+    }
+
+
     private String getCurrentDay(){
         Date date = new Date();
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEE", Locale.getDefault());
@@ -302,13 +323,43 @@ public class actFoodIntakeTracker extends AppCompatActivity {
         return dayFormat.format(date);
     }
 
-    private String getCurrentDateTime(){
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private void saveWeekSteps(String userId, String day, int dailyStepTaken){
+        DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
+        Map<String, Object> stepData = new HashMap<>();
 
-        return sdf.format(date);
+        switch (day){
+            case "Mon":
+                stepData.put("mon", dailyStepTaken);
+                break;
+            case "Tue":
+                stepData.put("tue", dailyStepTaken);
+                break;
+            case "Wed":
+                stepData.put("wed", dailyStepTaken);
+                break;
+            case "Thu":
+                stepData.put("thu", dailyStepTaken);
+                break;
+            case "Fri":
+                stepData.put("fri", dailyStepTaken);
+                break;
+            case "Sat":
+                stepData.put("sat", dailyStepTaken);
+                break;
+            case "Sun":
+                stepData.put("sun", dailyStepTaken);
+                break;
+            default:
+                Log.w(TAG, day + " is not available");
+        }
+
+        weeklyStepRef.update(stepData)
+                .addOnSuccessListener(unused -> {
+                    Log.i(TAG, "Successfully added " + stepData + " to Firestore");
+                }).addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to add " + stepData + " to Firestore");
+                });
     }
-
 
     private void saveWeeklyCalorie(String userId, String day, int dailyCalorieTaken){
         DocumentReference weeklyCalorieRef = db.collection("weekly_calorie").document(userId);
@@ -365,12 +416,33 @@ public class actFoodIntakeTracker extends AppCompatActivity {
         }
     }
 
-
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             currentUser.reload();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (stepSensorManager != null) {
+            stepSensorManager.unregisterListener();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_ACTIVITY_RECOGNITION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, initialize step sensor
+                initializeStepSensor();
+            } else {
+                // Permission denied, show a message or take appropriate action
+                Toast.makeText(this, "Permission denied. Step tracking won't work.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

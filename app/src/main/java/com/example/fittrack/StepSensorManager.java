@@ -27,7 +27,7 @@ public class StepSensorManager {
 
     public void registerListener() {
         if (stepSensor != null) {
-            Log.e("StepSensorManager", "StepSensor Registered");
+            Log.d("StepSensorManager", "StepSensor Registered");
             sensorManager.registerListener(stepDetector, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
             Log.e("StepSensorManager", "Step sensor is not available on this device");
@@ -35,7 +35,7 @@ public class StepSensorManager {
     }
 
     public void unregisterListener() {
-        Log.e("StepSensorManager", "StepSensor Unregistered");
+        Log.d("StepSensorManager", "StepSensor Unregistered");
         sensorManager.unregisterListener(stepDetector);
     }
 

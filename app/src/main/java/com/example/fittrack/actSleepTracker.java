@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -47,6 +48,8 @@ public class actSleepTracker extends AppCompatActivity {
     private static final int THEME_DEFAULT = 0;
     private static final int THEME_ORANGE = 1;
     private static final int THEME_GREEN = 2;
+    private static final int REQUEST_ACTIVITY_RECOGNITION_PERMISSION = 1;
+
 
     FirebaseAuth mAuth;
     ImageView imBackBtn;
@@ -55,6 +58,8 @@ public class actSleepTracker extends AppCompatActivity {
     ProgressBar pbSleepTracker, pbAddHours;
     Button btnAddHours;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StepSensorManager stepSensorManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +72,6 @@ public class actSleepTracker extends AppCompatActivity {
         String userId = currentUser.getUid();
         DataManager dataManager = new DataManager(this);
         final String[] storedDate = {dataManager.getStoredDate()};
-        String currentDate = getCurrentDateTime();
 
         if(storedDate[0] == null || storedDate[0].isEmpty()){
             dataManager.saveCurrentDateTime();
@@ -86,13 +90,14 @@ public class actSleepTracker extends AppCompatActivity {
         pbAddHours.setVisibility(View.GONE);
         btnAddHours.setVisibility(View.VISIBLE);
 
-        fetchSleepData(userId,storedDate[0]);
+        fetchSleepData(userId);
 
         btnAddHours.setOnClickListener(v -> {
             pbAddHours.setVisibility(View.VISIBLE);
             btnAddHours.setVisibility(View.GONE);
             String inputSleep = etSleepTrackerInput.getText().toString().trim();
             String day = getCurrentDay();
+
             try {
                 if (inputSleep.isEmpty()) {
                     pbAddHours.setVisibility(View.GONE);
@@ -131,7 +136,8 @@ public class actSleepTracker extends AppCompatActivity {
                         weeklySleepTaken += Integer.parseInt(inputSleep);
 
                         saveWeeklySleep(userId, day, dailySleepTaken);
-                        checkGoalAchievement(dailySleepTaken, sleepDailyGoal, userId, storedDate[0]);
+                        checkGoalAchievement(dailySleepTaken, sleepDailyGoal, userId);
+
                         if (sleepDailyGoal != 0) {
                             sleepPercent = Math.min((int) (((double) dailySleepTaken / sleepDailyGoal) * 100), 100);
                         } else {
@@ -147,44 +153,22 @@ public class actSleepTracker extends AppCompatActivity {
                         pbSleepTracker.setMax(100);
                         pbSleepTracker.setProgress(sleepPercent);
 
-                        if(storedDate[0].equals(currentDate) || storedDate[0] == null || storedDate[0].isEmpty()) {
-                            docRef.update(sleep)
-                                    .addOnSuccessListener(unused -> {
-                                        Toast.makeText(actSleepTracker.this, "Successfully entered hours of sleep taken", Toast.LENGTH_SHORT).show();
-                                        dataManager.saveCurrentDateTime();
-                                        pbAddHours.setVisibility(View.GONE);
-                                        btnAddHours.setVisibility(View.VISIBLE);
-                                        etSleepTrackerInput.setText("");
-                                        Log.d(TAG, "Successfully added " + inputSleep);
-                                    }).addOnFailureListener(e -> {
-                                        pbAddHours.setVisibility(View.GONE);
-                                        btnAddHours.setVisibility(View.VISIBLE);
+                        docRef.update(sleep)
+                                .addOnSuccessListener(unused -> {
+                                    fetchSleepData(userId);
+                                    Toast.makeText(actSleepTracker.this, "Successfully entered hours of sleep taken", Toast.LENGTH_SHORT).show();
+                                    dataManager.saveCurrentDateTime();
+                                    pbAddHours.setVisibility(View.GONE);
+                                    btnAddHours.setVisibility(View.VISIBLE);
+                                    etSleepTrackerInput.setText("");
+                                    Log.d(TAG, "Successfully added " + inputSleep);
+                                }).addOnFailureListener(e -> {
+                                    pbAddHours.setVisibility(View.GONE);
+                                    btnAddHours.setVisibility(View.VISIBLE);
 
-                                        Log.e(TAG, "Failed to add " + inputSleep);
-                                        Toast.makeText(actSleepTracker.this, "Failed to enter hours of sleep taken", Toast.LENGTH_SHORT).show();
-                                    });
-                        }else{
-                            Log.d(TAG, storedDate[0] + " is not equal to " + currentDate);
-                            dataManager.saveCurrentDateTime();
-
-                            dailySleepTaken = Integer.parseInt(inputSleep);
-                            Map<String, Object> sleepTaken = new HashMap<>();
-
-                            sleepTaken.put("dailySleepTaken", dailySleepTaken);
-
-                            docRef.update(sleepTaken)
-                                    .addOnSuccessListener(unused -> {
-                                        pbAddHours.setVisibility(View.GONE);
-                                        btnAddHours.setVisibility(View.VISIBLE);
-
-                                        Log.d(TAG, "Successfully updated daily sleep taken");
-                                    }).addOnFailureListener(e -> {
-                                        pbAddHours.setVisibility(View.GONE);
-                                        btnAddHours.setVisibility(View.VISIBLE);
-
-                                        Log.e(TAG, "Failed to update daily sleep taken");
-                                    });
-                        }
+                                    Log.e(TAG, "Failed to add " + inputSleep);
+                                    Toast.makeText(actSleepTracker.this, "Failed to enter hours of sleep taken", Toast.LENGTH_SHORT).show();
+                                });
                     } else {
                         pbAddHours.setVisibility(View.GONE);
                         btnAddHours.setVisibility(View.VISIBLE);
@@ -225,65 +209,56 @@ public class actSleepTracker extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-    private void fetchSleepData(String userId, String storedDateTime) {
-        String currentDate = getCurrentDateTime();
+    private void fetchSleepData(String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
 
-        if (storedDateTime.equals(currentDate)) {
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    updateSleepUI(documentSnapshot);
-                } else {
-                    Log.e(TAG, "Document does not exist");
-                }
-            }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
-        } else {
-            Map<String, Object> sleepData = new HashMap<>();
-            sleepData.put("dailySleepTaken", 0);
-            docRef.update(sleepData)
-                    .addOnSuccessListener(unused -> {
-                        Log.d(TAG, "Successfully updated dailySleepTaken to zero");
-                    }).addOnFailureListener(e -> {
-                        Log.e(TAG, "Error updating dailySleepTaken to zero");
-                    });
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int sleepDailyGoal, dailySleepTaken, sleepPercent;
+            sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal").intValue();
+            dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
 
-            updateSleepUI(null);
-        }
-    }
-
-    private void updateSleepUI(@Nullable DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            int sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal") != null ? documentSnapshot.getLong("sleepDailyGoal").intValue() : 0;
-            int dailySleepTaken = documentSnapshot.getLong("dailySleepTaken") != null ? documentSnapshot.getLong("dailySleepTaken").intValue() : 0;
-
-            int sleepPercent = 0;
             if (sleepDailyGoal != 0) {
                 sleepPercent = Math.min((int) (((double) dailySleepTaken / sleepDailyGoal) * 100), 100);
+            }else{
+                sleepPercent = 0;
             }
 
             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(sleepDailyGoal);
             String formattedSleepTaken = NumberFormat.getNumberInstance(Locale.US).format(dailySleepTaken);
 
-            tvSleepTrackerTaken.setText(formattedSleepTaken + " Hours");
+            tvSleepTrackerTaken.setText(formattedSleepTaken);
             tvSleepTrackerGoal.setText(formattedDailyGoal);
             tvSleepTrackerPercent.setText(String.valueOf(sleepPercent) + "%");
             pbSleepTracker.setMax(100);
             pbSleepTracker.setProgress(sleepPercent);
-        } else {
-            Log.e(TAG, "Document snapshot is null or does not exist");
-        }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch sleep data");
+        });
     }
-    private void checkGoalAchievement(int dailySleepTaken, int sleepDailyGoal, String userId, String storedDateTime) {
-        String currentDateTime = getCurrentDateTime();
 
+    private void checkStepGoalAchievement(int dailyStepTaken, int steDailyGoal, String userId) {
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    boolean isStepDailyGoal = documentSnapshot.getBoolean("isStepDailyGoal");
+
+                    if (!isStepDailyGoal && dailyStepTaken >= steDailyGoal) {
+                        updateStepGoalStatus(docRef, true);
+
+                        Intent intent = new Intent(getApplicationContext(), bannerStepGoalAchieved.class);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching isStepDailyGoal: " + e.getMessage());
+                });
+    }
+
+    private void checkGoalAchievement(int dailySleepTaken, int sleepDailyGoal, String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
         docRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     boolean isSleepDailyGoal = documentSnapshot.getBoolean("isSleepDailyGoal");
-
-                    if (!storedDateTime.equals(currentDateTime)) {
-                        updateSleepGoalStatus(docRef, false);
-                    }
 
                     if (!isSleepDailyGoal && dailySleepTaken >= sleepDailyGoal) {
                         updateSleepGoalStatus(docRef, true);
@@ -309,6 +284,19 @@ public class actSleepTracker extends AppCompatActivity {
                     Log.e(TAG, "Failed to update isSleepDailyGoal: " + e.getMessage());
                 });
     }
+    private void updateStepGoalStatus(DocumentReference docRef, boolean isGoalAchieved) {
+        Map<String, Object> goalData = new HashMap<>();
+        goalData.put("isStepDailyGoal", isGoalAchieved);
+
+        docRef.update(goalData)
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "Successfully updated isStepDailyGoal");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to update isStepDailyGoal: " + e.getMessage());
+                });
+    }
+
     private String getCurrentDay(){
         Date date = new Date();
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEE", Locale.getDefault());
@@ -322,6 +310,94 @@ public class actSleepTracker extends AppCompatActivity {
 
         return sdf.format(date);
     }
+
+    private void initializeStepSensor() {
+        Log.d(TAG, "initializeStepSensor");
+
+        stepSensorManager = new StepSensorManager(this, stepCount -> {
+            Log.d(TAG, "Listening...");
+
+            DataManager dataManager = new DataManager(actSleepTracker.this);
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String userId = currentUser.getUid();
+            String day = getCurrentDay();
+
+            DocumentReference docRef = db.collection("users").document(userId);
+            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                if(documentSnapshot.exists()){
+                    int dailyStepTaken, weeklyStepTaken, stepDailyGoal;
+
+                    dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+                    weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
+                    stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+
+                    dailyStepTaken += stepCount;
+                    weeklyStepTaken += stepCount;
+                    Log.d(TAG, "Daily Step Taken: " + dailyStepTaken);
+
+                    saveWeekSteps(userId, day, dailyStepTaken);
+                    checkStepGoalAchievement(dailyStepTaken, stepDailyGoal, userId);
+
+                    Map<String, Object> steps = new HashMap<>();
+                    steps.put("dailyStepTaken", dailyStepTaken);
+                    steps.put("weeklyStepTaken", weeklyStepTaken);
+
+                    docRef.update(steps).addOnSuccessListener(unused -> {
+                        Log.d(TAG, "Successfully updated dailyStepTaken and weeklyStepTaken");
+                        dataManager.saveCurrentDateTime();
+                    }).addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to update dailyStepTaken and weeklyStepTaken");
+                    });
+                }else{
+                    Log.e(TAG, "No such document");
+                }
+            }).addOnFailureListener(e -> {
+                Log.e(TAG, "Failed to fetch document: " + e.getMessage());
+            });
+        });
+        stepSensorManager.registerListener();
+    }
+
+
+    private void saveWeekSteps(String userId, String day, int dailyStepTaken){
+        DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
+        Map<String, Object> stepData = new HashMap<>();
+
+        switch (day){
+            case "Mon":
+                stepData.put("mon", dailyStepTaken);
+                break;
+            case "Tue":
+                stepData.put("tue", dailyStepTaken);
+                break;
+            case "Wed":
+                stepData.put("wed", dailyStepTaken);
+                break;
+            case "Thu":
+                stepData.put("thu", dailyStepTaken);
+                break;
+            case "Fri":
+                stepData.put("fri", dailyStepTaken);
+                break;
+            case "Sat":
+                stepData.put("sat", dailyStepTaken);
+                break;
+            case "Sun":
+                stepData.put("sun", dailyStepTaken);
+                break;
+            default:
+                Log.w(TAG, day + " is not available");
+        }
+
+        weeklyStepRef.update(stepData)
+                .addOnSuccessListener(unused -> {
+                    Log.i(TAG, "Successfully added " + stepData + " to Firestore");
+                }).addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to add " + stepData + " to Firestore");
+                });
+    }
+
 
     private void saveWeeklySleep(String userId, String day, int dailySleepTaken){
         DocumentReference weeklySleepRef = db.collection("weekly_sleep").document(userId);
@@ -377,12 +453,33 @@ public class actSleepTracker extends AppCompatActivity {
         }
     }
 
-
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             currentUser.reload();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (stepSensorManager != null) {
+            stepSensorManager.unregisterListener();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_ACTIVITY_RECOGNITION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, initialize step sensor
+                initializeStepSensor();
+            } else {
+                // Permission denied, show a message or take appropriate action
+                Toast.makeText(this, "Permission denied. Step tracking won't work.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

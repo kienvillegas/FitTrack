@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -24,6 +25,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,8 +57,10 @@ public class actStepTracker extends AppCompatActivity{
     EditText etStepTracker;
     Button btnAddSteps;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final int REQUEST_ACTIVITY_RECOGNITION_PERMISSION = 1;
+    private StepSensorManager stepSensorManager;
 
-    private int stepCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,19 +70,18 @@ public class actStepTracker extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String userId = currentUser.getUid();
-        DataManager dataManager = new DataManager(this);
+        DataManager dataManager = new DataManager(actStepTracker.this);
+
         final String[] storedDate = {dataManager.getStoredDate()};
         String currentDate = getCurrentDateTime();
 
         DocumentReference docRef = db.collection("users").document(userId);
 
-        if(storedDate[0] == null || storedDate[0].isEmpty()){
+        if (storedDate[0] == null || storedDate[0].isEmpty()) {
             dataManager.saveCurrentDateTime();
             storedDate[0] = dataManager.getStoredDate();
         }
 
-        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Sensor stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         pbStepTracker = findViewById(R.id.pbStepTracker);
         imBackBtn = findViewById(R.id.imStepTrackerBack);
 
@@ -90,40 +95,22 @@ public class actStepTracker extends AppCompatActivity{
         pbAddSteps.setVisibility(View.GONE);
         btnAddSteps.setVisibility(View.VISIBLE);
 
-        fetchStepsData(userId,storedDate[0]);
+        fetchStepsData(userId);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
+                    REQUEST_ACTIVITY_RECOGNITION_PERMISSION);
+        } else {
+            initializeStepSensor();
+        }
 
-        btnAddSteps.setOnClickListener(v -> {
-            pbAddSteps.setVisibility(View.VISIBLE);
-            btnAddSteps.setVisibility(View.GONE);
-            String inputStep = etStepTracker.getText().toString().trim();
-            String day = getCurrentDay();
-
-            try{
-                docRef.get().addOnSuccessListener(documentSnapshot -> {
-                    if(documentSnapshot.exists()){
-                        final int[] stepPercent = new int[1];
-                        final int[] dailyStepTaken = new int[1];
-                        final int[] weeklyStepTaken = new int[1];
-                        int stepDailyGoal;
-                        int stepWeeklyGoal;
-                        dailyStepTaken[0] = documentSnapshot.getLong("dailyStepTaken").intValue();
-                        weeklyStepTaken[0] = documentSnapshot.getLong("weeklyStepTaken").intValue();
-                        stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
-                        stepWeeklyGoal = documentSnapshot.getLong("stepWeeklyGoal").intValue();
-
-                        if(stepCounterSensor == null){
-                            Log.d(TAG, "StepCounterSensor is null");
-                            return;
-                        }
-                    }else{
-                        Log.e(TAG, "No such document");
-                    }
-                }).addOnFailureListener(e -> {
-                    Log.e(TAG, "Fail to fetch data: " + e.getMessage());
-                });
-            }catch(Exception e){
-                Log.e(TAG, e.getMessage());
-            }
+//        btnAddSteps.setOnClickListener(v -> {
+//            pbAddSteps.setVisibility(View.VISIBLE);
+//            btnAddSteps.setVisibility(View.GONE);
+//            String inputStep = etStepTracker.getText().toString().trim();
+//            String day = getCurrentDay();
+//
 //            try {
 //                if (inputStep.isEmpty()) {
 //                    pbAddSteps.setVisibility(View.GONE);
@@ -166,46 +153,46 @@ public class actStepTracker extends AppCompatActivity{
 //                                pbStepTracker.setMax(100);
 //                                pbStepTracker.setProgress(stepPercent);
 //
-//                                if(storedDate[0].equals(currentDate) || storedDate[0] == null || storedDate[0].isEmpty()){
-//                                    Log.d(TAG, storedDate[0] + " is equal to " + currentDate);
-//
-//                                    docRef.update(steps)
-//                                            .addOnSuccessListener(unused -> {
-//                                                dataManager.saveCurrentDateTime();
-//                                                pbAddSteps.setVisibility(View.GONE);
-//                                                btnAddSteps.setVisibility(View.VISIBLE);
-//
-//                                                Toast.makeText(actStepTracker.this, "Successfully entered steps taken", Toast.LENGTH_SHORT).show();
-//                                                etStepTracker.setText("");
-//                                                Log.d(TAG, "Successfully added " + inputStep);
-//                                            }).addOnFailureListener(e -> {
-//                                                pbAddSteps.setVisibility(View.GONE);
-//                                                btnAddSteps.setVisibility(View.VISIBLE);
-//
-//                                                Log.e(TAG, "Failed to add " + inputStep);
-//                                                Toast.makeText(actStepTracker.this, "Failed to enter steps taken", Toast.LENGTH_SHORT).show();
-//                                            });
-//                                }else{
-//                                    Log.e(TAG, storedDate[0] + " is not equal to " + currentDate);
-//                                    dataManager.saveCurrentDateTime();
-//
-//                                    dailyStepTaken = Integer.parseInt(inputStep);
-//                                    Map<String, Object> stepTaken = new HashMap<>();
-//                                    stepTaken.put("dailyStepTaken", dailyStepTaken);
-//
-//                                    docRef.update(stepTaken)
-//                                            .addOnSuccessListener(unused -> {
-//                                                pbAddSteps.setVisibility(View.GONE);
-//                                                btnAddSteps.setVisibility(View.VISIBLE);
-//
-//                                                Log.d(TAG, "Successfully updated daily step taken");
-//                                            }).addOnFailureListener(e -> {
-//                                                pbAddSteps.setVisibility(View.GONE);
-//                                                btnAddSteps.setVisibility(View.VISIBLE);
-//
-//                                                Log.e(TAG, "Failed to update daily step taken");
-//                                            });
-//                                }
+////                                if(storedDate[0].equals(currentDate) || storedDate[0] == null || storedDate[0].isEmpty()){
+////                                    Log.d(TAG, storedDate[0] + " is equal to " + currentDate);
+////
+////                                    docRef.update(steps)
+////                                            .addOnSuccessListener(unused -> {
+////                                                dataManager.saveCurrentDateTime();
+////                                                pbAddSteps.setVisibility(View.GONE);
+////                                                btnAddSteps.setVisibility(View.VISIBLE);
+////
+////                                                Toast.makeText(actStepTracker.this, "Successfully entered steps taken", Toast.LENGTH_SHORT).show();
+////                                                etStepTracker.setText("");
+////                                                Log.d(TAG, "Successfully added " + inputStep);
+////                                            }).addOnFailureListener(e -> {
+////                                                pbAddSteps.setVisibility(View.GONE);
+////                                                btnAddSteps.setVisibility(View.VISIBLE);
+////
+////                                                Log.e(TAG, "Failed to add " + inputStep);
+////                                                Toast.makeText(actStepTracker.this, "Failed to enter steps taken", Toast.LENGTH_SHORT).show();
+////                                            });
+////                                }else{
+////                                    Log.e(TAG, storedDate[0] + " is not equal to " + currentDate);
+////                                    dataManager.saveCurrentDateTime();
+////
+////                                    dailyStepTaken = Integer.parseInt(inputStep);
+////                                    Map<String, Object> stepTaken = new HashMap<>();
+////                                    stepTaken.put("dailyStepTaken", dailyStepTaken);
+////
+////                                    docRef.update(stepTaken)
+////                                            .addOnSuccessListener(unused -> {
+////                                                pbAddSteps.setVisibility(View.GONE);
+////                                                btnAddSteps.setVisibility(View.VISIBLE);
+////
+////                                                Log.d(TAG, "Successfully updated daily step taken");
+////                                            }).addOnFailureListener(e -> {
+////                                                pbAddSteps.setVisibility(View.GONE);
+////                                                btnAddSteps.setVisibility(View.VISIBLE);
+////
+////                                                Log.e(TAG, "Failed to update daily step taken");
+////                                            });
+////                                }
 //                        } else {
 //                            pbAddSteps.setVisibility(View.GONE);
 //                            btnAddSteps.setVisibility(View.VISIBLE);
@@ -220,7 +207,7 @@ public class actStepTracker extends AppCompatActivity{
 //
 //                Toast.makeText(actStepTracker.this, "An Error Occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 //            }
-        });
+//        });
 
         etStepTracker.addTextChangedListener(new TextWatcher() {
             @Override
@@ -249,40 +236,17 @@ public class actStepTracker extends AppCompatActivity{
         super.onBackPressed();
     }
 
-    private void fetchStepsData(String userId, String storedDateTime) {
-        String currentDate = getCurrentDateTime();
+    private void fetchStepsData(String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            int stepDailyGoal, dailyStepTaken, stepPercent;
+            stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+            dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
 
-        if (storedDateTime.equals(currentDate)) {
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    updateStepUI(documentSnapshot);
-                } else {
-                    Log.e(TAG, "Document does not exist");
-                }
-            }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
-        } else {
-            Map<String, Object> stepData = new HashMap<>();
-            stepData.put("dailyStepTaken", 0);
-            docRef.update(stepData)
-                    .addOnSuccessListener(unused -> {
-                        Log.d(TAG, "Successfully updated dailyStepTaken to zero");
-                    }).addOnFailureListener(e -> {
-                        Log.e(TAG, "Error updating dailyStepTaken to zero");
-                    });
-
-            updateStepUI(null);
-        }
-    }
-
-    private void updateStepUI(@Nullable DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot != null && documentSnapshot.exists()) {
-            int stepDailyGoal = documentSnapshot.getLong("stepDailyGoal") != null ? documentSnapshot.getLong("stepDailyGoal").intValue() : 0;
-            int dailyStepTaken = documentSnapshot.getLong("dailyStepTaken") != null ? documentSnapshot.getLong("dailyStepTaken").intValue() : 0;
-
-            int stepPercent = 0;
             if (stepDailyGoal != 0) {
                 stepPercent = Math.min((int) (((double) dailyStepTaken / stepDailyGoal) * 100), 100);
+            }else{
+                stepPercent = 0;
             }
 
             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(stepDailyGoal);
@@ -293,22 +257,16 @@ public class actStepTracker extends AppCompatActivity{
             tvStepTrackerPercent.setText(String.valueOf(stepPercent) + "%");
             pbStepTracker.setMax(100);
             pbStepTracker.setProgress(stepPercent);
-        } else {
-            Log.e(TAG, "Document snapshot is null or does not exist");
-        }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch step data");
+        });
     }
 
-    private void checkGoalAchievement(int dailyStepTaken, int steDailyGoal, String userId, String storedDateTime) {
-        String currentDateTime = getCurrentDateTime();
-
+    private void checkGoalAchievement(int dailyStepTaken, int steDailyGoal, String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
         docRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     boolean isStepDailyGoal = documentSnapshot.getBoolean("isStepDailyGoal");
-
-                    if (!storedDateTime.equals(currentDateTime)) {
-                        updateStepGoalStatus(docRef, false);
-                    }
 
                     if (!isStepDailyGoal && dailyStepTaken >= steDailyGoal) {
                         updateStepGoalStatus(docRef, true);
@@ -405,11 +363,83 @@ public class actStepTracker extends AppCompatActivity{
         }
     }
 
+    private void initializeStepSensor() {
+        Log.d(TAG, "initializeStepSensor");
+
+        stepSensorManager = new StepSensorManager(this, stepCount -> {
+            Log.d(TAG, "Listening...");
+
+            DataManager dataManager = new DataManager(actStepTracker.this);
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String userId = currentUser.getUid();
+            String day = getCurrentDay();
+            final String[] storedDate = {dataManager.getStoredDate()};
+
+            DocumentReference docRef = db.collection("users").document(userId);
+            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                if(documentSnapshot.exists()){
+                    int stepPercent, dailyStepTaken, weeklyStepTaken, stepDailyGoal;
+
+                    dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+                    weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
+                    stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+
+                    dailyStepTaken += stepCount;
+                    weeklyStepTaken += stepCount;
+                    Log.d(TAG, "Daily Step Taken: " + dailyStepTaken);
+
+                    saveWeekSteps(userId, day, dailyStepTaken);
+                    checkGoalAchievement(dailyStepTaken, stepDailyGoal,userId);
+
+                    Map<String, Object> steps = new HashMap<>();
+                    steps.put("dailyStepTaken", dailyStepTaken);
+                    steps.put("weeklyStepTaken", weeklyStepTaken);
+
+                    docRef.update(steps).addOnSuccessListener(unused -> {
+                        Log.d(TAG, "Successfully updated dailyStepTaken and weeklyStepTaken");
+                        dataManager.saveCurrentDateTime();
+                        fetchStepsData(userId);
+                    }).addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to update dailyStepTaken and weeklyStepTaken");
+                    });
+                }else{
+                    Log.e(TAG, "No such document");
+                }
+            }).addOnFailureListener(e -> {
+                Log.e(TAG, "Failed to fetch document: " + e.getMessage());
+            });
+        });
+        stepSensorManager.registerListener();
+    }
+
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             currentUser.reload();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (stepSensorManager != null) {
+            stepSensorManager.unregisterListener();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_ACTIVITY_RECOGNITION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, initialize step sensor
+                initializeStepSensor();
+            } else {
+                // Permission denied, show a message or take appropriate action
+                Toast.makeText(this, "Permission denied. Step tracking won't work.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
