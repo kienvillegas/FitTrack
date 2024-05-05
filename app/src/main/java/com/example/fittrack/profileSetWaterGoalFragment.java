@@ -121,6 +121,28 @@ public class profileSetWaterGoalFragment extends Fragment {
                     weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
 
+                if(Integer.parseInt(dailyGoal) > 999999){
+                    pbSetWater.setVisibility(View.GONE);
+                    btnSetWaterGoal.setVisibility(View.VISIBLE);
+                    btnSetWaterCancel.setVisibility(View.VISIBLE);
+
+                    etSetWaterDaily.setBackgroundResource(R.drawable.text_field_red);
+                    etSetWaterDaily.setError("Invalid");
+                    etSetWaterDaily.requestFocus();
+                    return;
+                }
+
+                if(Integer.parseInt(weeklyGoal) > 999999){
+                    pbSetWater.setVisibility(View.GONE);
+                    btnSetWaterGoal.setVisibility(View.VISIBLE);
+                    btnSetWaterCancel.setVisibility(View.VISIBLE);
+
+                    etSetWaterWeekly.setBackgroundResource(R.drawable.text_field_red);
+                    etSetWaterWeekly.setError("Invalid");
+                    etSetWaterWeekly.requestFocus();
+                    return;
+                }
+
                 formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
                 formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
 

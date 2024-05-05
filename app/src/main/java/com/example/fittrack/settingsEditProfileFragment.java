@@ -88,10 +88,13 @@ public class settingsEditProfileFragment extends Fragment {
         DocumentReference userRef = db.collection("users").document(userId);
         DocumentReference docRef = db.collection("users").document(userId);
 
+        hideContentView(view);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
+            showContentView(view);
             String username = documentSnapshot.getString("name");
             tvEditProfileUsername.setText(username);
         }).addOnFailureListener(e -> {
+            showContentView(view);
             Log.e(TAG, e.getMessage());
         });
 
@@ -346,5 +349,83 @@ public class settingsEditProfileFragment extends Fragment {
         });
 
         return view;
+    }
+    private void hideContentView(View view) {
+        try {
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imEditProfile};
+            int[] textViewIds = {R.id.tvEditProfileUsername, R.id.textView158, R.id.textView159, R.id.textView10, R.id.textView14, R.id.textView39};
+            int[] editTextIds = {R.id.etEditProfileUsername, R.id.etEditProfileEmail, R.id.etEditProfilePassword};
+            int[] buttonIds = {R.id.btnEditProfileUsername, R.id.btnEditProfileEmail};
+            int[] progressBarIds = {R.id.pbEditProfileUsername, R.id.pbEditProfileEmail};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = view.findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = view.findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+
+            for (int id : editTextIds) {
+                EditText editText = view.findViewById(id);
+                editText.setVisibility(View.GONE);
+            }
+
+            for (int id : buttonIds) {
+                Button button = view.findViewById(id);
+                button.setVisibility(View.GONE);
+            }
+
+            for (int id : progressBarIds) {
+                ProgressBar progressBar = view.findViewById(id);
+                progressBar.setVisibility(View.GONE);
+            }
+            ProgressBar pbSettingEditProfile = view.findViewById(R.id.pbSettingEditProfile);
+            pbSettingEditProfile.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView(View view) {
+        try {
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imEditProfile};
+            int[] textViewIds = {R.id.tvEditProfileUsername, R.id.textView158, R.id.textView159, R.id.textView10, R.id.textView14, R.id.textView39};
+            int[] editTextIds = {R.id.etEditProfileUsername, R.id.etEditProfileEmail, R.id.etEditProfilePassword};
+            int[] buttonIds = {R.id.btnEditProfileUsername, R.id.btnEditProfileEmail};
+            int[] progressBarIds = {R.id.pbEditProfileUsername, R.id.pbEditProfileEmail};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = view.findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = view.findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : editTextIds) {
+                EditText editText = view.findViewById(id);
+                editText.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : buttonIds) {
+                Button button = view.findViewById(id);
+                button.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : progressBarIds) {
+                ProgressBar progressBar = view.findViewById(id);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            ProgressBar pbSettingEditProfile = view.findViewById(R.id.pbSettingEditProfile);
+            pbSettingEditProfile.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

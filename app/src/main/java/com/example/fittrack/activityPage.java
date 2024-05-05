@@ -6,6 +6,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -22,6 +24,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentContainerView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,9 +39,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Document;
+
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,6 +64,7 @@ public class activityPage extends AppCompatActivity {
     TextView tvActStepPercent, tvActStepTaken, tvActStepGoal, tvDateTimeRecentAct, tvActDayMonDate;
     ProgressBar pbActStep;
     ImageView imRecentActIcon;
+    private PieChart pieChart;
 
     private StepSensorManager stepSensorManager;
 
@@ -74,6 +86,7 @@ public class activityPage extends AppCompatActivity {
         tvDateTimeRecentAct = findViewById(R.id.tvDateTimeRecentAct);
         tvActDayMonDate = findViewById(R.id.tvActDayMonDate);
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavActivity);
+        pieChart = findViewById(R.id.pieChart);
         bottomNav.setSelectedItemId(R.id.nav_activity);
         DataManager dataManager = new DataManager(this);
         final String[] storedDate = {dataManager.getStoredDate()};
@@ -83,8 +96,10 @@ public class activityPage extends AppCompatActivity {
             storedDate[0] = dataManager.getStoredDate();
         }
 
-        fetchStepData(userId, storedDate[0]);
-        fetchRecentActs(userId);
+        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
+        Date date = new Date();
+        String currentDate = dayMonDate.format(date);
+        tvActDayMonDate.setText(currentDate);
 
         bottomNav.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_dashboard) {
@@ -109,100 +124,77 @@ public class activityPage extends AppCompatActivity {
         } else {
             initializeStepSensor();
         }
-    }
 
-    private void fetchStepData(String userId, String storedDateTime) {
         hideContentView();
+        DocumentReference dailyActRef = db.collection("activity_time_spent").document(userId);
+        dailyActRef.get().addOnSuccessListener(documentSnapshot -> {
+            if(documentSnapshot.exists()){
+              fetchPieChartData(documentSnapshot);
+              showContentView();
+            }else{
+                showContentView();
+                Log.e(TAG, "Document does not exist");
+            }
+            fetchRecentActs(userId);
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch collection activity_time_spent: " + e.getMessage());
+        });
+    }
 
-        String currentDate = getCurrentDateTime();
-        DocumentReference docRef = db.collection("users").document(userId);
+    private void fetchPieChartData(DocumentSnapshot documentSnapshot){
+        int running, cycling, swimming, gym, yoga;
+        running = documentSnapshot.getLong("running").intValue();
+        cycling = documentSnapshot.getLong("cycle").intValue();
+        swimming = documentSnapshot.getLong("swim").intValue();
+        yoga = documentSnapshot.getLong("yoga").intValue();
+        gym = documentSnapshot.getLong("gym").intValue();
 
-        if (storedDateTime.equals(currentDate)) {
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    updateStepUI(documentSnapshot);
-                } else {
-                    Log.e(TAG, "Document does not exist");
-                }
-            }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        if(running > 0)  entries.add(new PieEntry(running, "Running"));
+        if(cycling > 0) entries.add(new PieEntry(cycling, "Cycling"));
+        if(swimming > 0) entries.add(new PieEntry(swimming, "Swimming"));
+        if(yoga > 0) entries.add(new PieEntry(yoga, "Yoga"));
+        if(gym > 0) entries.add(new PieEntry(gym, "Gym"));
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.rgb(255, 102, 0));   // Orange
+        colors.add(Color.rgb(51, 153, 255));  // Blue
+        colors.add(Color.rgb(255, 153, 0));   // Yellow
+        colors.add(Color.rgb(0, 204, 0));     // Green
+        colors.add(Color.rgb(255, 0, 0));     // Red
+
+        float totalValue = 0f;
+        for (PieEntry entry : entries) {
+            totalValue += entry.getValue();
+        }
+
+        if (totalValue == 0f) {
+            pieChart.setNoDataText("No chart data available");
         } else {
-            Map<String, Object> stepData = new HashMap<>();
-            stepData.put("dailyStepTaken", 0);
-            docRef.update(stepData)
-                    .addOnSuccessListener(unused -> {
-                        Log.d(TAG, "Successfully updated dailyStepTaken to zero");
-                    }).addOnFailureListener(e -> {
-                        Log.e(TAG, "Error updating dailyStepTaken to zero");
-                    });
+            PieDataSet dataSet = new PieDataSet(entries, "");
+            dataSet.setValueTextSize(14f);
+            dataSet.setSliceSpace(3f);
+            dataSet.setColors(colors);
 
-            updateStepUI(null);
+            PieData data = new PieData(dataSet);
+            data.setValueFormatter(new PercentFormatter());
+
+            pieChart.setUsePercentValues(true);
+            pieChart.setDrawHoleEnabled(true);
+            pieChart.setTransparentCircleRadius(25f);
+            pieChart.setHoleRadius(25f);
+            pieChart.setRotationAngle(0);
+            pieChart.setRotationEnabled(true);
+            pieChart.animateY(1500);
+
+            pieChart.setData(data);
+            pieChart.setExtraOffsets(10f,10f,10f,10f);
+            pieChart.getDescription().setEnabled(false);
+            pieChart.getLegend().setEnabled(false);
+            pieChart.invalidate();
         }
     }
 
-    private void updateStepUI(@Nullable DocumentSnapshot documentSnapshot) {
-        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
-        Date date = new Date();
-        String currentDate = dayMonDate.format(date);
-
-        showContentView();
-
-        if (documentSnapshot != null) {
-            int stepDailyGoal = 0;
-            Long stepDailyGoalLong = documentSnapshot.getLong("stepDailyGoal");
-            if (stepDailyGoalLong != null) {
-                stepDailyGoal = stepDailyGoalLong.intValue();
-            }
-            String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(stepDailyGoal);
-
-            int dailyStepTaken = 0;
-            Long dailyStepTakenLong = documentSnapshot.getLong("dailyStepTaken");
-            if (dailyStepTakenLong != null) {
-                dailyStepTaken = dailyStepTakenLong.intValue();
-            }
-
-            Log.d(TAG, "Step Daily Goal:  " + stepDailyGoal);
-
-            int stepPercent;
-            if (stepDailyGoal != 0) {
-                stepPercent = Math.min((int) (((double) dailyStepTaken / stepDailyGoal) * 100), 100);
-            } else {
-                stepPercent = 0;
-            }
-
-            String formattedStepTaken = NumberFormat.getInstance(Locale.US).format(dailyStepTaken);
-
-            tvActDayMonDate.setText(currentDate);
-            tvActStepTaken.setText(formattedStepTaken);
-            tvActStepGoal.setText(formattedDailyGoal);
-            tvActStepPercent.setText(String.valueOf(stepPercent) + "%");
-            pbActStep.setMax(100);
-            pbActStep.setProgress(stepPercent);
-        } else {
-            int stepDailyGoal = 0;
-            String formattedDailyGoal = NumberFormat.getInstance(Locale.US).format(stepDailyGoal);
-
-            int dailyStepTaken = 0;
-
-            Log.d(TAG, "Step Daily Goal:  " + stepDailyGoal);
-
-            int stepPercent = 0;
-
-            String formattedStepTaken = NumberFormat.getInstance(Locale.US).format(dailyStepTaken);
-
-            tvActDayMonDate.setText(currentDate);
-            tvActStepTaken.setText(formattedStepTaken);
-            tvActStepGoal.setText(formattedDailyGoal);
-            tvActStepPercent.setText(String.valueOf(stepPercent) + "%");
-            pbActStep.setMax(100);
-            pbActStep.setProgress(stepPercent);
-        }
-    }
-    private String getCurrentDateTime(){
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
-        return sdf.format(date);
-    }
     private void fetchRecentActs(String userId) {
         DocumentReference docRef = db.collection("recent_activities").document(userId);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -218,19 +210,19 @@ public class activityPage extends AppCompatActivity {
 
                 if(actName != null){
                     switch (actName) {
-                        case "Running":
+                        case "running":
                             imRecentActIcon.setImageResource(R.drawable.running_icon);
                             break;
-                        case "Cycle":
+                        case "cycle":
                             imRecentActIcon.setImageResource(R.drawable.cycling_icon);
                             break;
-                        case "Swim":
+                        case "swim":
                             imRecentActIcon.setImageResource(R.drawable.swimming_icon);
                             break;
-                        case "Yoga":
+                        case "yoga":
                             imRecentActIcon.setImageResource(R.drawable.yoga_icon);
                             break;
-                        case "Gym":
+                        case "gym":
                             imRecentActIcon.setImageResource(R.drawable.weights_icon);
                             break;
                         default:
@@ -266,6 +258,7 @@ public class activityPage extends AppCompatActivity {
             int[] textViewIds = {R.id.textView5, R.id.textView8, R.id.tvActStepTaken, R.id.textView11, R.id.textView12, R.id.textView16, R.id.textView17, R.id.textView25, R.id.tvDateTimeRecentAct, R.id.tvActStepGoal, R.id.tvActStepPercent};
             int[] progressBarIds = {R.id.pbActStep};
             int[] fragmentIds = {R.id.fragmentContainerView2};
+            int[] chart = {R.id.pieChart};
 
             for (int id : imageViewIds) {
                 ImageView imageView = findViewById(id);
@@ -287,6 +280,11 @@ public class activityPage extends AppCompatActivity {
                 fragmentContainerView.setVisibility(View.GONE);
             }
 
+            for (int id : chart){
+                PieChart pieChart = findViewById(id);
+                pieChart.setVisibility(View.GONE);
+            }
+
             ProgressBar pbActivityContent = findViewById(R.id.pbActivityContent);
             pbActivityContent.setVisibility(View.VISIBLE);
         } catch (Exception e) {
@@ -301,6 +299,7 @@ public class activityPage extends AppCompatActivity {
             int[] textViewIds = {R.id.textView5, R.id.textView8, R.id.tvActStepTaken, R.id.textView11, R.id.textView12, R.id.textView16, R.id.textView17, R.id.textView25, R.id.tvDateTimeRecentAct, R.id.tvActStepGoal, R.id.tvActStepPercent};
             int[] progressBarIds = {R.id.pbActStep};
             int[] fragmentIds = {R.id.fragmentContainerView2};
+            int[] chart = {R.id.pieChart};
 
             for (int id : imageViewIds) {
                 ImageView imageView = findViewById(id);
@@ -321,6 +320,11 @@ public class activityPage extends AppCompatActivity {
                 FragmentContainerView fragmentContainerView = findViewById(id);
                 fragmentContainerView.setVisibility(View.VISIBLE);
             }
+            for (int id : chart){
+                PieChart pieChart = findViewById(id);
+                pieChart.setVisibility(View.VISIBLE);
+            }
+
             ProgressBar pbActivityContent = findViewById(R.id.pbActivityContent);
             pbActivityContent.setVisibility(View.GONE);
         } catch (Exception e) {

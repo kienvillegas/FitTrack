@@ -130,6 +130,28 @@ public class profileSetStepsGoalFragment extends Fragment {
                     weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
 
+                if(Integer.parseInt(dailyGoal) > 999999){
+                    pbSetStep.setVisibility(View.GONE);
+                    btnSetStepGoal.setVisibility(View.VISIBLE);
+                    btnSetStepCancel.setVisibility(View.VISIBLE);
+
+                    etSetStepDaily.setBackgroundResource(R.drawable.text_field_red);
+                    etSetStepDaily.setError("Invalid");
+                    etSetStepDaily.requestFocus();
+                    return;
+                }
+
+                if(Integer.parseInt(weeklyGoal) > 999999){
+                    pbSetStep.setVisibility(View.GONE);
+                    btnSetStepGoal.setVisibility(View.VISIBLE);
+                    btnSetStepCancel.setVisibility(View.VISIBLE);
+
+                    etSetStepWeekly.setBackgroundResource(R.drawable.text_field_red);
+                    etSetStepWeekly.setError("Invalid");
+                    etSetStepWeekly.requestFocus();
+                    return;
+                }
+
                 String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
                 String formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
 

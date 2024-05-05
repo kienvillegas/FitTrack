@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -112,6 +113,22 @@ public class signUp extends AppCompatActivity {
         sleepData.put("fri", 0);
         sleepData.put("sat", 0);
         sleepData.put("sun", 0);
+
+        Map<String, Object> actData = new HashMap<>();
+        actData.put("running",0);
+        actData.put("cycle",0);
+        actData.put("swim",0);
+        actData.put("yoga",0);
+        actData.put("gym",0);
+
+        Map<String, Object> bmiData = new HashMap<>();
+        bmiData.put("mon", 0);
+        bmiData.put("tue", 0);
+        bmiData.put("wed", 0);
+        bmiData.put("thu", 0);
+        bmiData.put("fri", 0);
+        bmiData.put("sat", 0);
+        bmiData.put("sun", 0);
 
         btnSignUp.setOnClickListener(v -> {
             pbSignUp.setVisibility(View.VISIBLE);
@@ -214,6 +231,8 @@ public class signUp extends AppCompatActivity {
                                 DocumentReference weeklyWaterRef = db.collection("weekly_water").document(userId);
                                 DocumentReference weeklyCalorieRef = db.collection("weekly_calorie").document(userId);
                                 DocumentReference weeklySleepRef = db.collection("weekly_sleep").document(userId);
+                                DocumentReference dailyActivityRef = db.collection("activity_time_spent").document(userId);
+                                DocumentReference bmiRef = db.collection("bmi").document(userId);
 
                                 Map<String, Object> userData = new HashMap<>();
                                 userData.put("email", email);
@@ -238,6 +257,8 @@ public class signUp extends AppCompatActivity {
                                 userData.put("isWaterDailyGoal", false);
                                 userData.put("isCalorieDailyGoal", false);
                                 userData.put("isSleepDailyGoal", false);
+                                userData.put("isDailySleepTaken", false);
+                                userData.put("isDailyBMITaken", false);
 
                                 docRef.set(userData)
                                         .addOnSuccessListener(unused -> Log.d(TAG, "Successfully added " + name + " " + email + " to Firestore Database")).addOnFailureListener(new OnFailureListener() {
@@ -252,6 +273,8 @@ public class signUp extends AppCompatActivity {
                                 weeklyWaterRef.set(waterData);
                                 weeklyCalorieRef.set(calorieData);
                                 weeklySleepRef.set(sleepData);
+                                dailyActivityRef.set(actData);
+                                bmiRef.set(bmiData);
 
                                 pbSignUp.setVisibility(View.GONE);
                                 btnSignUp .setVisibility(View.VISIBLE);

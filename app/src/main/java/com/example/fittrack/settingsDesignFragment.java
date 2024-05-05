@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,11 +62,7 @@ public class settingsDesignFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userId = currentUser.getUid();
 
-        fetchDataFromFirestore(userId);
     }
 
     @Override
@@ -73,7 +70,6 @@ public class settingsDesignFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings_design, container, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-
         tvDesignUsername = view.findViewById(R.id.tvDesignUsername);
         imDesignEditProfile = view.findViewById(R.id.imDesignEditProfile);
         imDesignChangePass = view.findViewById(R.id.imDesignChangePass);
@@ -84,6 +80,24 @@ public class settingsDesignFragment extends Fragment {
         btnChangeThemeSecond = view.findViewById(R.id.btnChangeThemeSecond);
         btnChangeThemeThird = view.findViewById(R.id.btnChangeThemeThird);
         btnChangeThemeSave = view.findViewById(R.id.btnChangeThemeSave);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userId = currentUser.getUid();
+
+        hideContentView(view);
+
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    showContentView(view);
+                    String username = documentSnapshot.getString("name");
+                    tvDesignUsername.setText(username);
+                })
+                .addOnFailureListener(e -> {
+                    showContentView(view);
+                    Log.e(TAG, "Error fetching data from Firestore: " + e.getMessage());
+                });
 
         Drawable drawable = getResources().getDrawable(R.drawable.icon_check);
         btnChangeThemeDefault.setOnClickListener(v -> {
@@ -198,25 +212,71 @@ public class settingsDesignFragment extends Fragment {
         }
     }
 
-    private void fetchDataFromFirestore(String userId) {
-        DocumentReference docRef = db.collection("users").document(userId);
-        docRef.get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    String username = documentSnapshot.getString("name");
-                    updateUIWithUsername(username);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error fetching data from Firestore: " + e.getMessage());
-                });
-    }
-
-    private void updateUIWithUsername(String username) {
-        tvDesignUsername.setText(username);
-    }
-
     private void saveThemePreference(int theme) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(THEME_PREF_KEY, theme);
         editor.apply();
     }
+    private void hideContentView(View view) {
+        try {
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imDesignEditProfile, R.id.imDesignChangePass, R.id.imDesign};
+            int[] textViewIds = {R.id.tvDesignUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185, R.id.textView36};
+            int[] buttonIds = {R.id.btnChangeThemeDefault, R.id.btnChangeThemeSecond, R.id.btnChangeThemeThird, R.id.btnChangeThemeSave};
+            int[] progressBarIds = {R.id.pbSettingDesign};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = view.findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = view.findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+
+            for (int id : buttonIds) {
+                Button button = view.findViewById(id);
+                button.setVisibility(View.GONE);
+            }
+
+            for (int id : progressBarIds) {
+                ProgressBar progressBar = view.findViewById(id);
+                progressBar.setVisibility(View.VISIBLE); // Show the progress bar
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView(View view) {
+        try {
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imDesignEditProfile, R.id.imDesignChangePass, R.id.imDesign};
+            int[] textViewIds = {R.id.tvDesignUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185, R.id.textView36};
+            int[] buttonIds = {R.id.btnChangeThemeDefault, R.id.btnChangeThemeSecond, R.id.btnChangeThemeThird, R.id.btnChangeThemeSave};
+            int[] progressBarIds = {R.id.pbSettingDesign};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = view.findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = view.findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : buttonIds) {
+                Button button = view.findViewById(id);
+                button.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : progressBarIds) {
+                ProgressBar progressBar = view.findViewById(id);
+                progressBar.setVisibility(View.GONE); // Hide the progress bar
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+

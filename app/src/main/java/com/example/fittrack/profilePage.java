@@ -66,7 +66,7 @@ public class profilePage extends AppCompatActivity {
         tvStepTab = findViewById(R.id.stepTab);
         tvWaterTab = findViewById(R.id.waterTab);
         tvCalorieTab = findViewById(R.id.calorieTab);
-        tvSleepTab = findViewById(R.id.sleepTab);
+//        tvSleepTab = findViewById(R.id.sleepTab);
         tvProfileDayMonDate = findViewById(R.id.tvProfileDayMonDate);
         bottomNav.setSelectedItemId(R.id.nav_profile);
 
@@ -85,16 +85,16 @@ public class profilePage extends AppCompatActivity {
                 tvStepTab.setEnabled(false);
                 tvWaterTab.setEnabled(true);
                 tvCalorieTab.setEnabled(true);
-                tvSleepTab.setEnabled(true);
+//                tvSleepTab.setEnabled(true);
 
                 tvStepTab.setBackgroundResource(R.drawable.back_select);
                 tvWaterTab.setBackgroundResource(0);
                 tvCalorieTab.setBackgroundResource(0);
-                tvSleepTab.setBackgroundResource(0);
+//                tvSleepTab.setBackgroundResource(0);
                 tvStepTab.setTextColor(getResources().getColor(R.color.whiteText)) ;
                 tvWaterTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
                 tvCalorieTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
+//                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
 
                 Fragment newFragment = new profileStepsFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -108,22 +108,22 @@ public class profilePage extends AppCompatActivity {
             isStepTab = false;
             isWaterTab = true;
             isCalorieTab = false;
-            isSleepTab = false;
+//            isSleepTab = false;
 
             if(isWaterTab) {
                 tvStepTab.setEnabled(true);
                 tvWaterTab.setEnabled(false);
                 tvCalorieTab.setEnabled(true);
-                tvSleepTab.setEnabled(true);
+//                tvSleepTab.setEnabled(true);
 
                 tvStepTab.setBackgroundResource(0);
                 tvWaterTab.setBackgroundResource(R.drawable.back_select);
                 tvCalorieTab.setBackgroundResource(0);
-                tvSleepTab.setBackgroundResource(0);
+//                tvSleepTab.setBackgroundResource(0);
                 tvStepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
                 tvWaterTab.setTextColor(getResources().getColor(R.color.whiteText));
                 tvCalorieTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
+//                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
 
                 Fragment newFragment = new profileWaterFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -137,21 +137,21 @@ public class profilePage extends AppCompatActivity {
             isStepTab = false;
             isWaterTab = false;
             isCalorieTab = true;
-            isSleepTab = false;
+//            isSleepTab = false;
 
             if(isCalorieTab) {
                 tvStepTab.setEnabled(true);
                 tvWaterTab.setEnabled(true);
                 tvCalorieTab.setEnabled(false);
-                tvSleepTab.setEnabled(true);
+//                tvSleepTab.setEnabled(true);
                 tvStepTab.setBackgroundResource(0);
                 tvWaterTab.setBackgroundResource(0);
                 tvCalorieTab.setBackgroundResource(R.drawable.back_select);
-                tvSleepTab.setBackgroundResource(0);
+//                tvSleepTab.setBackgroundResource(0);
                 tvStepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
                 tvWaterTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
                 tvCalorieTab.setTextColor(getResources().getColor(R.color.whiteText));
-                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
+//                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
 
                 Fragment newFragment = new profileCalorieFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -161,33 +161,33 @@ public class profilePage extends AppCompatActivity {
             }
         });
 
-        tvSleepTab.setOnClickListener(v -> {
-            isStepTab = false;
-            isWaterTab = false;
-            isCalorieTab = false;
-            isSleepTab = true;
-
-            if(isSleepTab) {
-                tvStepTab.setEnabled(true);
-                tvWaterTab.setEnabled(true);
-                tvCalorieTab.setEnabled(true);
-                tvSleepTab.setEnabled(false);
-                tvStepTab.setBackgroundResource(0);
-                tvWaterTab.setBackgroundResource(0);
-                tvCalorieTab.setBackgroundResource(0);
-                tvSleepTab.setBackgroundResource(R.drawable.back_select);
-                tvStepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvWaterTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvCalorieTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvSleepTab.setTextColor(getResources().getColor(R.color.whiteText));
-
-                Fragment newFragment = new profileSleepFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                fragmentTransaction.commit();
-            }
-        });
+//        tvSleepTab.setOnClickListener(v -> {
+//            isStepTab = false;
+//            isWaterTab = false;
+//            isCalorieTab = false;
+//            isSleepTab = true;
+//
+//            if(isSleepTab) {
+//                tvStepTab.setEnabled(true);
+//                tvWaterTab.setEnabled(true);
+//                tvCalorieTab.setEnabled(true);
+//                tvSleepTab.setEnabled(false);
+//                tvStepTab.setBackgroundResource(0);
+//                tvWaterTab.setBackgroundResource(0);
+//                tvCalorieTab.setBackgroundResource(0);
+//                tvSleepTab.setBackgroundResource(R.drawable.back_select);
+//                tvStepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
+//                tvWaterTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
+//                tvCalorieTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
+//                tvSleepTab.setTextColor(getResources().getColor(R.color.whiteText));
+//
+//                Fragment newFragment = new profileSleepFragment();
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
+//                fragmentTransaction.commit();
+//            }
+//        });
 
 
         bottomNav.setOnItemSelectedListener(item -> {

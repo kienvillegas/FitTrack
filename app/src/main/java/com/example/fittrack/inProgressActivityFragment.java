@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -79,19 +80,23 @@ public class inProgressActivityFragment extends Fragment {
             actName[0] = bundle.getString("actName");
             if (actName[0] != null) {
                 switch (actName[0]) {
-                    case "Running":
+                    case "running":
                         imInProgressIcon.setImageResource(R.drawable.running_icon);
                         break;
-                    case "Cycle":
+                    case "cycle":
+
                         imInProgressIcon.setImageResource(R.drawable.cycling_icon);
                         break;
-                    case "Swim":
+                    case "swim":
+
                         imInProgressIcon.setImageResource(R.drawable.swimming_icon);
                         break;
-                    case "Yoga":
+                    case "yoga":
+
                         imInProgressIcon.setImageResource(R.drawable.yoga_icon);
                         break;
-                    case "Gym":
+                    case "gym":
+
                         imInProgressIcon.setImageResource(R.drawable.weights_icon);
                         break;
                     default:
@@ -101,6 +106,7 @@ public class inProgressActivityFragment extends Fragment {
             } else {
                 Log.e(TAG, "Act Name is " + actName[0]);
             }
+
             tvInProgressCurrentTime.setText(currentTime);
             Log.d(TAG, "Current Time: " + currentTime);
             tvInProgressTimeGoal.setText(String.valueOf(timeGoal));
@@ -113,7 +119,7 @@ public class inProgressActivityFragment extends Fragment {
             String currentDate = dateFormat.format(date);
             try{
                 if (countDownTimer != null) {
-                    countDownTimer.cancel(); // Cancel the timer
+                    countDownTimer.cancel();
                     long timeSpentInMillis = System.currentTimeMillis() - startTimeInMillis;
                     Log.d(TAG, "On Finish: " + timeSpentInMillis);
 
@@ -124,12 +130,33 @@ public class inProgressActivityFragment extends Fragment {
                     recentAct.put("timeSpent", timeSpentInMillis);
 
                     DocumentReference docRef = db.collection("recent_activities").document(userId);
-                    docRef.set(recentAct)
-                            .addOnSuccessListener(unused -> {
-                                Log.i(TAG, "Successfully added recent activity to Firestore");
+                    DocumentReference activityRef = db.collection("activity_time_spent").document(userId);
+
+                    docRef.set(recentAct).addOnSuccessListener(unused -> {
+                        Log.i(TAG, "Successfully added recent activity to Firestore");
+                    }).addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to added recent activity to Firestore: " + e.getMessage());
+                    });
+
+                    activityRef.get().addOnSuccessListener(documentSnapshot -> {
+                        if(documentSnapshot.exists()){
+                            long actTimeSpent = documentSnapshot.getLong(actName[0]);
+                            long timeSpentInSeconds = timeSpentInMillis / 1000; // Convert milliseconds to seconds
+
+                            actTimeSpent += timeSpentInSeconds;
+                            Log.d(TAG, "Activity Time Spent: " + timeSpentInSeconds);
+
+                            activityRef.update(actName[0], actTimeSpent).addOnSuccessListener(unused -> {
+                                Log.d(TAG, "Successfully updated activity time sptent");
                             }).addOnFailureListener(e -> {
-                                Log.e(TAG, "Failed to added recent activity to Firestore: " + e.getMessage());
+                                Log.e(TAG, "Failed to updated activity time spent: " + e.getMessage());
                             });
+                        }else{
+                            Log.e(TAG, "Document does not exist");
+                        }
+                    }).addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to fetch data from collection: " + e.getMessage());
+                    });
 
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

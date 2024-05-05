@@ -6,7 +6,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -16,26 +15,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.checkerframework.common.subtyping.qual.Bottom;
-
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,14 +46,14 @@ public class dashboardPage extends AppCompatActivity {
     private StepSensorManager stepSensorManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    ImageView imAddWalk, imAddWater, imAddFood, imAddSleep;
+    ImageView imAddWalk, imAddWater, imAddFood, imAddSleep, imAddBMI;
     TextView tvDayMonDate, tvMonYr, tvDayOne, tvDayTwo, tvDayThree, tvDayFour, tvDayFive, tvDaySix, tvDaySeven;
     ImageView imDayOneBg, imDayTwoBg, imDayThreeBg, imDayFourBg, imDayFiveBg, imDaySixBg, imDaySevenBg;
     private TextView[] dayTextViews = new TextView[7];
     private TextView[] dateTextViews = new TextView[7];
     private ImageView[] bgImageView = new ImageView[7];
 
-    TextView  tvStepPercent, tvCaloriePercent, tvSleepHours, tvWaterIntake, tvWeeklyPercent;
+    TextView  tvStepPercent, tvCaloriePercent, tvSleepHours, tvWaterIntake, tvWeeklyPercent, tvAverageBMI, tvBMIResult;
     ProgressBar pbDashboardStep, pbDashboardFood, pbDashboardWkProgress, pbDashboardContent;
 
     @Override
@@ -76,26 +67,27 @@ public class dashboardPage extends AppCompatActivity {
         String userId = currentUser.getUid();
 
         DocumentReference docRef = db.collection("users").document(userId);
+        DocumentReference bmiRef = db.collection("bmi").document(userId);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavDashboard);
         imAddWalk = findViewById(R.id.imAddWalk);
         imAddWater = findViewById(R.id.imAddWater);
         imAddFood = findViewById(R.id.imAddFood);
         imAddSleep= findViewById(R.id.imAddSleep);
+        imAddBMI = findViewById(R.id.imAddBMI);
 
         tvStepPercent = findViewById(R.id.tvDashboardStepPercent);
         tvCaloriePercent = findViewById(R.id.tvDashboardCaloriePercent);
         tvSleepHours = findViewById(R.id.tvDashboardSleep);
         tvWaterIntake = findViewById(R.id.tvDashboardWater);
         tvWeeklyPercent = findViewById(R.id.tvDashboardWkPercent);
+        tvAverageBMI = findViewById(R.id.tvAverageBMI);
+        tvBMIResult = findViewById(R.id.tvBMIResult);
 
         pbDashboardFood = findViewById(R.id.pbDashboardFood);
         pbDashboardStep = findViewById(R.id.pbDashboardStep);
         pbDashboardWkProgress = findViewById(R.id.pbDashboardWkProgress);
 
-        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
-        Date date = new Date();
-        String currentDate = dayMonDate.format(date);
         DataManager dataManager = new DataManager(dashboardPage.this);
         String currentDatetime = getCurrentDateTime();
 
@@ -142,7 +134,6 @@ public class dashboardPage extends AppCompatActivity {
             bgImageView[5] = findViewById(R.id.imDaySixBg);
             bgImageView[6] = findViewById(R.id.imDaySevenBg);
 
-            tvDayMonDate.setText(currentDate);
             setWeeklyCalendar();
             bottomNav.setSelectedItemId(R.id.nav_dashboard);
 
@@ -183,6 +174,11 @@ public class dashboardPage extends AppCompatActivity {
             startActivity(intent);
         });
 
+        imAddBMI.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actBMITracker.class);
+            startActivity(intent);
+        });
+
         if(currentDatetime.equals(dataManager.getStoredDate()) || dataManager.getStoredDate() == null){
             Log.d(TAG, "Current Date is equal, null or empty: " + dataManager.getStoredDate());
 
@@ -191,6 +187,7 @@ public class dashboardPage extends AppCompatActivity {
             fetchCalorieData(docRef);
             fetchSleepData(docRef);
             fetchWeeklyData(docRef);
+            fetchBMIData(bmiRef);
         }else{
             Map<String, Object> actData = new HashMap<>();
             actData.put("dailyStepTaken", 0);
@@ -201,6 +198,8 @@ public class dashboardPage extends AppCompatActivity {
             actData.put("isCalorieDailyGoal", false);
             actData.put("dailySleepTaken", 0);
             actData.put("isSleepDailyGoal", false);
+            actData.put("isDailySleepTaken", false);
+            actData.put("isDailyBMITaken", false);
 
             docRef.update(actData).addOnSuccessListener(unused -> {
                 Log.d(TAG, "act data has been saved to firestore");
@@ -211,6 +210,7 @@ public class dashboardPage extends AppCompatActivity {
                 fetchCalorieData(docRef);
                 fetchSleepData(docRef);
                 fetchWeeklyData(docRef);
+                fetchBMIData(bmiRef);
             }).addOnFailureListener(e -> {
                 Log.e(TAG, "Failed to update on firestore");
             });
@@ -228,7 +228,8 @@ public class dashboardPage extends AppCompatActivity {
 
     private void setWeeklyCalendar(){
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM, dd", Locale.getDefault());
+        Date date = new Date();
+        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
         SimpleDateFormat monYr = new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEE", Locale.getDefault());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd", Locale.getDefault());
@@ -249,7 +250,7 @@ public class dashboardPage extends AppCompatActivity {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        String currentDate = dayMonDate.format(calendar.getTime());
+        String currentDate = dayMonDate.format(date);
         String monthYear = monYr.format(calendar.getTime());
 
         tvDayMonDate.setText(currentDate);
@@ -341,6 +342,65 @@ public class dashboardPage extends AppCompatActivity {
         });
     }
 
+    private void fetchBMIData(DocumentReference docRef) {
+        hideContentView();
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+            Calendar calendar = Calendar.getInstance();
+            int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+            String fieldName = "";
+            switch (currentDayOfWeek) {
+                case Calendar.MONDAY:
+                    fieldName = "mon";
+                    break;
+                case Calendar.TUESDAY:
+                    fieldName = "tue";
+                    break;
+                case Calendar.WEDNESDAY:
+                    fieldName = "wed";
+                    break;
+                case Calendar.THURSDAY:
+                    fieldName = "thu";
+                    break;
+                case Calendar.FRIDAY:
+                    fieldName = "fri";
+                    break;
+                case Calendar.SATURDAY:
+                    fieldName = "sat";
+                    break;
+                case Calendar.SUNDAY:
+                    fieldName = "sun";
+                    break;
+            }
+
+            double recentBMI = documentSnapshot.getDouble(fieldName);
+
+            if (!Double.isNaN(recentBMI)) {
+                tvAverageBMI.setText(String.valueOf(decimalFormat.format(recentBMI)));
+            } else {
+                tvAverageBMI.setText("0");
+            }
+            if(recentBMI == 0){
+             tvBMIResult.setText("Nothing yet");
+            }else if(recentBMI < 18.5){
+                tvBMIResult.setText("Underweight");
+            }else if(recentBMI >= 18.5 && recentBMI < 25){
+                tvBMIResult.setText("Normal Weight");
+            }else if(recentBMI >= 25 && recentBMI < 30){
+                tvBMIResult.setText("Overweight");
+            }else{
+                tvBMIResult.setText("Obese");
+            }
+            showContentView();
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to fetch BMI Data: " + e.getMessage());
+        });
+    }
+
+
     private void fetchWeeklyData(DocumentReference docRef){
         hideContentView();
         docRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -386,7 +446,7 @@ public class dashboardPage extends AppCompatActivity {
             // Hide all ImageViews
             int[] imageViewIds = {R.id.imageView98, R.id.imageView99, R.id.imageView100, R.id.imageView101,
                     R.id.imageView102, R.id.imAddWalk, R.id.imageView104, R.id.imAddWater, R.id.imSleepIcon,
-                    R.id.imAddFood, R.id.imageView110, R.id.imageView107};
+                    R.id.imAddFood, R.id.imageView110, R.id.imageView107, R.id.imageView9, R.id.imAddBMI, R.id.imageView16};
 
             for (int id : imageViewIds) {
                 View view = findViewById(id);
@@ -396,11 +456,10 @@ public class dashboardPage extends AppCompatActivity {
                 }
             }
 
-            // Hide all TextViews
             int[] textViewIds = {R.id.textView178, R.id.textView181, R.id.textView184, R.id.textView153,
                     R.id.tvDashboardStepPercent, R.id.textView180, R.id.tvDashboardWater, R.id.textView183,
                     R.id.tvDashboardSleep, R.id.textView187, R.id.tvDashboardCaloriePercent, R.id.textView190,
-                    R.id.tvDashboardWkPercent, R.id.textView188};
+                    R.id.tvDashboardWkPercent, R.id.textView188, R.id.tvAverageBMI, R.id.textView43, R.id.tvBMIResult};
 
             for (int id : textViewIds) {
                 View view = findViewById(id);
@@ -431,7 +490,7 @@ public class dashboardPage extends AppCompatActivity {
         try {
             int[] imageViewIds = {R.id.imageView98, R.id.imageView99, R.id.imageView100, R.id.imageView101,
                     R.id.imageView102, R.id.imAddWalk, R.id.imageView104, R.id.imAddWater, R.id.imSleepIcon,
-                    R.id.imAddFood, R.id.imageView110, R.id.imageView107};
+                    R.id.imAddFood, R.id.imageView110, R.id.imageView107, R.id.imageView9, R.id.imAddBMI, R.id.imageView16};
 
             for (int id : imageViewIds) {
                 View view = findViewById(id);
@@ -444,7 +503,7 @@ public class dashboardPage extends AppCompatActivity {
             int[] textViewIds = {R.id.textView178, R.id.textView181, R.id.textView184, R.id.textView153,
                     R.id.tvDashboardStepPercent, R.id.textView180, R.id.tvDashboardWater, R.id.textView183,
                     R.id.tvDashboardSleep, R.id.textView187, R.id.tvDashboardCaloriePercent, R.id.textView190,
-                    R.id.tvDashboardWkPercent, R.id.textView188};
+                    R.id.tvDashboardWkPercent, R.id.textView188, R.id.tvAverageBMI, R.id.textView43, R.id.tvBMIResult};
 
             for (int id : textViewIds) {
                 View view = findViewById(id);

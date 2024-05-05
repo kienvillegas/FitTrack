@@ -47,32 +47,34 @@ public class startActivityFragment extends Fragment {
         btnStartActStart = view.findViewById(R.id.btnStartActStart);
         btnStartActCancel = view.findViewById(R.id.btnStartActCancel);
 
+
         Bundle bundle = getArguments();
         final String[] actName = {""};
         final int[] timeGoal = {1};
         final String[] currentTime = {getCurrentTime()};
 
         if(bundle != null){
+
             actName[0] = bundle.getString("actName");
             if(actName != null){
                 switch (actName[0]){
-                    case "Running":
+                    case "running":
                         imStartActIcon.setImageResource(R.drawable.running_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "Cycle":
+                    case "cycle":
                         imStartActIcon.setImageResource(R.drawable.cycling_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "Swim":
+                    case "swim":
                         imStartActIcon.setImageResource(R.drawable.swimming_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "Yoga":
+                    case "yoga":
                         imStartActIcon.setImageResource(R.drawable.yoga_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "Gym":
+                    case "gym":
                         imStartActIcon.setImageResource(R.drawable.weights_icon);
                         tvStartActName.setText(actName[0]);
                         break;

@@ -202,7 +202,7 @@ public class actWaterIntakeTracker extends AppCompatActivity {
             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(waterDailyGoal);
             String formattedWaterTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
 
-            tvWaterTrackerTaken.setText(formattedWaterTaken);
+            tvWaterTrackerTaken.setText(formattedWaterTaken + " mL");
             tvWaterTrackerGoal.setText(formattedDailyGoal);
             tvWaterTrackerPercent.setText(String.valueOf(waterPercent) + "%");
             pbWaterTracker.setMax(100);

@@ -129,6 +129,28 @@ public class profileSetCalorieGoalFragment extends Fragment {
                     weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
 
+                if(Integer.parseInt(dailyGoal) > 999999){
+                    pbSetCalorie.setVisibility(View.GONE);
+                    btnSetCalorieGoal.setVisibility(View.VISIBLE);
+                    btnSetCalorieCancel.setVisibility(View.VISIBLE);
+
+                    etSetCalorieDaily.setBackgroundResource(R.drawable.text_field_red);
+                    etSetCalorieDaily.setError("Invalid");
+                    etSetCalorieDaily.requestFocus();
+                    return;
+                }
+
+                if(Integer.parseInt(weeklyGoal) > 999999){
+                    pbSetCalorie.setVisibility(View.GONE);
+                    btnSetCalorieGoal.setVisibility(View.VISIBLE);
+                    btnSetCalorieCancel.setVisibility(View.VISIBLE);
+
+                    etSetCalorieWeekly.setBackgroundResource(R.drawable.text_field_red);
+                    etSetCalorieWeekly.setError("Invalid");
+                    etSetCalorieWeekly.requestFocus();
+                    return;
+                }
+
                 formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
                 formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
 

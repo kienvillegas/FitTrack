@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,18 +51,20 @@ public class settingsFragment extends Fragment {
 
         imSettingsEditProfile = view.findViewById(R.id.imSettingsEditProfile);
         imSettingsChangePass = view.findViewById(R.id.imSettingsChangePass);
-//        imSettingsNotifications = view.findViewById(R.id.imSettingsNotifications);
         imSettingsDesign = view.findViewById(R.id.imSettingsDesign);
         tvSettingsUsername = view.findViewById(R.id.tvSettingsUsername);
 
+        hideContentView(view);
         DocumentReference docRef = db.collection("users").document(userId);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
+            showContentView(view);
             String username = documentSnapshot.getString("name");
             tvSettingsUsername.setText(username);
-
         }).addOnFailureListener(e -> {
+            showContentView(view);
             Log.e(TAG, e.getMessage());
         });
+
 
         imSettingsEditProfile.setOnClickListener(v -> {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -77,13 +80,7 @@ public class settingsFragment extends Fragment {
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
             fragmentTransaction.commit();
         });
-//        imSettingsNotifications.setOnClickListener(v -> {
-//            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            Fragment newFragment = new settingsConfigNotifFragment();
-//            fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
-//            fragmentTransaction.commit();
-//        });
+
         imSettingsDesign.setOnClickListener(v -> {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -93,4 +90,47 @@ public class settingsFragment extends Fragment {
         });
         return view;
     }
+
+    private void hideContentView(View view) {
+        try {
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imSettingsEditProfile, R.id.imSettingsChangePass, R.id.imSettingsDesign};
+            int[] textViewIds = {R.id.tvSettingsUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = view.findViewById(id);
+                imageView.setVisibility(View.GONE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = view.findViewById(id);
+                textView.setVisibility(View.GONE);
+            }
+            ProgressBar pbSettingFragment = view.findViewById(R.id.pbSettingFragment);
+            pbSettingFragment.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showContentView(View view) {
+        try {
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imSettingsEditProfile, R.id.imSettingsChangePass, R.id.imSettingsDesign};
+            int[] textViewIds = {R.id.tvSettingsUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185};
+
+            for (int id : imageViewIds) {
+                ImageView imageView = view.findViewById(id);
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            for (int id : textViewIds) {
+                TextView textView = view.findViewById(id);
+                textView.setVisibility(View.VISIBLE);
+            }
+            ProgressBar pbSettingFragment = view.findViewById(R.id.pbSettingFragment);
+            pbSettingFragment.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -71,12 +71,6 @@ public class actSleepTracker extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String userId = currentUser.getUid();
         DataManager dataManager = new DataManager(this);
-        final String[] storedDate = {dataManager.getStoredDate()};
-
-        if(storedDate[0] == null || storedDate[0].isEmpty()){
-            dataManager.saveCurrentDateTime();
-            storedDate[0] = dataManager.getStoredDate();
-        }
 
         imBackBtn = findViewById(R.id.imSleepTrackerBack);
         tvSleepTrackerTaken = findViewById(R.id.tvSleepTrackerTaken);
@@ -99,31 +93,31 @@ public class actSleepTracker extends AppCompatActivity {
             String day = getCurrentDay();
 
             try {
-                if (inputSleep.isEmpty()) {
-                    pbAddHours.setVisibility(View.GONE);
-                    btnAddHours.setVisibility(View.VISIBLE);
-
-                    etSleepTrackerInput.setBackgroundResource(R.drawable.text_field_red);
-                    etSleepTrackerInput.setError("Please enter hours of sleep");
-                    return;
-                }
-
-                if(Integer.parseInt(inputSleep) > 8){
-                    pbAddHours.setVisibility(View.GONE);
-                    btnAddHours.setVisibility(View.VISIBLE);
-
-                    etSleepTrackerInput.setBackgroundResource(R.drawable.text_field_red);
-                    etSleepTrackerInput.setError("Maximum of 8 Hours sleep");
-                    return;
-                }
-
                 DocumentReference docRef = db.collection("users").document(userId);
                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        int sleepPercent, dailySleepTaken, weeklySleepTaken, sleepDailyGoal;
+                        int dailySleepTaken, weeklySleepTaken, sleepDailyGoal;
                         dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
                         weeklySleepTaken = documentSnapshot.getLong("weeklySleepTaken").intValue();
                         sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal").intValue();
+
+                        if (inputSleep.isEmpty()) {
+                            pbAddHours.setVisibility(View.GONE);
+                            btnAddHours.setVisibility(View.VISIBLE);
+
+                            etSleepTrackerInput.setBackgroundResource(R.drawable.text_field_red);
+                            etSleepTrackerInput.setError("Please enter hours of sleep");
+                            return;
+                        }
+
+                        if(Integer.parseInt(inputSleep) > 12){
+                            pbAddHours.setVisibility(View.GONE);
+                            btnAddHours.setVisibility(View.VISIBLE);
+
+                            etSleepTrackerInput.setBackgroundResource(R.drawable.text_field_red);
+                            etSleepTrackerInput.setError("Maximum of 12 Hours of sleep");
+                            return;
+                        }
 
                         if(dailySleepTaken >= sleepDailyGoal){
                             pbAddHours.setVisibility(View.GONE);
@@ -138,20 +132,9 @@ public class actSleepTracker extends AppCompatActivity {
                         saveWeeklySleep(userId, day, dailySleepTaken);
                         checkGoalAchievement(dailySleepTaken, sleepDailyGoal, userId);
 
-                        if (sleepDailyGoal != 0) {
-                            sleepPercent = Math.min((int) (((double) dailySleepTaken / sleepDailyGoal) * 100), 100);
-                        } else {
-                            sleepPercent = 0;
-                        }
-
                         Map<String, Object> sleep = new HashMap<>();
                         sleep.put("dailySleepTaken", dailySleepTaken);
                         sleep.put("weeklySleepTaken", weeklySleepTaken);
-
-                        tvSleepTrackerTaken.setText(Integer.toString(dailySleepTaken) + " Hours");
-                        tvSleepTrackerPercent.setText(Integer.toString(sleepPercent) + "%");
-                        pbSleepTracker.setMax(100);
-                        pbSleepTracker.setProgress(sleepPercent);
 
                         docRef.update(sleep)
                                 .addOnSuccessListener(unused -> {
@@ -226,7 +209,7 @@ public class actSleepTracker extends AppCompatActivity {
             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(sleepDailyGoal);
             String formattedSleepTaken = NumberFormat.getNumberInstance(Locale.US).format(dailySleepTaken);
 
-            tvSleepTrackerTaken.setText(formattedSleepTaken);
+            tvSleepTrackerTaken.setText(formattedSleepTaken + " Hours");
             tvSleepTrackerGoal.setText(formattedDailyGoal);
             tvSleepTrackerPercent.setText(String.valueOf(sleepPercent) + "%");
             pbSleepTracker.setMax(100);
@@ -304,12 +287,6 @@ public class actSleepTracker extends AppCompatActivity {
         return dayFormat.format(date);
     }
 
-    private String getCurrentDateTime(){
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
-        return sdf.format(date);
-    }
 
     private void initializeStepSensor() {
         Log.d(TAG, "initializeStepSensor");
