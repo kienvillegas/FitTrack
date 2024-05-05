@@ -170,6 +170,11 @@ public class actFoodIntakeTracker extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etCalorieTrackerInput.setText(filteredText);
+                }
+
                 etCalorieTrackerInput.setBackgroundResource(R.drawable.text_field_bg_grey);
                 etCalorieTrackerInput.setError(null);
             }

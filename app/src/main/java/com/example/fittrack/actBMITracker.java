@@ -123,7 +123,7 @@ public class actBMITracker extends AppCompatActivity {
                 return;
             }
 
-            if(Integer.parseInt(weight) > 100){
+            if(Double.parseDouble(weight) > 100){
                 pbEnterData.setVisibility(View.GONE);
                 btnEnterData.setVisibility(View.VISIBLE);
                 etBMITrackeWeight.setBackgroundResource(R.drawable.text_field_red);
@@ -132,7 +132,7 @@ public class actBMITracker extends AppCompatActivity {
                 return;
             }
 
-            if(Integer.parseInt(height) > 3){
+            if(Double.parseDouble(height) > 3){
                 pbEnterData.setVisibility(View.GONE);
                 btnEnterData.setVisibility(View.VISIBLE);
                 etBMITrackeHeight.setBackgroundResource(R.drawable.text_field_red);
@@ -210,7 +210,12 @@ public class actBMITracker extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                etBMITrackeHeight.setError("");
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etBMITrackeHeight.setText(filteredText);
+                }
+
+                etBMITrackeHeight.setError(null);
                 etBMITrackeHeight.setBackgroundResource(R.drawable.text_field_bg_grey);
             }
 
@@ -228,7 +233,12 @@ public class actBMITracker extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                etBMITrackeWeight.setError("");
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etBMITrackeWeight.setText(filteredText);
+                }
+
+                etBMITrackeWeight.setError(null);
                 etBMITrackeWeight.setBackgroundResource(R.drawable.text_field_bg_grey);
             }
 

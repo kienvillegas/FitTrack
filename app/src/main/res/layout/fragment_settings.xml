@@ -39,15 +39,15 @@
         app:layout_constraintStart_toStartOf="@+id/imageView84"
         app:layout_constraintTop_toTopOf="@+id/imageView84" />
 
-        <ImageView
-            android:id="@+id/imageView86"
-            android:layout_width="372sp"
-            android:layout_height="2sp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView84"
-            app:layout_constraintStart_toStartOf="@+id/imageView84"
-            app:layout_constraintTop_toBottomOf="@+id/tvSettingsUsername"
-            app:srcCompat="@drawable/line_divider_pink" />
+    <ImageView
+        android:id="@+id/imageView86"
+        android:layout_width="372dp"
+        android:layout_height="2sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView84"
+        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintTop_toBottomOf="@+id/tvSettingsUsername"
+        app:srcCompat="@drawable/line_divider_pink" />
 
     <TextView
         android:id="@+id/textView158"
@@ -109,7 +109,7 @@
 
     <ImageView
         android:id="@+id/imageView109"
-        android:layout_width="372dp"
+        android:layout_width="366dp"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView84"

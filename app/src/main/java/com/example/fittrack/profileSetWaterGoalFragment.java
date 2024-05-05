@@ -199,6 +199,11 @@ public class profileSetWaterGoalFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etSetWaterDaily.setText(filteredText);
+                }
+
                 etSetWaterDaily.setBackgroundResource(R.drawable.text_field_primary_border);
                 etSetWaterDaily.setError(null);
             }
@@ -217,6 +222,10 @@ public class profileSetWaterGoalFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etSetWaterWeekly.setText(filteredText);
+                }
                 etSetWaterWeekly.setBackgroundResource(R.drawable.text_field_primary_border);
                 etSetWaterWeekly.setError(null);
             }

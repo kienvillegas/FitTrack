@@ -211,6 +211,11 @@ public class profileSetStepsGoalFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etSetStepDaily.setText(filteredText);
+                }
+
                 etSetStepDaily.setBackgroundResource(R.drawable.text_field_primary_border);
                 etSetStepDaily.setError(null);
             }
@@ -229,6 +234,11 @@ public class profileSetStepsGoalFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etSetStepWeekly.setText(filteredText);
+                }
+
                 etSetStepWeekly.setBackgroundResource(R.drawable.text_field_primary_border);
                 etSetStepWeekly.setError(null);
             }

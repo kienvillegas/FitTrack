@@ -119,16 +119,6 @@ public class profileSetCalorieGoalFragment extends Fragment {
                     return;
                 }
 
-                if(weeklyGoal.isEmpty()){
-                    dailyGoalList.add(Integer.parseInt(dailyGoal));
-                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
-                }
-
-                if (!weeklyGoal.isEmpty()) {
-                    dailyGoalList.add(Integer.parseInt(dailyGoal));
-                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
-                }
-
                 if(Integer.parseInt(dailyGoal) > 999999){
                     pbSetCalorie.setVisibility(View.GONE);
                     btnSetCalorieGoal.setVisibility(View.VISIBLE);
@@ -149,6 +139,16 @@ public class profileSetCalorieGoalFragment extends Fragment {
                     etSetCalorieWeekly.setError("Invalid");
                     etSetCalorieWeekly.requestFocus();
                     return;
+                }
+
+                if(weeklyGoal.isEmpty()){
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
+                }
+
+                if (!weeklyGoal.isEmpty()) {
+                    dailyGoalList.add(Integer.parseInt(dailyGoal));
+                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
                 }
 
                 formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
@@ -207,6 +207,11 @@ public class profileSetCalorieGoalFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etSetCalorieDaily.setText(filteredText);
+                }
+
                 etSetCalorieDaily.setBackgroundResource(R.drawable.text_field_primary_border);
                 etSetCalorieDaily.setError(null);
             }
@@ -225,6 +230,11 @@ public class profileSetCalorieGoalFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0 && s.charAt(0) == '0') {
+                    String filteredText = s.toString().substring(1);
+                    etSetCalorieWeekly.setText(filteredText);
+                }
+
                 etSetCalorieWeekly.setBackgroundResource(R.drawable.text_field_primary_border);
                 etSetCalorieWeekly.setError(null);
             }
