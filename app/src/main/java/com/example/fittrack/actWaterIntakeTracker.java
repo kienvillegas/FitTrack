@@ -128,13 +128,27 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                 DocumentReference docRef = db.collection("users").document(userId);
                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        int dailyWaterTaken, weeklyWaterTaken, waterDailyGoal;
+                        int dailyWaterTaken, weeklyWaterTaken, waterDailyGoal, waterWeeklyGoal;
+                        int diff, inputWater;
                         dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken").intValue();
                         weeklyWaterTaken = documentSnapshot.getLong("weeklyWaterTaken").intValue();
                         waterDailyGoal = documentSnapshot.getLong("waterDailyGoal").intValue();
+                        waterWeeklyGoal = documentSnapshot.getLong("waterWeeklyGoal").intValue();
 
-                            dailyWaterTaken += glassWaterML * inputCounter[0];
-                            weeklyWaterTaken += glassWaterML * inputCounter[0];
+                        inputWater = glassWaterML * inputCounter[0];
+
+                            dailyWaterTaken += inputWater;
+                            weeklyWaterTaken += inputWater;
+
+                            diff = waterWeeklyGoal - weeklyWaterTaken;
+
+                            if(inputWater > diff){
+                                pbAddDrink.setVisibility(View.GONE);
+                                btnAddDrink.setVisibility(View.VISIBLE);
+
+                                Toast.makeText(this, "Cannot be more than the weekly goal", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
                             saveWeeklyWaterIntake(userId, day, dailyWaterTaken);
                             checkGoalAchievement(dailyWaterTaken, waterDailyGoal, userId);

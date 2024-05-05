@@ -97,9 +97,12 @@ public class actSleepTracker extends AppCompatActivity {
                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         int dailySleepTaken, weeklySleepTaken, sleepDailyGoal;
+                        int diff;
                         dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
                         weeklySleepTaken = documentSnapshot.getLong("weeklySleepTaken").intValue();
                         sleepDailyGoal = documentSnapshot.getLong("sleepDailyGoal").intValue();
+
+                        diff = sleepDailyGoal - dailySleepTaken;
 
                         if (inputSleep.isEmpty()) {
                             pbAddHours.setVisibility(View.GONE);
@@ -110,19 +113,10 @@ public class actSleepTracker extends AppCompatActivity {
                             return;
                         }
 
-                        if(Integer.parseInt(inputSleep) > 12){
+                        if(Integer.parseInt(inputSleep) > diff){
                             pbAddHours.setVisibility(View.GONE);
                             btnAddHours.setVisibility(View.VISIBLE);
-
-                            etSleepTrackerInput.setBackgroundResource(R.drawable.text_field_red);
-                            etSleepTrackerInput.setError("Maximum of 12 Hours of sleep");
-                            return;
-                        }
-
-                        if(dailySleepTaken >= sleepDailyGoal){
-                            pbAddHours.setVisibility(View.GONE);
-                            btnAddHours.setVisibility(View.VISIBLE);
-                            etSleepTrackerInput.setError("Maximum limit reached");
+                            etSleepTrackerInput.setError("Cannot be more than daily goal");
                             return;
                         }
 

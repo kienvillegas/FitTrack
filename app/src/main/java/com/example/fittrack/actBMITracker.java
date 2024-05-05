@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -108,6 +110,7 @@ public class actBMITracker extends AppCompatActivity {
                 btnEnterData.setVisibility(View.VISIBLE);
                 etBMITrackeWeight.setBackgroundResource(R.drawable.text_field_red);
                 etBMITrackeWeight.setError("Required");
+                etBMITrackeWeight.requestFocus();
                 return;
             }
 
@@ -116,6 +119,25 @@ public class actBMITracker extends AppCompatActivity {
                 btnEnterData.setVisibility(View.VISIBLE);
                 etBMITrackeHeight.setBackgroundResource(R.drawable.text_field_red);
                 etBMITrackeHeight.setError("Required");
+                etBMITrackeHeight.requestFocus();
+                return;
+            }
+
+            if(Integer.parseInt(weight) > 100){
+                pbEnterData.setVisibility(View.GONE);
+                btnEnterData.setVisibility(View.VISIBLE);
+                etBMITrackeWeight.setBackgroundResource(R.drawable.text_field_red);
+                etBMITrackeWeight.setError("Maximum of 100 kilograms");
+                etBMITrackeWeight.requestFocus();
+                return;
+            }
+
+            if(Integer.parseInt(height) > 3){
+                pbEnterData.setVisibility(View.GONE);
+                btnEnterData.setVisibility(View.VISIBLE);
+                etBMITrackeHeight.setBackgroundResource(R.drawable.text_field_red);
+                etBMITrackeHeight.setError("Maximum of 3 meters");
+                etBMITrackeHeight.requestFocus();
                 return;
             }
 
@@ -123,7 +145,6 @@ public class actBMITracker extends AppCompatActivity {
                 if(documentSnapshot.exists()){
                     String day = getCurrentDay();
 
-                    boolean isDailyBMITaken;
                     double heightDbl, weightDbl, bmi;
 
                     heightDbl = Double.parseDouble(height);
@@ -180,8 +201,45 @@ public class actBMITracker extends AppCompatActivity {
                 Log.e(TAG, "Error Occured fetching bmi data: " + e.getMessage());
             });
         });
+
+        etBMITrackeHeight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                etBMITrackeHeight.setError("");
+                etBMITrackeHeight.setBackgroundResource(R.drawable.text_field_bg_grey);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etBMITrackeWeight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                etBMITrackeWeight.setError("");
+                etBMITrackeWeight.setBackgroundResource(R.drawable.text_field_bg_grey);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         imBackBtn.setOnClickListener(view -> onBackPressed());
     }
+
 
     public void onBackPressed() {
         super.onBackPressed();

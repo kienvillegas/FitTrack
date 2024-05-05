@@ -91,16 +91,25 @@ public class actFoodIntakeTracker extends AppCompatActivity {
                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         int dailyCalorieTaken, weeklyCalorieTaken, calorieDailyGoal, calorieWeeklyGoal;
-//                        int diff = 0;
+                        int diff = 0;
 
                         dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
                         weeklyCalorieTaken = documentSnapshot.getLong("weeklyCalorieTaken").intValue();
                         calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
-//                        calorieWeeklyGoal  = documentSnapshot.getLong("calorieWeeklyGoal").intValue();
+                        calorieWeeklyGoal  = documentSnapshot.getLong("calorieWeeklyGoal").intValue();
 
                         dailyCalorieTaken += Integer.parseInt(inputCalorie);
                         weeklyCalorieTaken += Integer.parseInt(inputCalorie);
 
+                        diff = calorieWeeklyGoal - weeklyCalorieTaken;
+
+                        if(Integer.parseInt(inputCalorie) > diff){
+                            pbAddCalories.setVisibility(View.GONE);
+                            btnAddCalories.setVisibility(View.VISIBLE);
+                            etCalorieTrackerInput.setBackgroundResource(R.drawable.text_field_red);
+                            etCalorieTrackerInput.setError("Cannot be more than the weekly goal");
+                            return;
+                        }
 
                         if (inputCalorie.isEmpty()) {
                             pbAddCalories.setVisibility(View.GONE);

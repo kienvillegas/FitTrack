@@ -120,63 +120,78 @@ public class actStepTracker extends AppCompatActivity{
                     Drawable drawable = getResources().getDrawable(resourceId);
                     etStepTracker.setBackground(drawable);
                     etStepTracker.setError("Please enter steps");
-                } else {
+                    return;
+                }
 
-                    docRef.get().addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            int stepPercent, dailyStepTaken, weeklyStepTaken, stepDailyGoal;
-                             dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
-                             weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
-                             stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+                docRef.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        int stepPercent, dailyStepTaken, weeklyStepTaken, stepDailyGoal, stepWeeklyGoal;
+                        int diff;
 
-                                dailyStepTaken += Integer.parseInt(inputStep);
-                                weeklyStepTaken += Integer.parseInt(inputStep);
+                        dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+                        weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
+                        stepDailyGoal = documentSnapshot.getLong("stepDailyGoal").intValue();
+                        stepWeeklyGoal = documentSnapshot.getLong("stepWeeklyGoal").intValue();
 
-                                saveWeekSteps(userId, day, dailyStepTaken);
-                                checkGoalAchievement(dailyStepTaken, stepDailyGoal,userId);
-                                if (stepDailyGoal != 0) {
-                                    stepPercent = Math.min((int) (((double) dailyStepTaken / stepDailyGoal) * 100), 100);
-                                } else {
-                                    stepPercent = 0;
-                                }
+                        dailyStepTaken += Integer.parseInt(inputStep);
+                        weeklyStepTaken += Integer.parseInt(inputStep);
 
-                                Map<String, Object> steps = new HashMap<>();
-                                steps.put("dailyStepTaken", dailyStepTaken);
-                                steps.put("weeklyStepTaken", weeklyStepTaken);
+                        diff = stepWeeklyGoal - weeklyStepTaken;
 
-                                String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(stepDailyGoal);
-                                String formattedSteptaken = NumberFormat.getNumberInstance(Locale.US).format(dailyStepTaken);
-
-                                tvStepTrackerTaken.setText(formattedSteptaken);
-                                tvStepTrackerGoal.setText(formattedDailyGoal);
-                                tvStepTrackerPercent.setText(String.valueOf(stepPercent) + "%");
-                                pbStepTracker.setMax(100);
-                                pbStepTracker.setProgress(stepPercent);
-
-                            docRef.update(steps)
-                                    .addOnSuccessListener(unused -> {
-                                        dataManager.saveCurrentDateTime();
-                                        pbAddSteps.setVisibility(View.GONE);
-                                                btnAddSteps.setVisibility(View.VISIBLE);
-
-                                                Toast.makeText(actStepTracker.this, "Successfully entered steps taken", Toast.LENGTH_SHORT).show();
-                                                etStepTracker.setText("");
-                                                Log.d(TAG, "Successfully added " + inputStep);
-                                            }).addOnFailureListener(e -> {
-                                                pbAddSteps.setVisibility(View.GONE);
-                                                btnAddSteps.setVisibility(View.VISIBLE);
-
-                                                Log.e(TAG, "Failed to add " + inputStep);
-                                                Toast.makeText(actStepTracker.this, "Failed to enter steps taken", Toast.LENGTH_SHORT).show();
-                                            });
-                        } else {
+                        if(Integer.parseInt(inputStep) > diff){
                             pbAddSteps.setVisibility(View.GONE);
                             btnAddSteps.setVisibility(View.VISIBLE);
 
-                            Log.e(TAG, "Document does not exist");
+                            etStepTracker.setBackgroundResource(R.drawable.text_field_red);
+                            etStepTracker.setError("Cannot be more than the weekly goal");
+                            return; 
                         }
-                    }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
-                }
+
+                        saveWeekSteps(userId, day, dailyStepTaken);
+                        checkGoalAchievement(dailyStepTaken, stepDailyGoal,userId);
+                        if (stepDailyGoal != 0) {
+                            stepPercent = Math.min((int) (((double) dailyStepTaken / stepDailyGoal) * 100), 100);
+                        } else {
+                            stepPercent = 0;
+                        }
+
+                        Map<String, Object> steps = new HashMap<>();
+                        steps.put("dailyStepTaken", dailyStepTaken);
+                        steps.put("weeklyStepTaken", weeklyStepTaken);
+
+                        String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(stepDailyGoal);
+                        String formattedSteptaken = NumberFormat.getNumberInstance(Locale.US).format(dailyStepTaken);
+
+                        tvStepTrackerTaken.setText(formattedSteptaken);
+                        tvStepTrackerGoal.setText(formattedDailyGoal);
+                        tvStepTrackerPercent.setText(String.valueOf(stepPercent) + "%");
+                        pbStepTracker.setMax(100);
+                        pbStepTracker.setProgress(stepPercent);
+
+                        docRef.update(steps)
+                                .addOnSuccessListener(unused -> {
+                                    dataManager.saveCurrentDateTime();
+                                    pbAddSteps.setVisibility(View.GONE);
+                                    btnAddSteps.setVisibility(View.VISIBLE);
+
+                                    Toast.makeText(actStepTracker.this, "Successfully entered steps taken", Toast.LENGTH_SHORT).show();
+                                    etStepTracker.setText("");
+                                    Log.d(TAG, "Successfully added " + inputStep);
+                                }).addOnFailureListener(e -> {
+                                    pbAddSteps.setVisibility(View.GONE);
+                                    btnAddSteps.setVisibility(View.VISIBLE);
+
+                                    Log.e(TAG, "Failed to add " + inputStep);
+                                    Toast.makeText(actStepTracker.this, "Failed to enter steps taken", Toast.LENGTH_SHORT).show();
+                                });
+                    } else {
+                        pbAddSteps.setVisibility(View.GONE);
+                        btnAddSteps.setVisibility(View.VISIBLE);
+
+                        Log.e(TAG, "Document does not exist");
+                    }
+                }).addOnFailureListener(e -> Log.e(TAG, "Failed to get document", e));
+
             } catch (Exception e) {
                 pbAddSteps.setVisibility(View.GONE);
                 btnAddSteps.setVisibility(View.VISIBLE);

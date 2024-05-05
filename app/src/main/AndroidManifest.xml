@@ -21,9 +21,11 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppDefaultTheme"
+        android:screenOrientation="portrait"
         tools:targetApi="31">
         <activity
             android:name=".actBMITracker"
+            android:screenOrientation="portrait"
             android:exported="true">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -33,7 +35,8 @@
         </activity>
         <activity
             android:name=".bannerSleepGoalAchieved"
-            android:exported="true">
+            android:screenOrientation="portrait"
+        android:exported="true">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -44,7 +47,9 @@
         </activity>
         <activity
             android:name=".actSleepTracker"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            >
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -55,6 +60,7 @@
         </activity>
         <activity
             android:name=".settingsPage"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -66,6 +72,7 @@
         </activity>
         <activity
             android:name=".dashboardPage"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -77,6 +84,7 @@
         </activity>
         <activity
             android:name=".bannerCalorieGoalAchieved"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -88,6 +96,7 @@
         </activity>
         <activity
             android:name=".bannerWaterGoalAchieved"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -99,6 +108,7 @@
         </activity>
         <activity
             android:name=".bannerStepGoalAchieved"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -110,6 +120,7 @@
         </activity>
         <activity
             android:name=".profilePage"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -121,6 +132,7 @@
         </activity>
         <activity
             android:name=".activityPage"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -132,6 +144,7 @@
         </activity>
         <activity
             android:name=".actFoodIntakeTracker"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -143,6 +156,7 @@
         </activity>
         <activity
             android:name=".actWaterIntakeTracker"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -154,6 +168,7 @@
         </activity>
         <activity
             android:name=".actStepTracker"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -165,6 +180,7 @@
         </activity>
         <activity
             android:name=".signUp"
+            android:screenOrientation="portrait"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -176,6 +192,7 @@
         </activity>
         <activity
             android:name=".signIn"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
