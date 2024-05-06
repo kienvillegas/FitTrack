@@ -100,56 +100,53 @@ public class profileSetCalorieGoalFragment extends Fragment {
             etSetCalorieWeekly.setError(null);
 
             String dailyGoal, weeklyGoal;
+            int dailyGoalInt, weeklyGoalInt;
+            List<Integer> dailyGoalList = new ArrayList<Integer>();
+            List<Integer> weeklyGoalList = new ArrayList<Integer>();
+
             dailyGoal = etSetCalorieDaily.getText().toString().trim();
             weeklyGoal = etSetCalorieWeekly.getText().toString().trim();
 
+            dailyGoalInt = dailyGoal.isEmpty() ? 0 : Integer.parseInt(dailyGoal);
+            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
+
+            if(dailyGoalInt == 0){
+                pbSetCalorie.setVisibility(View.GONE);
+                btnSetCalorieCancel.setVisibility(View.VISIBLE);
+                btnSetCalorieGoal.setVisibility(View.VISIBLE);
+
+                etSetCalorieDaily.setBackgroundResource(R.drawable.text_field_red);
+                etSetCalorieDaily.setError("Required");
+                return;
+            }
+
+            if(dailyGoalInt > 999999){
+                pbSetCalorie.setVisibility(View.GONE);
+                btnSetCalorieGoal.setVisibility(View.VISIBLE);
+                btnSetCalorieCancel.setVisibility(View.VISIBLE);
+
+                etSetCalorieDaily.setBackgroundResource(R.drawable.text_field_red);
+                etSetCalorieDaily.setError("Invalid");
+                etSetCalorieDaily.requestFocus();
+                return;
+            }
+
+            if(weeklyGoalInt > 999999){
+                pbSetCalorie.setVisibility(View.GONE);
+                btnSetCalorieGoal.setVisibility(View.VISIBLE);
+                btnSetCalorieCancel.setVisibility(View.VISIBLE);
+
+                etSetCalorieWeekly.setBackgroundResource(R.drawable.text_field_red);
+                etSetCalorieWeekly.setError("Invalid");
+                etSetCalorieWeekly.requestFocus();
+                return;
+            }
+
+            dailyGoalList.add(dailyGoalInt);
+            weeklyGoalList.add(weeklyGoalInt);
+
             try{
-                List<Integer> dailyGoalList = new ArrayList<Integer>();
-                List<Integer> weeklyGoalList = new ArrayList<Integer>();
-
                 String formattedDailyGoal, formattedWeeklyGoal;
-
-                if(dailyGoal.isEmpty()){
-                    pbSetCalorie.setVisibility(View.GONE);
-                    btnSetCalorieCancel.setVisibility(View.VISIBLE);
-                    btnSetCalorieGoal.setVisibility(View.VISIBLE);
-
-                    etSetCalorieDaily.setBackgroundResource(R.drawable.text_field_red);
-                    etSetCalorieDaily.setError("Required");
-                    return;
-                }
-
-                if(Integer.parseInt(dailyGoal) > 999999){
-                    pbSetCalorie.setVisibility(View.GONE);
-                    btnSetCalorieGoal.setVisibility(View.VISIBLE);
-                    btnSetCalorieCancel.setVisibility(View.VISIBLE);
-
-                    etSetCalorieDaily.setBackgroundResource(R.drawable.text_field_red);
-                    etSetCalorieDaily.setError("Invalid");
-                    etSetCalorieDaily.requestFocus();
-                    return;
-                }
-
-                if(Integer.parseInt(weeklyGoal) > 999999){
-                    pbSetCalorie.setVisibility(View.GONE);
-                    btnSetCalorieGoal.setVisibility(View.VISIBLE);
-                    btnSetCalorieCancel.setVisibility(View.VISIBLE);
-
-                    etSetCalorieWeekly.setBackgroundResource(R.drawable.text_field_red);
-                    etSetCalorieWeekly.setError("Invalid");
-                    etSetCalorieWeekly.requestFocus();
-                    return;
-                }
-
-                if(weeklyGoal.isEmpty()){
-                    dailyGoalList.add(Integer.parseInt(dailyGoal));
-                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
-                }
-
-                if (!weeklyGoal.isEmpty()) {
-                    dailyGoalList.add(Integer.parseInt(dailyGoal));
-                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
-                }
 
                 formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
                 formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));

@@ -115,11 +115,11 @@ public class signUp extends AppCompatActivity {
         sleepData.put("sun", 0);
 
         Map<String, Object> actData = new HashMap<>();
-        actData.put("running",0);
-        actData.put("cycle",0);
-        actData.put("swim",0);
-        actData.put("yoga",0);
-        actData.put("gym",0);
+        actData.put("Running",0);
+        actData.put("Cycle",0);
+        actData.put("Swim",0);
+        actData.put("Yoga",0);
+        actData.put("Gym",0);
 
         Map<String, Object> bmiData = new HashMap<>();
         bmiData.put("mon", 0);

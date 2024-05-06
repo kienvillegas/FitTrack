@@ -99,59 +99,53 @@ public class profileSetStepsGoalFragment extends Fragment {
 
 
             String dailyGoal, weeklyGoal;
+            int dailyGoalInt, weeklyGoalInt;
+            List<Integer> dailyGoalList = new ArrayList<>();
+            List<Integer> weeklyGoalList = new ArrayList<>();
+
             dailyGoal = etSetStepDaily.getText().toString().trim();
             weeklyGoal = etSetStepWeekly.getText().toString().trim();
+            Log.d(TAG, "" + weeklyGoal);
+            dailyGoalInt = dailyGoal.isEmpty() ? 0 : Integer.parseInt(dailyGoal);
+            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
+
+            if(dailyGoalInt == 0){
+                pbSetStep.setVisibility(View.GONE);
+                btnSetStepCancel.setVisibility(View.VISIBLE);
+                btnSetStepGoal.setVisibility(View.VISIBLE);
+
+                etSetStepDaily.setBackgroundResource(R.drawable.text_field_red);
+                etSetStepDaily.setError("Required");
+                etSetStepDaily.requestFocus();
+                return;
+            }
+
+            if(dailyGoalInt > 999999){
+                pbSetStep.setVisibility(View.GONE);
+                btnSetStepGoal.setVisibility(View.VISIBLE);
+                btnSetStepCancel.setVisibility(View.VISIBLE);
+
+                etSetStepDaily.setBackgroundResource(R.drawable.text_field_red);
+                etSetStepDaily.setError("Invalid");
+                etSetStepDaily.requestFocus();
+                return;
+            }
+
+            if(weeklyGoalInt > 999999){
+                pbSetStep.setVisibility(View.GONE);
+                btnSetStepGoal.setVisibility(View.VISIBLE);
+                btnSetStepCancel.setVisibility(View.VISIBLE);
+
+                etSetStepWeekly.setBackgroundResource(R.drawable.text_field_red);
+                etSetStepWeekly.setError("Invalid");
+                etSetStepWeekly.requestFocus();
+                return;
+            }
+
+            dailyGoalList.add(dailyGoalInt);
+            weeklyGoalList.add(weeklyGoalInt);
 
             try{
-                List<Integer> dailyGoalList = new ArrayList<>();
-                List<Integer> weeklyGoalList = new ArrayList<>();
-
-                if(dailyGoal.isEmpty()){
-                    pbSetStep.setVisibility(View.GONE);
-                    btnSetStepCancel.setVisibility(View.VISIBLE);
-                    btnSetStepGoal.setVisibility(View.VISIBLE);
-
-                    etSetStepDaily.setBackgroundResource(R.drawable.text_field_red);
-                    etSetStepDaily.setError("Required");
-                    etSetStepDaily.requestFocus();
-
-                    return;
-                }
-
-                if(weeklyGoal.isEmpty()){
-                    Log.d(TAG, "Weekly Goal is empty");
-                    dailyGoalList.add(Integer.parseInt(dailyGoal));
-                    weeklyGoalList.add(Integer.parseInt(dailyGoal) * 7);
-                }
-
-                if(!weeklyGoal.isEmpty()){
-                    Log.d(TAG, "Weekly Goal is empty");
-                    dailyGoalList.add(Integer.parseInt(dailyGoal));
-                    weeklyGoalList.add(Integer.parseInt(weeklyGoal));
-                }
-
-                if(Integer.parseInt(dailyGoal) > 999999){
-                    pbSetStep.setVisibility(View.GONE);
-                    btnSetStepGoal.setVisibility(View.VISIBLE);
-                    btnSetStepCancel.setVisibility(View.VISIBLE);
-
-                    etSetStepDaily.setBackgroundResource(R.drawable.text_field_red);
-                    etSetStepDaily.setError("Invalid");
-                    etSetStepDaily.requestFocus();
-                    return;
-                }
-
-                if(Integer.parseInt(weeklyGoal) > 999999){
-                    pbSetStep.setVisibility(View.GONE);
-                    btnSetStepGoal.setVisibility(View.VISIBLE);
-                    btnSetStepCancel.setVisibility(View.VISIBLE);
-
-                    etSetStepWeekly.setBackgroundResource(R.drawable.text_field_red);
-                    etSetStepWeekly.setError("Invalid");
-                    etSetStepWeekly.requestFocus();
-                    return;
-                }
-
                 String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));
                 String formattedWeeklyGoal = NumberFormat.getNumberInstance(Locale.US).format(weeklyGoalList.get(0));
 

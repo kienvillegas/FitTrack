@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,7 +55,7 @@ public class dashboardPage extends AppCompatActivity {
     private TextView[] dateTextViews = new TextView[7];
     private ImageView[] bgImageView = new ImageView[7];
 
-    TextView  tvStepPercent, tvCaloriePercent, tvSleepHours, tvWaterIntake, tvWeeklyPercent, tvAverageBMI, tvBMIResult;
+    TextView  tvStepPercent, tvCaloriePercent, tvSleepHours, tvWaterIntake, tvWeeklyPercent, tvAverageBMI, tvBMIResult, tvDashboardGreeting;
     ProgressBar pbDashboardStep, pbDashboardFood, pbDashboardWkProgress, pbDashboardContent;
 
     @Override
@@ -83,6 +85,7 @@ public class dashboardPage extends AppCompatActivity {
         tvWeeklyPercent = findViewById(R.id.tvDashboardWkPercent);
         tvAverageBMI = findViewById(R.id.tvAverageBMI);
         tvBMIResult = findViewById(R.id.tvBMIResult);
+        tvDashboardGreeting = findViewById(R.id.tvDashboardGreeting);
 
         pbDashboardFood = findViewById(R.id.pbDashboardFood);
         pbDashboardStep = findViewById(R.id.pbDashboardStep);
@@ -90,6 +93,8 @@ public class dashboardPage extends AppCompatActivity {
 
         DataManager dataManager = new DataManager(dashboardPage.this);
         String currentDatetime = getCurrentDateTime();
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
 
         try{
             tvDayMonDate = findViewById(R.id.tvDayMonDate);
@@ -134,23 +139,15 @@ public class dashboardPage extends AppCompatActivity {
             bgImageView[5] = findViewById(R.id.imDaySixBg);
             bgImageView[6] = findViewById(R.id.imDaySevenBg);
 
-            setWeeklyCalendar();
-            bottomNav.setSelectedItemId(R.id.nav_dashboard);
 
-            bottomNav.setOnItemSelectedListener(item -> {
-                if (item.getItemId() == R.id.nav_dashboard) {
-                    return true;
-                } else if (item.getItemId() == R.id.nav_activity) {
-                    startActivity(new Intent(getApplicationContext(), activityPage.class));
-                    finish();
-                    return true;
-                } else if (item.getItemId() == R.id.nav_profile) {
-                    startActivity(new Intent(getApplicationContext(), profilePage.class));
-                    finish();
-                    return true;
-                }
-                return false;
-            });
+            if(currentDatetime.equals(dataManager.getStoredDate()) || dataManager.getStoredDate() == null){
+                Log.d(TAG, "Current Date is equal, null or empty: " + dataManager.getStoredDate());
+                displayDashboardContent(docRef, bmiRef, hour);
+            }else{
+                resetDailyFields(docRef,bmiRef,dataManager,hour);
+            }
+            checkAndRequestActivityRecognitionPermission();
+
         }catch(Exception e){
             Toast.makeText(this, "An Error Occured: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -179,51 +176,23 @@ public class dashboardPage extends AppCompatActivity {
             startActivity(intent);
         });
 
-        if(currentDatetime.equals(dataManager.getStoredDate()) || dataManager.getStoredDate() == null){
-            Log.d(TAG, "Current Date is equal, null or empty: " + dataManager.getStoredDate());
-
-            fetchStepData(docRef);
-            fetchWaterData(docRef);
-            fetchCalorieData(docRef);
-            fetchSleepData(docRef);
-            fetchWeeklyData(docRef);
-            fetchBMIData(bmiRef);
-        }else{
-            Map<String, Object> actData = new HashMap<>();
-            actData.put("dailyStepTaken", 0);
-            actData.put("isStepDailyGoal", false);
-            actData.put("dailyWaterTaken", 0);
-            actData.put("isWaterDailyGoal", false);
-            actData.put("dailyCalorieTaken", 0);
-            actData.put("isCalorieDailyGoal", false);
-            actData.put("dailySleepTaken", 0);
-            actData.put("isSleepDailyGoal", false);
-            actData.put("isDailySleepTaken", false);
-            actData.put("isDailyBMITaken", false);
-
-            docRef.update(actData).addOnSuccessListener(unused -> {
-                Log.d(TAG, "act data has been saved to firestore");
-                dataManager.saveCurrentDateTime();
-
-                fetchStepData(docRef);
-                fetchWaterData(docRef);
-                fetchCalorieData(docRef);
-                fetchSleepData(docRef);
-                fetchWeeklyData(docRef);
-                fetchBMIData(bmiRef);
-            }).addOnFailureListener(e -> {
-                Log.e(TAG, "Failed to update on firestore");
-            });
-        }
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACTIVITY_RECOGNITION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
-                    REQUEST_ACTIVITY_RECOGNITION_PERMISSION);
-        } else {
-            initializeStepSensor();
-        }
+        bottomNav.setSelectedItemId(R.id.nav_dashboard);
+        bottomNav.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_dashboard) {
+                startActivity(new Intent(getApplicationContext(), dashboardPage.class));
+                finish();
+                return true;
+            } else if (item.getItemId() == R.id.nav_activity) {
+                startActivity(new Intent(getApplicationContext(), activityPage.class));
+                finish();
+                return true;
+            } else if (item.getItemId() == R.id.nav_profile) {
+                startActivity(new Intent(getApplicationContext(), profilePage.class));
+                finish();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void setWeeklyCalendar(){
@@ -265,7 +234,6 @@ public class dashboardPage extends AppCompatActivity {
     }
 
     private void fetchStepData(DocumentReference docRef){
-        hideContentView();
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             int dailyStepTaken, stepDailyGoal, stepPercent;
             dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
@@ -276,7 +244,6 @@ public class dashboardPage extends AppCompatActivity {
             } else {
                 stepPercent = 0;
             }
-            showContentView();
 
             tvStepPercent.setText(String.valueOf(stepPercent) + "%");
             pbDashboardStep.setMax(100);
@@ -289,23 +256,21 @@ public class dashboardPage extends AppCompatActivity {
 
     private void fetchWaterData(DocumentReference docRef){
         hideContentView();
-
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             int dailyWaterTaken;
             dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken").intValue();
 
-            showContentView();
-
             String formattedDailyWater = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
             tvWaterIntake.setText(formattedDailyWater);
+            showContentView();
         }).addOnFailureListener(e -> {
+            showContentView();
             Log.e(TAG, "Failed to fetch Water Data: " + e.getMessage());
         });
     }
 
     private void fetchCalorieData(DocumentReference docRef){
         hideContentView();
-
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             int dailyCalorieTaken, calorieDailyGoal, caloriePercent ;
             dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
@@ -316,35 +281,37 @@ public class dashboardPage extends AppCompatActivity {
             } else {
                 caloriePercent = 0;
             }
-            showContentView();
 
             tvCaloriePercent.setText(String.valueOf(caloriePercent) + "%");
             pbDashboardFood.setMax(100);
             pbDashboardFood.setProgress(caloriePercent);
+            showContentView();
 
         }).addOnFailureListener(e -> {
+            showContentView();
             Log.e(TAG, "Failed to fetch Calorie Data: " + e.getMessage());
         });
     }
 
     private void fetchSleepData(DocumentReference docRef){
         hideContentView();
-
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             int dailySleepTaken;
             dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
-            showContentView();
 
             String formattedDailySleep = NumberFormat.getNumberInstance(Locale.US).format(dailySleepTaken);
             tvSleepHours.setText(formattedDailySleep);
+            showContentView();
+
         }).addOnFailureListener(e -> {
             Log.e(TAG, "Failed to fetch Sleep Data: " + e.getMessage());
+            showContentView();
+
         });
     }
 
     private void fetchBMIData(DocumentReference docRef) {
         hideContentView();
-
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
@@ -395,7 +362,10 @@ public class dashboardPage extends AppCompatActivity {
                 tvBMIResult.setText("Obese");
             }
             showContentView();
+
         }).addOnFailureListener(e -> {
+            showContentView();
+
             Log.e(TAG, "Failed to fetch BMI Data: " + e.getMessage());
         });
     }
@@ -431,12 +401,14 @@ public class dashboardPage extends AppCompatActivity {
 
              Log.d(TAG, "Weekly Progress Percent" + String.valueOf(weeklyProgressPercent));
 
-            showContentView();
-
             pbDashboardWkProgress.setMax(100);
              pbDashboardWkProgress.setProgress(weeklyProgressPercent);
              tvWeeklyPercent.setText(String.valueOf(weeklyProgressPercent) + "%");
+            showContentView();
+
         }).addOnFailureListener(e -> {
+            showContentView();
+
             Log.e(TAG, e.getMessage());
         });
     }
@@ -590,8 +562,6 @@ public class dashboardPage extends AppCompatActivity {
             FirebaseUser currentUser = mAuth.getCurrentUser();
             mAuth = FirebaseAuth.getInstance();
             String userId = currentUser.getUid();
-            final String[] storedDate = {dataManager.getStoredDate()};
-            String currentDateTime = getCurrentDateTime();
 
             DocumentReference docRef = db.collection("users").document(userId);
             docRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -630,6 +600,18 @@ public class dashboardPage extends AppCompatActivity {
         });
         stepSensorManager.registerListener();
     }
+
+    private void checkAndRequestActivityRecognitionPermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACTIVITY_RECOGNITION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION},
+                    REQUEST_ACTIVITY_RECOGNITION_PERMISSION);
+        } else {
+            initializeStepSensor();
+        }
+    }
+
 
     private String getCurrentDay(){
         Date date = new Date();
@@ -682,6 +664,82 @@ public class dashboardPage extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         return sdf.format(date);
+    }
+//
+//    private boolean isMidnight() {
+//        Calendar now = Calendar.getInstance();
+//        int hour = now.get(Calendar.HOUR_OF_DAY);
+//        int minute = now.get(Calendar.MINUTE);
+//
+//        // Check if it's midnight (00:00)
+//        return hour == 0 && minute == 0;
+//    }
+
+    private void getGreetings(int hour){
+        if (hour >= 0 && hour < 12) {
+            tvDashboardGreeting.setText("Good Morning!");
+        } else if (hour >= 12 && hour < 18) {
+            tvDashboardGreeting.setText("Good Afternoon!");
+        } else {
+            tvDashboardGreeting.setText("Good Evening!");
+        }
+    }
+
+//    private void resetFirestoreValues(DocumentReference docRef) {
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("dailyStepTaken", 0);
+//        data.put("isStepDailyGoal", false);
+//        data.put("dailyWaterTaken", 0);
+//        data.put("isWaterDailyGoal", false);
+//        data.put("dailyCalorieTaken", 0);
+//        data.put("isCalorieDailyGoal", false);
+//        data.put("dailySleepTaken", 0);
+//        data.put("isSleepDailyGoal", false);
+//        data.put("isDailySleepTaken", false);
+//        data.put("isDailyBMITaken", false);
+//
+//        docRef.update(data)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        Log.d(TAG, "Document fields reset successfully.");
+//                    } else {
+//                        Log.e(TAG, "Error resetting document fields: ", task.getException());
+//                    }
+//                });
+//    }
+
+    private void displayDashboardContent(DocumentReference docRef, DocumentReference bmiRef, int hour){
+        getGreetings(hour);
+        setWeeklyCalendar();
+        fetchStepData(docRef);
+        fetchWaterData(docRef);
+        fetchCalorieData(docRef);
+        fetchSleepData(docRef);
+        fetchWeeklyData(docRef);
+        fetchBMIData(bmiRef);
+    }
+
+    private void resetDailyFields(DocumentReference docRef, DocumentReference bmiRef, DataManager dataManager, int hour){
+        Map<String, Object> actData = new HashMap<>();
+        actData.put("dailyStepTaken", 0);
+        actData.put("isStepDailyGoal", false);
+        actData.put("dailyWaterTaken", 0);
+        actData.put("isWaterDailyGoal", false);
+        actData.put("dailyCalorieTaken", 0);
+        actData.put("isCalorieDailyGoal", false);
+        actData.put("dailySleepTaken", 0);
+        actData.put("isSleepDailyGoal", false);
+        actData.put("isDailySleepTaken", false);
+        actData.put("isDailyBMITaken", false);
+
+        docRef.update(actData).addOnSuccessListener(unused -> {
+            Log.d(TAG, "act data has been saved to firestore");
+            dataManager.saveCurrentDateTime();
+
+            displayDashboardContent(docRef, bmiRef, hour);
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Failed to update on firestore");
+        });
     }
 
     protected void onStart() {

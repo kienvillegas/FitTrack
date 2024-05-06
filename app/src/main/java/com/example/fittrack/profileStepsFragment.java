@@ -65,81 +65,17 @@ public class profileStepsFragment extends Fragment {
             tvProfileStepWeeklyGoal = view.findViewById(R.id.tvProfileStepWeeklyGoal);
             btnProfileStepSetGoal = view.findViewById(R.id.btnProfileStepSetGoal);
             barChart = view.findViewById(R.id.stepBarChart);
+
+            DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
+            DocumentReference docRef = db.collection("users").document(userId);
+
             if(userId != null){
                 Log.d(TAG, "Fragment is attached");
                 hideContentView();
                 fetchStepData(userId);
-
-                DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
-                weeklyStepRef.get()
-                        .addOnSuccessListener(documentSnapshot -> {
-                           if(isAdded()){
-                               if(documentSnapshot.exists()){
-                                   showContentView();
-
-                                   int monStep, tueStep, wedStep, thuStep, friStep, satStep, sunStep;
-
-                                   monStep = documentSnapshot.getLong("mon").intValue();
-                                   tueStep = documentSnapshot.getLong("tue").intValue();
-                                   wedStep = documentSnapshot.getLong("wed").intValue();
-                                   thuStep = documentSnapshot.getLong("thu").intValue();
-                                   friStep = documentSnapshot.getLong("fri").intValue();
-                                   satStep = documentSnapshot.getLong("sat").intValue();
-                                   sunStep = documentSnapshot.getLong("sun").intValue();
-
-                                   List<BarEntry> entries = new ArrayList<>();
-                                   entries.add(new BarEntry(0, monStep));
-                                   entries.add(new BarEntry(1, tueStep));
-                                   entries.add(new BarEntry(2, wedStep));
-                                   entries.add(new BarEntry(3, thuStep));
-                                   entries.add(new BarEntry(4, friStep));
-                                   entries.add(new BarEntry(5, satStep));
-                                   entries.add(new BarEntry(6, sunStep));
-
-                                   BarDataSet dataSet = new BarDataSet(entries, "Bar Data");
-                                   TypedValue typedValue = new TypedValue();
-                                   requireContext().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
-                                   int primary = typedValue.data;                                   int tertiary = ContextCompat.getColor(requireContext(), R.color.tertiaryDark);
-                                   dataSet.setColor(primary);
-                                   dataSet.setDrawValues(false);
-                                   BarData barData = new BarData(dataSet);
-                                   barData.setBarWidth(0.5f);
-                                   XAxis xAxis = barChart.getXAxis();
-                                   xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                                   xAxis.setDrawLabels(true);
-                                   xAxis.setDrawGridLines(true);
-                                   xAxis.setDrawAxisLine(true);
-                                   xAxis.setGridColor(tertiary);
-                                   xAxis.setGranularity(1f);
-                                   xAxis.setTextSize(12f);
-                                   xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"}));
-
-                                   YAxis yAxisRight = barChart.getAxisRight();
-                                   YAxis yAxisLeft = barChart.getAxisLeft();
-                                   yAxisLeft.setDrawGridLines(false);
-                                   yAxisRight.setDrawGridLines(false);
-                                   yAxisLeft.setTextSize(12f);
-                                   yAxisRight.setTextSize(12f);
-                                   yAxisRight.setEnabled(false);
-
-                                   barChart.setExtraOffsets(20f, 20f, 20f, 20f);
-                                   barChart.getDescription().setEnabled(false);
-                                   barChart.getLegend().setEnabled(false);
-                                   barChart.setData(barData);
-                                   barChart.invalidate();
-                               }else{
-                                   Log.d(TAG, "Document does not exist");
-                               }
-                           }else{
-                                Log.e(TAG, "Fragment is not attached");
-                           }
-                        }).addOnFailureListener(e -> {
-                            Log.e(TAG, "An error occurred: " + e.getMessage());
-                        });
+                displayBarChart(weeklyStepRef);
 
                 btnProfileStepSetGoal.setOnClickListener(v -> {
-
-                    DocumentReference docRef = db.collection("users").document(userId);
                     docRef.get()
                             .addOnSuccessListener(documentSnapshot -> {
                                if(isAdded()){
@@ -178,7 +114,74 @@ public class profileStepsFragment extends Fragment {
         }
         return view;
     }
+    private void displayBarChart(DocumentReference weeklyStepRef){
+        weeklyStepRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if(isAdded()){
+                        if(documentSnapshot.exists()){
+                            showContentView();
 
+                            int monStep, tueStep, wedStep, thuStep, friStep, satStep, sunStep;
+
+                            monStep = documentSnapshot.getLong("mon").intValue();
+                            tueStep = documentSnapshot.getLong("tue").intValue();
+                            wedStep = documentSnapshot.getLong("wed").intValue();
+                            thuStep = documentSnapshot.getLong("thu").intValue();
+                            friStep = documentSnapshot.getLong("fri").intValue();
+                            satStep = documentSnapshot.getLong("sat").intValue();
+                            sunStep = documentSnapshot.getLong("sun").intValue();
+
+                            List<BarEntry> entries = new ArrayList<>();
+                            entries.add(new BarEntry(0, monStep));
+                            entries.add(new BarEntry(1, tueStep));
+                            entries.add(new BarEntry(2, wedStep));
+                            entries.add(new BarEntry(3, thuStep));
+                            entries.add(new BarEntry(4, friStep));
+                            entries.add(new BarEntry(5, satStep));
+                            entries.add(new BarEntry(6, sunStep));
+
+                            BarDataSet dataSet = new BarDataSet(entries, "Bar Data");
+                            TypedValue typedValue = new TypedValue();
+                            requireContext().getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+                            int primary = typedValue.data;                                   int tertiary = ContextCompat.getColor(requireContext(), R.color.tertiaryDark);
+                            dataSet.setColor(primary);
+                            dataSet.setDrawValues(false);
+                            BarData barData = new BarData(dataSet);
+                            barData.setBarWidth(0.5f);
+                            XAxis xAxis = barChart.getXAxis();
+                            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                            xAxis.setDrawLabels(true);
+                            xAxis.setDrawGridLines(true);
+                            xAxis.setDrawAxisLine(true);
+                            xAxis.setGridColor(tertiary);
+                            xAxis.setGranularity(1f);
+                            xAxis.setTextSize(12f);
+                            xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"}));
+
+                            YAxis yAxisRight = barChart.getAxisRight();
+                            YAxis yAxisLeft = barChart.getAxisLeft();
+                            yAxisLeft.setDrawGridLines(false);
+                            yAxisRight.setDrawGridLines(false);
+                            yAxisLeft.setTextSize(12f);
+                            yAxisRight.setTextSize(12f);
+                            yAxisRight.setEnabled(false);
+
+                            barChart.setExtraOffsets(20f, 20f, 20f, 20f);
+                            barChart.getDescription().setEnabled(false);
+                            barChart.getLegend().setEnabled(false);
+                            barChart.setData(barData);
+                            barChart.animateY(1000);
+                            barChart.invalidate();
+                        }else{
+                            Log.d(TAG, "Document does not exist");
+                        }
+                    }else{
+                        Log.e(TAG, "Fragment is not attached");
+                    }
+                }).addOnFailureListener(e -> {
+                    Log.e(TAG, "An error occurred: " + e.getMessage());
+                });
+    }
     private void fetchStepData(String userId){
         DocumentReference docRef = db.collection("users").document(userId);
         docRef.get()

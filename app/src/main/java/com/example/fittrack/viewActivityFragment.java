@@ -35,7 +35,7 @@ public class viewActivityFragment extends Fragment {
 
         imViewActRun.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("actName", "running");
+            bundle.putString("actName", "Running");
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new startActivityFragment();
@@ -47,7 +47,7 @@ public class viewActivityFragment extends Fragment {
 
         imViewActCycle.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("actName", "cycle");
+            bundle.putString("actName", "Cycle");
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new startActivityFragment();
@@ -59,7 +59,7 @@ public class viewActivityFragment extends Fragment {
 
         imViewActSwim.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("actName", "swim");
+            bundle.putString("actName", "Swim");
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new startActivityFragment();
@@ -71,7 +71,7 @@ public class viewActivityFragment extends Fragment {
 
         imViewActYoga.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("actName", "yoga");
+            bundle.putString("actName", "Yoga");
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new startActivityFragment();
@@ -83,7 +83,7 @@ public class viewActivityFragment extends Fragment {
 
         imViewActGym.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("actName", "gym");
+            bundle.putString("actName", "Gym");
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment newFragment = new startActivityFragment();

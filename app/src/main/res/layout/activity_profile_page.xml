@@ -30,7 +30,7 @@
                 app:srcCompat="@drawable/user_icon" />
 
             <TextView
-                android:id="@+id/textView22"
+                android:id="@+id/tvProfileGreeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -52,30 +52,29 @@
                 android:textColor="@color/tertiaryDarkText"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                app:layout_constraintTop_toBottomOf="@+id/tvProfileGreeting" />
 
             <ImageView
                 android:id="@+id/imProfileSettings"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="100dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView22"
+                app:layout_constraintStart_toEndOf="@+id/tvProfileGreeting"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/settings_icon" />
 
             <LinearLayout
                 android:id="@+id/custom_tab_layout"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/back_tabs"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/tvProfileDayMonDate"
-                tools:layout_editor_absoluteX="20dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvProfileDayMonDate">
 
                 <TextView
                     android:id="@+id/stepTab"
@@ -111,16 +110,16 @@
                     android:text="Calorie"
                     android:textColor="@color/tertiaryDarkText" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/sleepTab"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:fontFamily="@font/poppins_semibold"-->
-<!--                    android:gravity="center"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:text="Sleep"-->
-<!--                    android:textColor="@color/tertiaryDarkText" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/sleepTab"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:fontFamily="@font/poppins_semibold"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:padding="10dp"-->
+                <!--                    android:text="Sleep"-->
+                <!--                    android:textColor="@color/tertiaryDarkText" />-->
             </LinearLayout>
 
             <androidx.fragment.app.FragmentContainerView

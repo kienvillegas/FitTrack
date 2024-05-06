@@ -45,6 +45,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -61,7 +62,7 @@ public class activityPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    TextView tvActStepPercent, tvActStepTaken, tvActStepGoal, tvDateTimeRecentAct, tvActDayMonDate;
+    TextView tvActStepPercent, tvActStepTaken, tvActStepGoal, tvDateTimeRecentAct, tvActDayMonDate, tvActGreeting;
     ProgressBar pbActStep;
     ImageView imRecentActIcon;
     private PieChart pieChart;
@@ -85,6 +86,8 @@ public class activityPage extends AppCompatActivity {
         imRecentActIcon = findViewById(R.id.imRecentActIcon);
         tvDateTimeRecentAct = findViewById(R.id.tvDateTimeRecentAct);
         tvActDayMonDate = findViewById(R.id.tvActDayMonDate);
+        tvActGreeting = findViewById(R.id.tvActGreeting);
+
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavActivity);
         pieChart = findViewById(R.id.pieChart);
         bottomNav.setSelectedItemId(R.id.nav_activity);
@@ -99,6 +102,18 @@ public class activityPage extends AppCompatActivity {
         SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
         Date date = new Date();
         String currentDate = dayMonDate.format(date);
+
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+        if (hour >= 0 && hour < 12) {
+            tvActGreeting.setText("Good Morning!");
+        } else if (hour >= 12 && hour < 18) {
+            tvActGreeting.setText("Good Afternoon!");
+        } else {
+            tvActGreeting.setText("Good Evening!");
+        }
+
         tvActDayMonDate.setText(currentDate);
 
         bottomNav.setOnItemSelectedListener(item -> {
@@ -107,6 +122,8 @@ public class activityPage extends AppCompatActivity {
                 finish();
                 return true;
             } else if (item.getItemId() == R.id.nav_activity) {
+                startActivity(new Intent(getApplicationContext(), activityPage.class));
+                finish();
                 return true;
             } else if (item.getItemId() == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), profilePage.class));
@@ -143,11 +160,11 @@ public class activityPage extends AppCompatActivity {
 
     private void fetchPieChartData(DocumentSnapshot documentSnapshot){
         int running, cycling, swimming, gym, yoga;
-        running = documentSnapshot.getLong("running").intValue();
-        cycling = documentSnapshot.getLong("cycle").intValue();
-        swimming = documentSnapshot.getLong("swim").intValue();
-        yoga = documentSnapshot.getLong("yoga").intValue();
-        gym = documentSnapshot.getLong("gym").intValue();
+        running = documentSnapshot.getLong("Running").intValue();
+        cycling = documentSnapshot.getLong("Cycle").intValue();
+        swimming = documentSnapshot.getLong("Swim").intValue();
+        yoga = documentSnapshot.getLong("Yoga").intValue();
+        gym = documentSnapshot.getLong("Gym").intValue();
 
         ArrayList<PieEntry> entries = new ArrayList<>();
         if(running > 0)  entries.add(new PieEntry(running, "Running"));

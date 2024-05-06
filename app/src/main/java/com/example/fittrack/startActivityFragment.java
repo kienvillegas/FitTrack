@@ -58,23 +58,23 @@ public class startActivityFragment extends Fragment {
             actName[0] = bundle.getString("actName");
             if(actName != null){
                 switch (actName[0]){
-                    case "running":
+                    case "Running":
                         imStartActIcon.setImageResource(R.drawable.running_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "cycle":
+                    case "Cycle":
                         imStartActIcon.setImageResource(R.drawable.cycling_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "swim":
+                    case "Swim":
                         imStartActIcon.setImageResource(R.drawable.swimming_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "yoga":
+                    case "Yoga":
                         imStartActIcon.setImageResource(R.drawable.yoga_icon);
                         tvStartActName.setText(actName[0]);
                         break;
-                    case "gym":
+                    case "Gym":
                         imStartActIcon.setImageResource(R.drawable.weights_icon);
                         tvStartActName.setText(actName[0]);
                         break;
@@ -90,8 +90,10 @@ public class startActivityFragment extends Fragment {
         }
 
         imStartActIncTime.setOnClickListener(v -> {
-            timeGoal[0] += 1;
-            tvStartActTimeGoal.setText(String.valueOf(timeGoal[0]));
+            if(timeGoal[0] < 5){
+                timeGoal[0] += 1;
+                tvStartActTimeGoal.setText(String.valueOf(timeGoal[0]));
+            }
         });
 
         imStartActDecTime.setOnClickListener(v -> {

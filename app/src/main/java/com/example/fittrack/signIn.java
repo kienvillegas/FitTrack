@@ -247,6 +247,7 @@ public class signIn extends AppCompatActivity {
                                             btnSignIn.setVisibility(View.VISIBLE);
                                             tvForgotPassword.setVisibility(View.VISIBLE);
                                             etSignInEmail.setText("");
+                                            etSignInPasssword.setText("");
 
                                             Toast.makeText(signIn.this, "Reset Password Link has been sent to your email", Toast.LENGTH_SHORT).show();
                                         }).addOnFailureListener(e -> {
@@ -256,7 +257,7 @@ public class signIn extends AppCompatActivity {
                                             pbSignIn.setVisibility(View.GONE);
                                             btnSignIn.setVisibility(View.VISIBLE);
                                             tvForgotPassword.setVisibility(View.VISIBLE);
-                                            etSignInEmail.setText("");
+                                            etSignInPasssword.setText("");
 
                                             if(e instanceof FirebaseAuthException) {
                                                 FirebaseAuthException firebaseAuthException = (FirebaseAuthException) e;

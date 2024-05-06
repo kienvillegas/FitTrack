@@ -31,7 +31,7 @@
                 app:srcCompat="@drawable/user_icon" />
 
             <TextView
-                android:id="@+id/textView151"
+                android:id="@+id/tvDashboardGreeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -52,7 +52,7 @@
                 android:textColor="@color/tertiaryDarkText"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView79"
-                app:layout_constraintTop_toBottomOf="@+id/textView151" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDashboardGreeting" />
 
             <ImageView
                 android:id="@+id/imageView80"
@@ -78,9 +78,8 @@
                 android:id="@+id/imageView90"
                 android:layout_width="372dp"
                 android:layout_height="110dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.589"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDayMonDate"
                 app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
@@ -99,15 +98,30 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView90" />
 
             <TextView
+                android:id="@+id/textView166"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Tue"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView167"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView165"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <TextView
                 android:id="@+id/textView164"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Sun"
                 android:textColor="@color/primaryText"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView165"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/imageView90"
                 app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
 
@@ -115,38 +129,27 @@
                 android:id="@+id/textView165"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Mon"
                 android:textColor="@color/primaryText"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView166"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView164"
-                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
-
-            <TextView
-                android:id="@+id/textView166"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/outfit_medium"
-                android:text="Tue"
-                android:textColor="@color/primaryText"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/textView165"
                 app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
 
             <TextView
                 android:id="@+id/textView167"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Wed"
                 android:textColor="@color/primaryText"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView168"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView166"
                 app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
 
@@ -154,12 +157,13 @@
                 android:id="@+id/textView168"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Thur"
                 android:textColor="@color/primaryText"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView169"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView167"
                 app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
 
@@ -167,12 +171,13 @@
                 android:id="@+id/textView169"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Fri"
                 android:textColor="@color/primaryText"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView170"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView168"
                 app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
 
@@ -180,12 +185,13 @@
                 android:id="@+id/textView170"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Sat"
                 android:textColor="@color/primaryText"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView90"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView169"
                 app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
 
@@ -193,8 +199,9 @@
                 android:id="@+id/imDayOneBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayTwoBg"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/imageView90"
                 app:layout_constraintTop_toBottomOf="@+id/textView164"
                 app:srcCompat="@drawable/circle_filled_shape" />
@@ -203,8 +210,9 @@
                 android:id="@+id/imDayTwoBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="18dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayThreeBg"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imDayOneBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView165"
                 app:srcCompat="@drawable/circle_filled_shape" />
@@ -213,8 +221,9 @@
                 android:id="@+id/imDayThreeBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="18dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayFourBg"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imDayTwoBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView166"
                 app:srcCompat="@drawable/circle_filled_shape" />
@@ -223,8 +232,9 @@
                 android:id="@+id/imDayFourBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="17dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayFiveBg"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imDayThreeBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView167"
                 app:srcCompat="@drawable/circle_filled_shape" />
@@ -233,8 +243,9 @@
                 android:id="@+id/imDayFiveBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="19dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDaySixBg"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imDayFourBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView168"
                 app:srcCompat="@drawable/circle_filled_shape" />
@@ -243,8 +254,9 @@
                 android:id="@+id/imDaySixBg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDaySevenBg"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imDayFiveBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView169"
                 app:srcCompat="@drawable/circle_filled_shape" />
@@ -255,6 +267,8 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView90"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imDaySixBg"
                 app:layout_constraintTop_toBottomOf="@+id/textView170"
                 app:srcCompat="@drawable/circle_filled_shape" />
@@ -460,7 +474,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_medium"
                 android:text="steps"
-                android:textColor="?attr/colorPrimaryDark"
+                android:textColor="@color/whiteText"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/pbDashboardStep"
                 app:layout_constraintStart_toStartOf="@+id/pbDashboardStep"
@@ -521,7 +535,7 @@
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="mL"
-                android:textColor="@color/primaryText"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView99"
                 app:layout_constraintStart_toEndOf="@+id/tvDashboardWater"
@@ -572,7 +586,7 @@
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="hours"
-                android:textColor="@color/primaryText"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView101"
                 app:layout_constraintStart_toEndOf="@+id/tvDashboardSleep"
@@ -648,7 +662,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Kcal"
-                android:textColor="@color/tertiaryDarkText"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/pbDashboardFood"
                 app:layout_constraintHorizontal_bias="0.516"
@@ -783,7 +797,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Average BMI"
-                android:textColor="?attr/colorPrimaryDark"
+                android:textColor="@color/whiteText"
                 android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView9"
                 app:layout_constraintStart_toStartOf="@+id/imageView9"
@@ -798,6 +812,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView9"
                 app:layout_constraintTop_toTopOf="@+id/imageView9"
                 app:srcCompat="@drawable/plus_white_icon" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

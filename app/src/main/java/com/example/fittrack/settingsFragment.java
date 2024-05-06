@@ -93,7 +93,7 @@ public class settingsFragment extends Fragment {
 
     private void hideContentView(View view) {
         try {
-            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imSettingsEditProfile, R.id.imSettingsChangePass, R.id.imSettingsDesign};
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imSettingsEditProfile, R.id.imSettingsChangePass, R.id.imSettingsDesign, R.id.imageView109};
             int[] textViewIds = {R.id.tvSettingsUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185};
 
             for (int id : imageViewIds) {
@@ -114,7 +114,7 @@ public class settingsFragment extends Fragment {
 
     private void showContentView(View view) {
         try {
-            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imSettingsEditProfile, R.id.imSettingsChangePass, R.id.imSettingsDesign};
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imSettingsEditProfile, R.id.imSettingsChangePass, R.id.imSettingsDesign, R.id.imageView109};
             int[] textViewIds = {R.id.tvSettingsUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185};
 
             for (int id : imageViewIds) {

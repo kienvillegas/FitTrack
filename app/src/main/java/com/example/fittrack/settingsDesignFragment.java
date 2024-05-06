@@ -219,7 +219,7 @@ public class settingsDesignFragment extends Fragment {
     }
     private void hideContentView(View view) {
         try {
-            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imDesignEditProfile, R.id.imDesignChangePass, R.id.imDesign};
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imDesignEditProfile, R.id.imDesignChangePass, R.id.imDesign, R.id.imageView109};
             int[] textViewIds = {R.id.tvDesignUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185, R.id.textView36};
             int[] buttonIds = {R.id.btnChangeThemeDefault, R.id.btnChangeThemeSecond, R.id.btnChangeThemeThird, R.id.btnChangeThemeSave};
             int[] progressBarIds = {R.id.pbSettingDesign};
@@ -250,7 +250,7 @@ public class settingsDesignFragment extends Fragment {
 
     private void showContentView(View view) {
         try {
-            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imDesignEditProfile, R.id.imDesignChangePass, R.id.imDesign};
+            int[] imageViewIds = {R.id.imageView85, R.id.imageView86, R.id.imDesignEditProfile, R.id.imDesignChangePass, R.id.imDesign, R.id.imageView109};
             int[] textViewIds = {R.id.tvDesignUsername, R.id.textView158, R.id.textView159, R.id.textView160, R.id.textView162, R.id.textView185, R.id.textView36};
             int[] buttonIds = {R.id.btnChangeThemeDefault, R.id.btnChangeThemeSecond, R.id.btnChangeThemeThird, R.id.btnChangeThemeSave};
             int[] progressBarIds = {R.id.pbSettingDesign};

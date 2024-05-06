@@ -30,6 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -47,7 +48,7 @@ public class profilePage extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     ImageView imProfileSettings;
-    TextView tvStepTab, tvWaterTab, tvSleepTab, tvCalorieTab, tvProfileDayMonDate;
+    TextView tvStepTab, tvWaterTab, tvSleepTab, tvCalorieTab, tvProfileDayMonDate, tvProfileGreeting;
     private boolean isSleepTab, isStepTab, isWaterTab, isCalorieTab = false;
     private StepSensorManager stepSensorManager;
 
@@ -68,12 +69,25 @@ public class profilePage extends AppCompatActivity {
         tvCalorieTab = findViewById(R.id.calorieTab);
 //        tvSleepTab = findViewById(R.id.sleepTab);
         tvProfileDayMonDate = findViewById(R.id.tvProfileDayMonDate);
+        tvProfileGreeting = findViewById(R.id.tvProfileGreeting);
         bottomNav.setSelectedItemId(R.id.nav_profile);
 
         SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
         Date date = new Date();
         String currentDate = dayMonDate.format(date);
         tvProfileDayMonDate.setText(currentDate);
+
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+        if (hour >= 0 && hour < 12) {
+            tvProfileGreeting.setText("Good Morning!");
+        } else if (hour >= 12 && hour < 18) {
+            tvProfileGreeting.setText("Good Afternoon!");
+        } else {
+            tvProfileGreeting.setText("Good Evening!");
+        }
+
 
         tvStepTab.setOnClickListener(v -> {
             isStepTab = true;
@@ -200,6 +214,8 @@ public class profilePage extends AppCompatActivity {
                 finish();
                 return true;
             } else if (item.getItemId() == R.id.nav_profile) {
+                startActivity(new Intent(getApplicationContext(), profilePage.class));
+                finish();
                 return true;
             }
             return false;

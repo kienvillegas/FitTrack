@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -418,6 +420,14 @@ public class actBMITracker extends AppCompatActivity {
     }
 
     private void displayChart(Double [] bmiData){
+        TypedValue typedValue = new TypedValue();
+
+        getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true);
+        int colorPrimary = typedValue.data;
+
+        getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimaryDark, typedValue, true);
+        int colorPrimaryDark = typedValue.data;
+
         ArrayList<Entry> entries = new ArrayList<>();
         for (int i = 0; i < bmiData.length; i++) {
             if(bmiData[i] != null){
@@ -434,6 +444,8 @@ public class actBMITracker extends AppCompatActivity {
         dataSet.setCircleRadius(4f);
         dataSet.setValueTextSize(10f);
         dataSet.setDrawValues(false);
+        dataSet.setColor(colorPrimary);
+        dataSet.setCircleColor(colorPrimaryDark);
 
         LineData lineData = new LineData(dataSet);
 

@@ -32,7 +32,7 @@
                 app:srcCompat="@drawable/user_icon" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/tvActGreeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -54,7 +54,7 @@
                 android:textColor="@color/tertiaryDarkText"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView6"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toBottomOf="@+id/tvActGreeting" />
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -63,7 +63,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView9"
+                app:layout_constraintStart_toEndOf="@+id/tvActGreeting"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/notification_circle" />
 
@@ -85,13 +85,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="261dp"
                 android:fontFamily="@font/outfit_semi_bold"
                 android:text="My Activity"
                 android:textColor="@color/primaryText"
                 android:textSize="26dp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
@@ -100,12 +98,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="205dp"
                 android:fontFamily="@font/outfit_medium"
                 android:text="Track your daily activity"
                 android:textColor="@color/tertiaryDarkText"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
 

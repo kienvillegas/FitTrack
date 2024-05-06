@@ -92,24 +92,53 @@ public class profileSetWaterGoalFragment extends Fragment {
             etSetWaterWeekly.setError(null);
 
             String dailyGoal, weeklyGoal;
+            int dailyGoalInt, weeklyGoalInt;
+            List<Integer> dailyGoalList = new ArrayList<>();
+            List<Integer> weeklyGoalList = new ArrayList<>();
+
             dailyGoal = etSetWaterDaily.getText().toString().trim();
             weeklyGoal = etSetWaterWeekly.getText().toString().trim();
+            dailyGoalInt = dailyGoal.isEmpty() ? 0 : Integer.parseInt(dailyGoal);
+            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
+
+            if(dailyGoalInt == 0){
+                pbSetWater.setVisibility(View.GONE);
+                btnSetWaterGoal.setVisibility(View.VISIBLE);
+                btnSetWaterCancel.setVisibility(View.VISIBLE);
+
+                etSetWaterDaily.setBackgroundResource(R.drawable.text_field_red);
+                etSetWaterDaily.setError("Required");
+                etSetWaterDaily.requestFocus();
+                return;
+            }
+
+            if(dailyGoalInt > 999999){
+                pbSetWater.setVisibility(View.GONE);
+                btnSetWaterGoal.setVisibility(View.VISIBLE);
+                btnSetWaterCancel.setVisibility(View.VISIBLE);
+
+                etSetWaterDaily.setBackgroundResource(R.drawable.text_field_red);
+                etSetWaterDaily.setError("Invalid");
+                etSetWaterDaily.requestFocus();
+                return;
+            }
+
+            if(weeklyGoalInt > 999999){
+                pbSetWater.setVisibility(View.GONE);
+                btnSetWaterGoal.setVisibility(View.VISIBLE);
+                btnSetWaterCancel.setVisibility(View.VISIBLE);
+
+                etSetWaterWeekly.setBackgroundResource(R.drawable.text_field_red);
+                etSetWaterWeekly.setError("Invalid");
+                etSetWaterWeekly.requestFocus();
+                return;
+            }
+
+            dailyGoalList.add(dailyGoalInt);
+            weeklyGoalList.add(weeklyGoalInt);
 
             try{
-                List<Integer> dailyGoalList = new ArrayList<>();
-                List<Integer> weeklyGoalList = new ArrayList<>();
                 String formattedDailyGoal, formattedWeeklyGoal;
-
-                if(dailyGoal.isEmpty()){
-                    pbSetWater.setVisibility(View.GONE);
-                    btnSetWaterGoal.setVisibility(View.VISIBLE);
-                    btnSetWaterCancel.setVisibility(View.VISIBLE);
-
-                    etSetWaterDaily.setBackgroundResource(R.drawable.text_field_red);
-                    etSetWaterDaily.setError("Required");
-                    etSetWaterDaily.requestFocus();
-                    return;
-                }
 
                 if(weeklyGoal.isEmpty()){
                     dailyGoalList.add(Integer.parseInt(dailyGoal));
@@ -119,28 +148,6 @@ public class profileSetWaterGoalFragment extends Fragment {
                 if (!weeklyGoal.isEmpty()) {
                     dailyGoalList.add(Integer.parseInt(dailyGoal));
                     weeklyGoalList.add(Integer.parseInt(weeklyGoal));
-                }
-
-                if(Integer.parseInt(dailyGoal) > 999999){
-                    pbSetWater.setVisibility(View.GONE);
-                    btnSetWaterGoal.setVisibility(View.VISIBLE);
-                    btnSetWaterCancel.setVisibility(View.VISIBLE);
-
-                    etSetWaterDaily.setBackgroundResource(R.drawable.text_field_red);
-                    etSetWaterDaily.setError("Invalid");
-                    etSetWaterDaily.requestFocus();
-                    return;
-                }
-
-                if(Integer.parseInt(weeklyGoal) > 999999){
-                    pbSetWater.setVisibility(View.GONE);
-                    btnSetWaterGoal.setVisibility(View.VISIBLE);
-                    btnSetWaterCancel.setVisibility(View.VISIBLE);
-
-                    etSetWaterWeekly.setBackgroundResource(R.drawable.text_field_red);
-                    etSetWaterWeekly.setError("Invalid");
-                    etSetWaterWeekly.requestFocus();
-                    return;
                 }
 
                 formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(dailyGoalList.get(0));

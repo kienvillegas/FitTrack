@@ -101,6 +101,7 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                         totalWaterAmount[0] = inputCounter[0] * glassWaterMl;
                         tvWaterTrackerInputAmount.setText(inputCounter[0] + "x Glass " + totalWaterAmount[0] + "ml");
                     } else {
+                        imIncWater.setEnabled(false);
                         Toast.makeText(actWaterIntakeTracker.this, "You've reached the maximum amount!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -111,6 +112,7 @@ public class actWaterIntakeTracker extends AppCompatActivity {
 
         imDecWater.setOnClickListener(v -> {
             if (inputCounter[0] > 1) {
+                imIncWater.setEnabled(true);
                 inputCounter[0] -= 1;
                 totalWaterAmount[0] = inputCounter[0] * glassWaterMl;
                 tvWaterTrackerInputAmount.setText(inputCounter[0] + "x Glass " + totalWaterAmount[0] + "ml");
@@ -120,6 +122,7 @@ public class actWaterIntakeTracker extends AppCompatActivity {
         btnAddDrink.setOnClickListener(v -> {
             pbAddDrink.setVisibility(View.VISIBLE);
             btnAddDrink.setVisibility(View.GONE);
+            imIncWater.setEnabled(true);
 
             int glassWaterML = 250;
             String day = getCurrentDay();
@@ -135,17 +138,20 @@ public class actWaterIntakeTracker extends AppCompatActivity {
                         waterDailyGoal = documentSnapshot.getLong("waterDailyGoal").intValue();
                         waterWeeklyGoal = documentSnapshot.getLong("waterWeeklyGoal").intValue();
 
-                        inputWater = glassWaterML * inputCounter[0];
+                        diff = waterWeeklyGoal - weeklyWaterTaken;
 
+                        inputWater = glassWaterML * inputCounter[0];
+                        Log.d(TAG, "Input: " + inputWater);
                             dailyWaterTaken += inputWater;
                             weeklyWaterTaken += inputWater;
 
-                            diff = waterWeeklyGoal - weeklyWaterTaken;
+                        Log.e(TAG, "Weekly Goal: " + waterWeeklyGoal);
+                        Log.e(TAG, "Weekly Water Taken: " + weeklyWaterTaken);
 
                             if(inputWater > diff){
                                 pbAddDrink.setVisibility(View.GONE);
                                 btnAddDrink.setVisibility(View.VISIBLE);
-
+                                Log.e(TAG, "Difference: " + diff);
                                 Toast.makeText(this, "Cannot be more than the weekly goal", Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -215,6 +221,8 @@ public class actWaterIntakeTracker extends AppCompatActivity {
 
             String formattedDailyGoal = NumberFormat.getNumberInstance(Locale.US).format(waterDailyGoal);
             String formattedWaterTaken = NumberFormat.getNumberInstance(Locale.US).format(dailyWaterTaken);
+
+            Log.d(TAG, "Weekly Water Taken: " + formattedWaterTaken);
 
             tvWaterTrackerTaken.setText(formattedWaterTaken + " mL");
             tvWaterTrackerGoal.setText(formattedDailyGoal);

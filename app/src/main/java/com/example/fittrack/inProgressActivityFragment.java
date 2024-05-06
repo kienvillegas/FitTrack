@@ -80,22 +80,22 @@ public class inProgressActivityFragment extends Fragment {
             actName[0] = bundle.getString("actName");
             if (actName[0] != null) {
                 switch (actName[0]) {
-                    case "running":
+                    case "Running":
                         imInProgressIcon.setImageResource(R.drawable.running_icon);
                         break;
-                    case "cycle":
+                    case "Cycle":
 
                         imInProgressIcon.setImageResource(R.drawable.cycling_icon);
                         break;
-                    case "swim":
+                    case "Swim":
 
                         imInProgressIcon.setImageResource(R.drawable.swimming_icon);
                         break;
-                    case "yoga":
+                    case "Yoga":
 
                         imInProgressIcon.setImageResource(R.drawable.yoga_icon);
                         break;
-                    case "gym":
+                    case "Gym":
 
                         imInProgressIcon.setImageResource(R.drawable.weights_icon);
                         break;
