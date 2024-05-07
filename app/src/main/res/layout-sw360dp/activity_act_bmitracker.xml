@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".actBMITracker">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <TextView
+               android:id="@+id/textView4"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:fontFamily="@font/outfit_medium"
+               android:text="BMI"
+               android:textColor="@color/primaryText"
+               android:textSize="28sp"
+               android:textStyle="bold"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/imBMITrackerBack" />
+
+           <ImageView
+               android:id="@+id/imageView4"
+               android:layout_width="0dp"
+               android:layout_height="500dp"
+               android:layout_marginTop="380dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:srcCompat="@drawable/tracker_bg" />
+
+           <ImageView
+               android:id="@+id/imBMITrackerBack"
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_marginStart="20dp"
+               android:layout_marginTop="20dp"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:srcCompat="@drawable/arrow_left" />
+
+           <ProgressBar
+               android:id="@+id/pbEnterData"
+               style="?android:attr/progressBarStyle"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="50dp"
+               android:indeterminateTint="@color/secondary"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/etBMITrackerHeight" />
+
+           <EditText
+               android:id="@+id/etBMITrackerWeight"
+               android:layout_width="300dp"
+               android:layout_height="50dp"
+               android:layout_marginTop="20dp"
+               android:background="@drawable/text_field_bg_grey"
+               android:ems="10"
+               android:fontFamily="@font/outfit_medium"
+               android:hint="Weight (Kg)"
+               android:inputType="number"
+               android:paddingStart="10dp"
+               android:paddingEnd="10dp"
+               android:textColor="@color/primaryText"
+               android:textColorHint="@color/tertiaryDarkText"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/lineChart" />
+
+           <EditText
+               android:id="@+id/etBMITrackerHeight"
+               android:layout_width="300dp"
+               android:layout_height="50dp"
+               android:layout_marginTop="20dp"
+               android:background="@drawable/text_field_bg_grey"
+               android:ems="10"
+               android:fontFamily="@font/outfit_medium"
+               android:hint="Height (meters)"
+               android:inputType="numberDecimal"
+               android:paddingStart="10dp"
+               android:paddingEnd="10dp"
+               android:textColor="@color/primaryText"
+               android:textColorHint="@color/tertiaryDarkText"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/etBMITrackerWeight" />
+
+           <Button
+               android:id="@+id/btnEnterData"
+               android:layout_width="300dp"
+               android:layout_height="50dp"
+               android:layout_marginTop="50dp"
+               android:background="@drawable/btn_mid_rounded"
+               android:backgroundTint="@color/secondary"
+               android:fontFamily="@font/outfit_medium"
+               android:text="Enter Data"
+               android:textColor="?attr/colorPrimary"
+               android:textSize="21sp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/etBMITrackerHeight" />
+
+
+           <com.github.mikephil.charting.charts.LineChart
+               android:id="@+id/lineChart"
+               android:layout_width="0dp"
+               android:layout_height="360dp"
+               android:layout_marginTop="20dp"
+               android:background="@drawable/rectangle_shape"
+               app:layout_constraintEnd_toStartOf="@+id/guideline35"
+               app:layout_constraintStart_toStartOf="@+id/guideline34"
+               app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+           <androidx.constraintlayout.widget.Guideline
+               android:id="@+id/guideline34"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               app:layout_constraintGuide_begin="31dp"
+               app:layout_constraintGuide_percent="0.05" />
+
+           <androidx.constraintlayout.widget.Guideline
+               android:id="@+id/guideline35"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               app:layout_constraintGuide_percent="0.95" />
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </ScrollView>
+</LinearLayout>

@@ -10,7 +10,6 @@
         android:id="@+id/textView47"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="This Week Progress"
@@ -20,23 +19,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView29"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/calendar_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView47"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView48"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="Total Calorie"
@@ -49,7 +35,6 @@
         android:id="@+id/tvProfileCalorieTaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:fontFamily="@font/outfit_semi_bold"
         android:text="0"
         android:textColor="@color/primaryText"
@@ -109,10 +94,11 @@
         android:id="@+id/imageView31"
         android:layout_width="153dp"
         android:layout_height="80dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/rectangle_thin_stroke_shape"
-        app:layout_constraintStart_toStartOf="@+id/imageView30"
+        app:layout_constraintEnd_toStartOf="@+id/imageView32"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
     <ImageView
@@ -121,7 +107,8 @@
         android:layout_height="80dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/rectangle_thin_stroke_shape"
-        app:layout_constraintEnd_toEndOf="@+id/imageView30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView31"
         app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
@@ -148,7 +135,6 @@
         android:fontFamily="@font/outfit_semi_bold"
         android:text="DAILY CALORIE"
         android:textColor="@color/primaryText"
-        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/imageView31"
         app:layout_constraintTop_toTopOf="@+id/imageView31" />
 

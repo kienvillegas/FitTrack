@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical"
+    tools:context=".profilePage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".profilePage">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline71"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/user_icon" />
+
+            <TextView
+                android:id="@+id/tvProfileGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Good Morning!"
+                android:textColor="?attr/colorPrimaryDark"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvProfileDayMonDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
+                android:textColor="@color/tertiaryDarkText"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/tvProfileGreeting" />
+
+            <ImageView
+                android:id="@+id/imProfileSettings"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline72"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/settings_icon" />
+
+            <LinearLayout
+                android:id="@+id/custom_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/back_tabs"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toStartOf="@+id/guideline72"
+                app:layout_constraintStart_toStartOf="@+id/guideline71"
+                app:layout_constraintTop_toBottomOf="@+id/tvProfileDayMonDate">
+
+                <TextView
+                    android:id="@+id/stepTab"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/back_select"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Steps"
+                    android:textColor="@color/whiteText" />
+
+                <TextView
+                    android:id="@+id/waterTab"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Water"
+                    android:textColor="@color/tertiaryDarkText" />
+
+                <TextView
+                    android:id="@+id/calorieTab"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Calorie"
+                    android:textColor="@color/tertiaryDarkText" />
+            </LinearLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView"
+                android:name="com.example.fittrack.profileStepsFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/guideline72"
+                app:layout_constraintStart_toStartOf="@+id/guideline71"
+                app:layout_constraintTop_toBottomOf="@+id/custom_tab_layout" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline71"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline72"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavProfile"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bottom_nav_shape"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/bottom_nav_icon_selector"
+        app:itemTextAppearanceActive="@style/BottomNavTextActiveStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavTextInactiveStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@drawable/bottom_nav_menu" />
+
+</LinearLayout>

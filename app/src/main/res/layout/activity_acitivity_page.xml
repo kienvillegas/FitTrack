@@ -370,5 +370,3 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@drawable/bottom_nav_menu" />
 </LinearLayout>
-
-

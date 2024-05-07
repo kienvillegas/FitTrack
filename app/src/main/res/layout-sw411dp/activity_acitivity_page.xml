@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activityPage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor"
+            app:layout_constraintEnd_toEndOf="@+id/textView15"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            tools:context=".activityPage">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/user_icon" />
+
+            <TextView
+                android:id="@+id/tvActGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Good Morning!"
+                android:textColor="?attr/colorPrimaryDark"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvActDayMonDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
+                android:textColor="@color/tertiaryDarkText"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/tvActGreeting" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:fontFamily="@font/outfit_semi_bold"
+                android:text="My Activity"
+                android:textColor="@color/primaryText"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Track your daily activity"
+                android:textColor="@color/tertiaryDarkText"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+
+            <ImageView
+                android:id="@+id/imageView22"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline61"
+                app:layout_constraintHorizontal_bias="0.487"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView2"
+                app:srcCompat="@drawable/rectangle_shape" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
+                android:text="Recent Activity"
+                android:textColor="@color/primaryText"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imageView22"
+                app:layout_constraintTop_toTopOf="@+id/imageView22" />
+
+            <ImageView
+                android:id="@+id/imRecentActIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView22"
+                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+            <TextView
+                android:id="@+id/tvDateTimeRecentAct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Nothing yet."
+                android:textColor="@color/tertiaryDarkText"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView22"
+                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView2"
+                android:name="com.example.fittrack.viewActivityFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline61"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toBottomOf="@+id/pieChart" />
+
+            <ProgressBar
+                android:id="@+id/pbActivityContent"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="0dp"
+                android:layout_height="370dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle_shape"
+                app:layout_constraintEnd_toStartOf="@+id/guideline61"
+                app:layout_constraintStart_toStartOf="@+id/guideline59"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline59"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavActivity"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bottom_nav_shape"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/bottom_nav_icon_selector"
+        app:itemTextAppearanceActive="@style/BottomNavTextActiveStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavTextInactiveStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@drawable/bottom_nav_menu" />
+</LinearLayout>

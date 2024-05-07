@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".profileSetStepsGoalFragment">
+
+    <ImageView
+        android:id="@+id/imageView35"
+        android:layout_width="0dp"
+        android:layout_height="480dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/rectangle_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView58"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Goal Set"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toTopOf="@+id/imageView35" />
+
+    <ImageView
+        android:id="@+id/imageView38"
+        android:layout_width="153dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/rectangle_thin_stroke_shape"
+        app:layout_constraintEnd_toStartOf="@+id/imageView39"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/textView58" />
+
+    <ImageView
+        android:id="@+id/imageView39"
+        android:layout_width="153dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/rectangle_thin_stroke_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView38"
+        app:layout_constraintTop_toBottomOf="@+id/textView58" />
+
+    <TextView
+        android:id="@+id/textView65"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="DAILY STEPS"
+        android:textColor="@color/primaryText"
+        app:layout_constraintStart_toStartOf="@+id/imageView38"
+        app:layout_constraintTop_toTopOf="@+id/imageView38" />
+
+    <TextView
+        android:id="@+id/tvSetStepDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_medium"
+        android:text="0"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imageView38"
+        app:layout_constraintStart_toStartOf="@+id/imageView38"
+        app:layout_constraintTop_toBottomOf="@+id/textView65" />
+
+    <TextView
+        android:id="@+id/textView67"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="WEEKLY STEPS"
+        android:textColor="@color/primaryText"
+        app:layout_constraintStart_toStartOf="@+id/imageView39"
+        app:layout_constraintTop_toTopOf="@+id/imageView39" />
+
+    <TextView
+        android:id="@+id/tvSetStepWeekly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_medium"
+        android:text="0"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imageView39"
+        app:layout_constraintStart_toStartOf="@+id/imageView39"
+        app:layout_constraintTop_toBottomOf="@+id/textView67" />
+
+    <TextView
+        android:id="@+id/textView69"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="DAILY STEPS"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/imageView38" />
+
+    <EditText
+        android:id="@+id/etSetStepDaily"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/text_field_primary_border"
+        android:ems="10"
+        android:fontFamily="@font/poppins_light"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/primaryText"
+        app:layout_constraintEnd_toEndOf="@+id/imageView35"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/textView69" />
+
+    <TextView
+        android:id="@+id/textView70"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Steps"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView35"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/etSetStepDaily"
+        app:layout_constraintTop_toBottomOf="@+id/textView69" />
+
+    <TextView
+        android:id="@+id/textView71"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="WEEKLY STEPS"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/etSetStepDaily" />
+
+    <EditText
+        android:id="@+id/etSetStepWeekly"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/text_field_primary_border"
+        android:ems="10"
+        android:fontFamily="@font/poppins_light"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/primaryText"
+        app:layout_constraintEnd_toEndOf="@+id/imageView35"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/textView71" />
+
+    <TextView
+        android:id="@+id/textView72"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Steps"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView35"
+        app:layout_constraintHorizontal_bias="0.10"
+        app:layout_constraintStart_toEndOf="@+id/etSetStepWeekly"
+        app:layout_constraintTop_toBottomOf="@+id/textView71" />
+
+    <Button
+        android:id="@+id/btnSetStepGoal"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_mid_rounded"
+        android:backgroundTint="?attr/colorPrimary"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Set Goal"
+        android:textColor="@color/btnText"
+        app:layout_constraintEnd_toEndOf="@+id/imageView35"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/etSetStepWeekly" />
+
+    <Button
+        android:id="@+id/btnSetStepCancel"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_mid_rounded"
+        android:backgroundTint="@color/btnCancelColor"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Cancel"
+        android:textColor="@color/btnText"
+        app:layout_constraintEnd_toEndOf="@+id/imageView35"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/btnSetStepGoal" />
+
+    <ProgressBar
+        android:id="@+id/pbSetStep"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="?attr/colorPrimary"
+        android:progressDrawable="@drawable/circle_progress_bar_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView35"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/etSetStepWeekly" />
+</androidx.constraintlayout.widget.ConstraintLayout>

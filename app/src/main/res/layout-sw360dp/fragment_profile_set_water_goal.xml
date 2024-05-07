@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".profileSetCalorieGoalFragment">
+    tools:context=".profileSetWaterGoalFragment">
 
     <ImageView
-        android:id="@+id/imageView41"
+        android:id="@+id/imageView40"
         android:layout_width="0dp"
         android:layout_height="480dp"
         android:layout_marginTop="20dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView78"
+        android:id="@+id/textView73"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -27,45 +27,47 @@
         android:textColor="@color/primaryText"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toTopOf="@+id/imageView41" />
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toTopOf="@+id/imageView40" />
 
     <ImageView
-        android:id="@+id/imageView42"
-        android:layout_width="153dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/rectangle_thin_stroke_shape"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/textView78" />
-
-    <ImageView
-        android:id="@+id/imageView45"
+        android:id="@+id/imageView43"
         android:layout_width="153dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/rectangle_thin_stroke_shape"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
-        app:layout_constraintStart_toEndOf="@+id/imageView42"
-        app:layout_constraintTop_toBottomOf="@+id/textView78" />
+        app:layout_constraintEnd_toStartOf="@+id/imageView44"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/textView73" />
+
+    <ImageView
+        android:id="@+id/imageView44"
+        android:layout_width="153dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/rectangle_thin_stroke_shape"
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView43"
+        app:layout_constraintTop_toBottomOf="@+id/textView73" />
 
     <TextView
-        android:id="@+id/textView79"
+        android:id="@+id/textView74"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/outfit_medium"
-        android:text="DAILY CALORIE: "
+        android:text="DAILY WATER INTAKE: "
         android:textColor="@color/primaryText"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/imageView42" />
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/imageView43" />
 
     <EditText
-        android:id="@+id/etSetCalorieDaily"
+        android:id="@+id/etSetWaterDaily"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
@@ -76,72 +78,72 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColor="@color/primaryText"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
-        app:layout_constraintHorizontal_bias="0.20"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/textView79" />
-
-    <TextView
-        android:id="@+id/textView80"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/outfit_medium"
-        android:text="Kcal"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/etSetCalorieDaily"
-        app:layout_constraintTop_toBottomOf="@+id/textView79" />
-
-    <TextView
-        android:id="@+id/textView81"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/outfit_medium"
-        android:text="WEEKLY CALORIE:"
-        android:textColor="@color/primaryText"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/etSetCalorieDaily" />
-
-    <EditText
-        android:id="@+id/etSetCalorieWeekly"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/text_field_primary_border"
-        android:ems="10"
-        android:fontFamily="@font/poppins_light"
-        android:inputType="number"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:textColor="@color/primaryText"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
         app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/textView81" />
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/textView74" />
 
     <TextView
-        android:id="@+id/textView82"
+        android:id="@+id/textView75"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="mL"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/etSetWaterDaily"
+        app:layout_constraintTop_toBottomOf="@+id/textView74" />
+
+    <EditText
+        android:id="@+id/etSetWaterWeekly"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/text_field_primary_border"
+        android:ems="10"
+        android:fontFamily="@font/poppins_light"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/primaryText"
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/textView76" />
+
+    <TextView
+        android:id="@+id/textView76"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="WEEKLY WATER INTAKE:"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/etSetWaterDaily" />
+
+    <TextView
+        android:id="@+id/textView77"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_medium"
-        android:text="Kcal"
+        android:text="mL"
         android:textColor="?attr/colorPrimary"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/etSetCalorieWeekly"
-        app:layout_constraintTop_toBottomOf="@+id/textView81" />
+        app:layout_constraintStart_toEndOf="@+id/etSetWaterWeekly"
+        app:layout_constraintTop_toBottomOf="@+id/textView76" />
 
     <Button
-        android:id="@+id/btnSetCalorieGoal"
+        android:id="@+id/btnSetWaterGoal"
         android:layout_width="180dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -150,12 +152,12 @@
         android:fontFamily="@font/poppins_semibold"
         android:text="Set Goal"
         android:textColor="@color/btnText"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/etSetCalorieWeekly" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/etSetWaterWeekly" />
 
     <Button
-        android:id="@+id/btnSetCalorieCancel"
+        android:id="@+id/btnSetWaterCancel"
         android:layout_width="180dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
@@ -164,52 +166,38 @@
         android:fontFamily="@font/poppins_semibold"
         android:text="Cancel"
         android:textColor="@color/btnText"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/btnSetCalorieGoal" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/btnSetWaterGoal" />
 
     <TextView
-        android:id="@+id/textView92"
+        android:id="@+id/textView95"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_medium"
-        android:text="DAILY CALORIES"
+        android:text="DAILY WATER"
         android:textColor="@color/primaryText"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView42"
-        app:layout_constraintTop_toTopOf="@+id/imageView42" />
+        app:layout_constraintStart_toStartOf="@+id/imageView43"
+        app:layout_constraintTop_toTopOf="@+id/imageView43" />
 
     <TextView
-        android:id="@+id/textView93"
+        android:id="@+id/textView97"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/outfit_medium"
-        android:text="WEEKLY CALORIES"
+        android:text="WEEKLY WATER "
         android:textColor="@color/primaryText"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView45"
-        app:layout_constraintTop_toTopOf="@+id/imageView45" />
+        app:layout_constraintStart_toStartOf="@+id/imageView44"
+        app:layout_constraintTop_toTopOf="@+id/imageView44" />
 
     <TextView
-        android:id="@+id/tvSetCalorieDaily"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/outfit_semi_bold"
-        android:text="0"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView42"
-        app:layout_constraintStart_toStartOf="@+id/imageView42"
-        app:layout_constraintTop_toBottomOf="@+id/textView92" />
-
-    <TextView
-        android:id="@+id/tvSetCalorieWeekly"
+        android:id="@+id/tvSetWaterDaily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/outfit_medium"
@@ -217,19 +205,33 @@
         android:textColor="?attr/colorPrimary"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView45"
-        app:layout_constraintStart_toStartOf="@+id/imageView45"
-        app:layout_constraintTop_toBottomOf="@+id/textView93" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView43"
+        app:layout_constraintStart_toStartOf="@+id/imageView43"
+        app:layout_constraintTop_toBottomOf="@+id/textView95" />
+
+    <TextView
+        android:id="@+id/tvSetWaterWeekly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_medium"
+        android:text="0"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imageView44"
+        app:layout_constraintStart_toStartOf="@+id/imageView44"
+        app:layout_constraintTop_toBottomOf="@+id/textView97" />
 
     <ProgressBar
-        android:id="@+id/pbSetCalorie"
+        android:id="@+id/pbSetWater"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminateTint="?attr/colorPrimary"
         android:progressDrawable="@drawable/circle_progress_bar_primary"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView41"
-        app:layout_constraintEnd_toEndOf="@+id/imageView41"
-        app:layout_constraintStart_toStartOf="@+id/imageView41"
-        app:layout_constraintTop_toBottomOf="@+id/etSetCalorieWeekly" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView40"
+        app:layout_constraintEnd_toEndOf="@+id/imageView40"
+        app:layout_constraintStart_toStartOf="@+id/imageView40"
+        app:layout_constraintTop_toBottomOf="@+id/etSetWaterWeekly" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

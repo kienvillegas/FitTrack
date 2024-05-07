@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bannerCalorieGoalAchieved">
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <ImageView
+               android:id="@+id/imageView5"
+               android:layout_width="0dp"
+               android:layout_height="500dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:srcCompat="@drawable/banner_bg" />
+
+           <ImageView
+               android:id="@+id/imCalorieBannerBack"
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_marginTop="20dp"
+               app:layout_constraintStart_toStartOf="@+id/guideline66"
+               app:layout_constraintTop_toTopOf="@+id/imageView5"
+               app:srcCompat="@drawable/arrow_left_white" />
+           <Button
+               android:id="@+id/btnCalorieBannerShare"
+               android:layout_width="300dp"
+               android:layout_height="50dp"
+               android:layout_marginTop="20dp"
+               android:background="@drawable/btn_mid_rounded"
+               android:backgroundTint="?attr/colorPrimary"
+               android:fontFamily="@font/outfit_medium"
+               android:text="Share to Friends"
+               android:textColor="@color/btnText"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/imBannerCalorieAchievement" />
+
+           <Button
+               android:id="@+id/btnCalorieBannerCancel"
+               android:layout_width="300dp"
+               android:layout_height="50dp"
+               android:layout_marginTop="10dp"
+               android:background="@drawable/btn_mid_rounded_red"
+               android:backgroundTint="@color/secondary"
+               android:fontFamily="@font/outfit_medium"
+               android:text="Not Now"
+               android:textColor="@color/btnCancelColor"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/btnCalorieBannerShare" />
+
+           <ImageView
+               android:id="@+id/imBannerCalorieAchievement"
+               android:layout_width="0dp"
+               android:layout_height="500dp"
+               android:layout_marginTop="120dp"
+               app:layout_constraintEnd_toStartOf="@+id/guideline65"
+               app:layout_constraintStart_toStartOf="@+id/guideline66"
+               app:layout_constraintTop_toTopOf="@+id/imageView5"
+               app:srcCompat="@drawable/calorieachievement" />
+
+           <androidx.constraintlayout.widget.Guideline
+               android:id="@+id/guideline65"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               app:layout_constraintGuide_percent="0.95" />
+
+           <androidx.constraintlayout.widget.Guideline
+               android:id="@+id/guideline66"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               app:layout_constraintGuide_percent="0.05" />
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </ScrollView>
+</LinearLayout>

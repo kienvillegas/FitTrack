@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".startActivityFragment">
+
+    <ImageView
+        android:id="@+id/imageView50"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:src="@drawable/rectangle_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imStartActIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/running_icon"
+        app:layout_constraintStart_toStartOf="@+id/imageView50"
+        app:layout_constraintTop_toTopOf="@+id/imageView50" />
+
+    <TextView
+        android:id="@+id/textView100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="New Activity"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imStartActIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageView50" />
+
+    <TextView
+        android:id="@+id/tvStartActName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Running"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/imStartActIcon"
+        app:layout_constraintTop_toBottomOf="@+id/textView100" />
+
+    <ImageView
+        android:id="@+id/imageView53"
+        android:layout_width="2dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/line_divider"
+        app:layout_constraintStart_toStartOf="@+id/imageView50"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartActName" />
+
+    <TextView
+        android:id="@+id/textView105"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Time Start:"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView53"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartActName" />
+
+    <TextView
+        android:id="@+id/tvStartActCurrentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="8:00 am"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView53"
+        app:layout_constraintTop_toBottomOf="@+id/textView105" />
+
+    <ImageView
+        android:id="@+id/imageView54"
+        android:layout_width="2dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/line_divider"
+        app:layout_constraintStart_toEndOf="@+id/tvStartActCurrentTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartActName" />
+
+    <TextView
+        android:id="@+id/textView108"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Set Goal"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView54"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartActName" />
+
+    <TextView
+        android:id="@+id/tvStartActTimeGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="02"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView54"
+        app:layout_constraintTop_toBottomOf="@+id/textView108" />
+
+    <TextView
+        android:id="@+id/textView110"
+        android:layout_width="38dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="hr/s"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tvStartActTimeGoal"
+        app:layout_constraintTop_toBottomOf="@+id/textView108" />
+
+    <ImageView
+        android:id="@+id/imageView55"
+        android:layout_width="25dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="18dp"
+        android:src="@drawable/line_divider"
+        app:layout_constraintEnd_toStartOf="@+id/imageView56"
+        app:layout_constraintTop_toBottomOf="@+id/imStartActIncTime" />
+
+    <ImageView
+        android:id="@+id/imageView56"
+        android:layout_width="2dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/line_divider"
+        app:layout_constraintEnd_toEndOf="@+id/imageView50"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartActName" />
+
+    <ImageView
+        android:id="@+id/imStartActDecTime"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/arrow_down_icon"
+        app:layout_constraintEnd_toStartOf="@+id/imageView56"
+        app:layout_constraintTop_toBottomOf="@+id/imageView55" />
+
+    <ImageView
+        android:id="@+id/imStartActIncTime"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/arrow_up_icon"
+        app:layout_constraintEnd_toStartOf="@+id/imageView56"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartActName" />
+
+    <Button
+        android:id="@+id/btnStartActStart"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_rounded"
+        android:backgroundTint="?attr/colorPrimary"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Start"
+        android:textAlignment="center"
+        android:textColor="@color/btnText"
+        app:layout_constraintEnd_toStartOf="@+id/btnStartActCancel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageView50"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartActCurrentTime" />
+
+    <Button
+        android:id="@+id/btnStartActCancel"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_rounded"
+        android:backgroundTint="@color/btnCancelColor"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Cancel"
+        android:textColor="@color/btnText"
+        app:layout_constraintEnd_toEndOf="@+id/imageView50"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnStartActStart"
+        app:layout_constraintTop_toTopOf="@+id/btnStartActStart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

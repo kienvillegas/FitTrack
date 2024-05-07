@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".inProgressActivityFragment">
+
+
+    <ImageView
+        android:id="@+id/imageView49"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:src="@drawable/rectangle_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView102"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="New Activity"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageView49"
+        app:layout_constraintTop_toTopOf="@+id/imageView49" />
+
+    <TextView
+        android:id="@+id/tvInProgressActName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Running"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView49"
+        app:layout_constraintTop_toBottomOf="@+id/textView102" />
+
+    <ImageView
+        android:id="@+id/imageView52"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/circle_filled_shape"
+        app:layout_constraintStart_toStartOf="@+id/imageView49"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
+
+    <ImageView
+        android:id="@+id/imInProgressIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/running_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView52"
+        app:layout_constraintEnd_toEndOf="@+id/imageView52"
+        app:layout_constraintStart_toStartOf="@+id/imageView52"
+        app:layout_constraintTop_toTopOf="@+id/imageView52" />
+
+    <TextView
+        android:id="@+id/textView104"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Start:"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView52"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
+
+    <TextView
+        android:id="@+id/tvInProgressCurrentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="8:00 am"
+        android:textColor="@color/primaryText"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView52"
+        app:layout_constraintTop_toBottomOf="@+id/textView104" />
+
+    <ImageView
+        android:id="@+id/imageView60"
+        android:layout_width="2sp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/line_divider"
+        app:layout_constraintStart_toEndOf="@+id/tvInProgressCurrentTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
+
+    <TextView
+        android:id="@+id/textView111"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/outfit_medium"
+        android:text="Duration:"
+        android:textColor="@color/tertiaryDarkText"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView60"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
+
+    <TextView
+        android:id="@+id/tvInProgressTimeGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="2 hours"
+        android:textColor="@color/primaryText"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView60"
+        app:layout_constraintTop_toBottomOf="@+id/textView111" />
+
+    <ImageView
+        android:id="@+id/imageView61"
+        android:layout_width="2dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/line_divider"
+        app:layout_constraintEnd_toEndOf="@+id/imageView49"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressActName" />
+
+    <Button
+        android:id="@+id/btnInProgressDone"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_rounded"
+        android:backgroundTint="?attr/colorPrimary"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Done"
+        android:textColor="@color/btnText"
+        app:layout_constraintEnd_toStartOf="@+id/btnInProgressCancel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageView49"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressCurrentTime" />
+
+    <Button
+        android:id="@+id/btnInProgressCancel"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_rounded"
+        android:backgroundTint="@color/btnCancelColor"
+        android:fontFamily="@font/outfit_semi_bold"
+        android:text="Cancel"
+        android:textColor="@color/btnText"
+        app:layout_constraintEnd_toEndOf="@+id/imageView49"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnInProgressDone"
+        app:layout_constraintTop_toBottomOf="@+id/tvInProgressTimeGoal" />
+</androidx.constraintlayout.widget.ConstraintLayout>

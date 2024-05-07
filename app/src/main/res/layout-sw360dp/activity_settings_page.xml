@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".settingsPage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/imageView112"
+                android:layout_width="0dp"
+                android:layout_height="500dp"
+                android:layout_marginTop="400dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/tracker_bg" />
+
+            <ImageView
+                android:id="@+id/imSettingsBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline47"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/arrow_left" />
+
+            <ImageView
+                android:id="@+id/imageView83"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline47"
+                app:layout_constraintTop_toBottomOf="@+id/imSettingsBack"
+                app:srcCompat="@drawable/settings_icon" />
+
+            <TextView
+                android:id="@+id/textView155"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Settings"
+                android:textColor="@color/primaryText"
+                android:textSize="32sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView83"
+                app:layout_constraintTop_toBottomOf="@+id/imSettingsBack" />
+
+            <Button
+                android:id="@+id/btnSignOut"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/btn_mid_rounded"
+                android:backgroundTint="@color/secondary"
+                android:fontFamily="@font/outfit_medium"
+                android:text="SIgn Out"
+                android:textColor="@color/btnCancelColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView3" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView3"
+                android:name="com.example.fittrack.settingsFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline48"
+                app:layout_constraintStart_toStartOf="@+id/guideline47"
+                app:layout_constraintTop_toBottomOf="@+id/textView155" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

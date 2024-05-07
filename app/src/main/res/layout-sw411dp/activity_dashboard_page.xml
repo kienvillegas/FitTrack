@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical"
+    tools:context=".dashboardPage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/backgroundColor">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
+
+            <ImageView
+                android:id="@+id/imageView79"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/user_icon" />
+
+            <TextView
+                android:id="@+id/tvDashboardGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Good Morning!"
+                android:textColor="?attr/colorPrimaryDark"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView79"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvDayMonDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/outfit_semi_bold"
+                android:textColor="@color/tertiaryDarkText"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView79"
+                app:layout_constraintTop_toBottomOf="@+id/tvDashboardGreeting" />
+
+            <ImageView
+                android:id="@+id/imageView90"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline68"
+                app:layout_constraintStart_toStartOf="@+id/guideline67"
+                app:layout_constraintTop_toBottomOf="@+id/tvDayMonDate"
+                app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
+
+            <TextView
+                android:id="@+id/tvMonYr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Month, Year"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView90"
+                app:layout_constraintTop_toTopOf="@+id/imageView90" />
+
+            <TextView
+                android:id="@+id/textView166"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Tue"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView167"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView165"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <TextView
+                android:id="@+id/textView164"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Sun"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView165"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/imageView90"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <TextView
+                android:id="@+id/textView165"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Mon"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView166"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView164"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <TextView
+                android:id="@+id/textView167"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Wed"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView168"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView166"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <TextView
+                android:id="@+id/textView168"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Thur"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView169"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView167"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <TextView
+                android:id="@+id/textView169"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Fri"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/textView170"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView168"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <TextView
+                android:id="@+id/textView170"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Sat"
+                android:textColor="@color/primaryText"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView90"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView169"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonYr" />
+
+            <ImageView
+                android:id="@+id/imDayOneBg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayTwoBg"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/imageView90"
+                app:layout_constraintTop_toBottomOf="@+id/textView164"
+                app:srcCompat="@drawable/circle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imDayTwoBg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayThreeBg"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imDayOneBg"
+                app:layout_constraintTop_toBottomOf="@+id/textView165"
+                app:srcCompat="@drawable/circle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imDayThreeBg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayFourBg"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imDayTwoBg"
+                app:layout_constraintTop_toBottomOf="@+id/textView166"
+                app:srcCompat="@drawable/circle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imDayFourBg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDayFiveBg"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imDayThreeBg"
+                app:layout_constraintTop_toBottomOf="@+id/textView167"
+                app:srcCompat="@drawable/circle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imDayFiveBg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDaySixBg"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imDayFourBg"
+                app:layout_constraintTop_toBottomOf="@+id/textView168"
+                app:srcCompat="@drawable/circle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imDaySixBg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/imDaySevenBg"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imDayFiveBg"
+                app:layout_constraintTop_toBottomOf="@+id/textView169"
+                app:srcCompat="@drawable/circle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imDaySevenBg"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView90"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imDaySixBg"
+                app:layout_constraintTop_toBottomOf="@+id/textView170"
+                app:srcCompat="@drawable/circle_filled_shape" />
+
+            <TextView
+                android:id="@+id/tvDayOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="1"
+                android:textColor="@color/primaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/imDayOneBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayOneBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayOneBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayOneBg" />
+
+            <TextView
+                android:id="@+id/tvDayTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="2"
+                android:textColor="@color/primaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/imDayTwoBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayTwoBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayTwoBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayTwoBg" />
+
+            <TextView
+                android:id="@+id/tvDayThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="3"
+                android:textColor="@color/primaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/imDayThreeBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayThreeBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayThreeBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayThreeBg" />
+
+            <TextView
+                android:id="@+id/tvDayFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="4"
+                android:textColor="@color/primaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/imDayFourBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayFourBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayFourBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayFourBg" />
+
+            <TextView
+                android:id="@+id/tvDayFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="5"
+                android:textColor="@color/primaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/imDayFiveBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDayFiveBg"
+                app:layout_constraintStart_toStartOf="@+id/imDayFiveBg"
+                app:layout_constraintTop_toTopOf="@+id/imDayFiveBg" />
+
+            <TextView
+                android:id="@+id/tvDaySix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="6"
+                android:textColor="@color/primaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/imDaySixBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDaySixBg"
+                app:layout_constraintStart_toStartOf="@+id/imDaySixBg"
+                app:layout_constraintTop_toTopOf="@+id/imDaySixBg" />
+
+            <TextView
+                android:id="@+id/tvDaySeven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="7"
+                android:textColor="@color/primaryText"
+                app:layout_constraintBottom_toBottomOf="@+id/imDaySevenBg"
+                app:layout_constraintEnd_toEndOf="@+id/imDaySevenBg"
+                app:layout_constraintStart_toStartOf="@+id/imDaySevenBg"
+                app:layout_constraintTop_toTopOf="@+id/imDaySevenBg" />
+
+            <ImageView
+                android:id="@+id/imageView98"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView99"
+                app:layout_constraintStart_toStartOf="@+id/guideline67"
+                app:layout_constraintTop_toBottomOf="@+id/imageView90"
+                app:srcCompat="@drawable/rectangle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imageView99"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline68"
+                app:layout_constraintStart_toEndOf="@+id/imageView98"
+                app:layout_constraintTop_toBottomOf="@+id/imageView90"
+                app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
+
+            <ImageView
+                android:id="@+id/imageView100"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline68"
+                app:layout_constraintStart_toEndOf="@+id/imageView101"
+                app:layout_constraintTop_toBottomOf="@+id/imageView99"
+                app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
+
+            <ImageView
+                android:id="@+id/imageView101"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView100"
+                app:layout_constraintStart_toStartOf="@+id/guideline67"
+                app:layout_constraintTop_toBottomOf="@+id/imageView98"
+                app:srcCompat="@drawable/rectangle_thin_stroke_shape" />
+
+            <ImageView
+                android:id="@+id/imageView102"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView98"
+                app:layout_constraintTop_toTopOf="@+id/imageView98"
+                app:srcCompat="@drawable/steps_white_icon" />
+
+            <TextView
+                android:id="@+id/textView178"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="WALK"
+                android:textColor="@color/whiteText"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView102"
+                app:layout_constraintTop_toTopOf="@+id/imageView98" />
+
+            <ImageView
+                android:id="@+id/imAddWalk"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView98"
+                app:layout_constraintTop_toTopOf="@+id/imageView98"
+                app:srcCompat="@drawable/plus_white_icon" />
+
+            <ProgressBar
+                android:id="@+id/pbDashboardStep"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/circle_small_shape_dark_primary"
+                android:backgroundTint="?attr/colorPrimaryDark"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/circle_small_progress_bar_white"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView98"
+                app:layout_constraintEnd_toEndOf="@+id/imageView98"
+                app:layout_constraintStart_toStartOf="@+id/imageView98"
+                app:layout_constraintTop_toBottomOf="@+id/textView178" />
+
+            <TextView
+                android:id="@+id/tvDashboardStepPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="0"
+                android:textColor="@color/whiteText"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/pbDashboardStep"
+                app:layout_constraintEnd_toEndOf="@+id/pbDashboardStep"
+                app:layout_constraintStart_toStartOf="@+id/pbDashboardStep"
+                app:layout_constraintTop_toTopOf="@+id/pbDashboardStep"
+                app:layout_constraintVertical_bias="0.4" />
+
+            <TextView
+                android:id="@+id/textView180"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="steps"
+                android:textColor="@color/whiteText"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/pbDashboardStep"
+                app:layout_constraintStart_toStartOf="@+id/pbDashboardStep"
+                app:layout_constraintTop_toBottomOf="@+id/tvDashboardStepPercent" />
+
+            <ImageView
+                android:id="@+id/imageView104"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView99"
+                app:layout_constraintTop_toTopOf="@+id/imageView99"
+                app:srcCompat="@drawable/water_droplet_icon" />
+
+            <TextView
+                android:id="@+id/textView181"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="WATER"
+                android:textColor="@color/primaryText"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView104"
+                app:layout_constraintTop_toTopOf="@+id/imageView99" />
+
+            <ImageView
+                android:id="@+id/imAddWater"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView99"
+                app:layout_constraintTop_toTopOf="@+id/imageView99"
+                app:srcCompat="@drawable/plus_icon" />
+
+            <TextView
+                android:id="@+id/tvDashboardWater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="0"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView99"
+                app:layout_constraintEnd_toEndOf="@+id/imageView99"
+                app:layout_constraintHorizontal_bias="0.29"
+                app:layout_constraintStart_toStartOf="@+id/imageView99"
+                app:layout_constraintTop_toBottomOf="@+id/textView181"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/textView183"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="mL"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView99"
+                app:layout_constraintStart_toEndOf="@+id/tvDashboardWater"
+                app:layout_constraintTop_toBottomOf="@+id/textView181"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/textView184"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="SLEEP"
+                android:textColor="@color/primaryText"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imSleepIcon"
+                app:layout_constraintTop_toTopOf="@+id/imageView101" />
+
+            <ImageView
+                android:id="@+id/imSleepIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView101"
+                app:layout_constraintTop_toTopOf="@+id/imageView101"
+                app:srcCompat="@drawable/moon_icon" />
+
+            <TextView
+                android:id="@+id/tvDashboardSleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="0"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView101"
+                app:layout_constraintEnd_toEndOf="@+id/imageView101"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintStart_toStartOf="@+id/imageView101"
+                app:layout_constraintTop_toBottomOf="@+id/textView184" />
+
+            <TextView
+                android:id="@+id/textView187"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="hours"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView101"
+                app:layout_constraintStart_toEndOf="@+id/tvDashboardSleep"
+                app:layout_constraintTop_toBottomOf="@+id/textView184"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <ImageView
+                android:id="@+id/imageView107"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView100"
+                app:layout_constraintTop_toTopOf="@+id/imageView100"
+                app:srcCompat="@drawable/food_icon" />
+
+            <TextView
+                android:id="@+id/textView188"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="FOOD"
+                android:textColor="@color/primaryText"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView107"
+                app:layout_constraintTop_toTopOf="@+id/imageView100" />
+
+            <ImageView
+                android:id="@+id/imAddFood"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView100"
+                app:layout_constraintTop_toTopOf="@+id/imageView100"
+                app:srcCompat="@drawable/plus_icon" />
+
+            <ProgressBar
+                android:id="@+id/pbDashboardFood"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/circle_small_shape_grey"
+                android:backgroundTint="@color/tertiaryDark"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/circle_small_progress_bar_primary"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView100"
+                app:layout_constraintEnd_toEndOf="@+id/imageView100"
+                app:layout_constraintStart_toStartOf="@+id/imageView100"
+                app:layout_constraintTop_toBottomOf="@+id/textView188" />
+
+            <TextView
+                android:id="@+id/tvDashboardCaloriePercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="0"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/pbDashboardFood"
+                app:layout_constraintEnd_toEndOf="@+id/pbDashboardFood"
+                app:layout_constraintStart_toStartOf="@+id/pbDashboardFood"
+                app:layout_constraintTop_toTopOf="@+id/pbDashboardFood"
+                app:layout_constraintVertical_bias="0.4" />
+
+            <TextView
+                android:id="@+id/textView190"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Kcal"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/pbDashboardFood"
+                app:layout_constraintHorizontal_bias="0.516"
+                app:layout_constraintStart_toStartOf="@+id/pbDashboardFood"
+                app:layout_constraintTop_toBottomOf="@+id/tvDashboardCaloriePercent" />
+
+            <ImageView
+                android:id="@+id/imageView110"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle_shape"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toStartOf="@+id/guideline68"
+                app:layout_constraintStart_toStartOf="@+id/guideline67"
+                app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                app:srcCompat="@drawable/weeklyprogressbg" />
+
+
+            <TextView
+                android:id="@+id/textView153"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Your Weekly Progress"
+                android:textColor="@color/whiteText"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imageView110"
+                app:layout_constraintTop_toTopOf="@+id/imageView110" />
+
+            <ProgressBar
+                android:id="@+id/pbDashboardWkProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/circle_small_shape_white"
+                android:backgroundTint="@color/secondary"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/circle_small_progress_bar_primary"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView110"
+                app:layout_constraintTop_toTopOf="@+id/imageView110" />
+
+            <TextView
+                android:id="@+id/tvDashboardWkPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily=" "
+                android:text="0%"
+                android:textColor="@color/whiteText"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@+id/pbDashboardWkProgress"
+                app:layout_constraintEnd_toEndOf="@+id/pbDashboardWkProgress"
+                app:layout_constraintStart_toStartOf="@+id/pbDashboardWkProgress"
+                app:layout_constraintTop_toTopOf="@+id/pbDashboardWkProgress" />
+
+            <ImageView
+                android:id="@+id/imAddSleep"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView101"
+                app:layout_constraintTop_toTopOf="@+id/imageView101"
+                app:srcCompat="@drawable/plus_icon" />
+
+            <ProgressBar
+                android:id="@+id/pbDashboardContent"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView90" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline68"
+                app:layout_constraintStart_toStartOf="@+id/guideline67"
+                app:layout_constraintTop_toBottomOf="@+id/imageView101"
+                app:srcCompat="@drawable/rectangle_filled_shape" />
+
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView9"
+                app:layout_constraintTop_toTopOf="@+id/imageView9"
+                app:srcCompat="@drawable/bmi_icon" />
+
+            <TextView
+                android:id="@+id/textView43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="BMI"
+                android:textColor="@color/whiteText"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView16"
+                app:layout_constraintTop_toTopOf="@+id/imageView9" />
+
+            <TextView
+                android:id="@+id/tvAverageBMI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="0"
+                android:textColor="@color/whiteText"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView9"
+                app:layout_constraintStart_toStartOf="@+id/imageView9"
+                app:layout_constraintTop_toTopOf="@+id/imageView9" />
+
+            <TextView
+                android:id="@+id/tvBMIResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Average BMI"
+                android:textColor="@color/whiteText"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView9"
+                app:layout_constraintStart_toStartOf="@+id/imageView9"
+                app:layout_constraintTop_toBottomOf="@+id/tvAverageBMI" />
+
+            <ImageView
+                android:id="@+id/imAddBMI"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView9"
+                app:layout_constraintTop_toTopOf="@+id/imageView9"
+                app:srcCompat="@drawable/plus_white_icon" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline67"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline68"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavDashboard"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bottom_nav_shape"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/bottom_nav_icon_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemTextAppearanceActive="@style/BottomNavTextActiveStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavTextInactiveStyle"
+    app:menu="@drawable/bottom_nav_menu" />
+</LinearLayout>

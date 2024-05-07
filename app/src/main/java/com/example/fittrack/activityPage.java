@@ -227,19 +227,19 @@ public class activityPage extends AppCompatActivity {
 
                 if(actName != null){
                     switch (actName) {
-                        case "running":
+                        case "Running":
                             imRecentActIcon.setImageResource(R.drawable.running_icon);
                             break;
-                        case "cycle":
+                        case "Cycle":
                             imRecentActIcon.setImageResource(R.drawable.cycling_icon);
                             break;
-                        case "swim":
+                        case "Swim":
                             imRecentActIcon.setImageResource(R.drawable.swimming_icon);
                             break;
-                        case "yoga":
+                        case "Yoga":
                             imRecentActIcon.setImageResource(R.drawable.yoga_icon);
                             break;
-                        case "gym":
+                        case "Gym":
                             imRecentActIcon.setImageResource(R.drawable.weights_icon);
                             break;
                         default:
