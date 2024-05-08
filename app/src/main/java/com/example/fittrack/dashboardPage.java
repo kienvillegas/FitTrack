@@ -91,12 +91,12 @@ public class dashboardPage extends AppCompatActivity {
         pbDashboardStep = findViewById(R.id.pbDashboardStep);
         pbDashboardWkProgress = findViewById(R.id.pbDashboardWkProgress);
 
-        DataManager dataManager = new DataManager(dashboardPage.this);
-        String currentDatetime = getCurrentDateTime();
-        Calendar cal = Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-
         try{
+            DataManager dataManager = new DataManager(dashboardPage.this);
+            String currentDatetime = getCurrentDateTime();
+            Calendar cal = Calendar.getInstance();
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+
             tvDayMonDate = findViewById(R.id.tvDayMonDate);
             tvMonYr = findViewById(R.id.tvMonYr);
             tvDayOne = findViewById(R.id.tvDayOne);
@@ -759,16 +759,31 @@ public class dashboardPage extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userId = currentUser.getUid();
+
+        DocumentReference docRef = db.collection("users").document(userId);
+        DocumentReference bmiRef = db.collection("bmi").document(userId);
+
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+        displayDashboardContent(docRef, bmiRef, hour);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_ACTIVITY_RECOGNITION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, initialize step sensor
                 initializeStepSensor();
             } else {
-                // Permission denied, show a message or take appropriate action
                 Toast.makeText(this, "Permission denied. Step tracking won't work.", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 }
