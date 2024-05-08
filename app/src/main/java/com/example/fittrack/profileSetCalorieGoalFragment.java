@@ -2,8 +2,10 @@ package com.example.fittrack;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,10 +49,80 @@ public class profileSetCalorieGoalFragment extends Fragment {
     }
 
 
+    private FirebaseAuth.AuthStateListener authStateListener;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Add auth state listener when the fragment starts
+        mAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Remove auth state listener when the fragment stops
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Remove the authStateListener when the fragment is destroyed
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Initialize FirebaseAuth instance
+        mAuth = FirebaseAuth.getInstance();
+
+        // Initialize AuthStateListener
+        authStateListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user == null) {
+                Log.d(TAG, "onAuthStateChanged:signed_out");
+                // Example: Redirect to sign-in fragment
+                androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Sign In Required")
+                        .setMessage("Please sign in to access this feature.")
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            // Handle sign-in action or any other action
+                            // If currentUser is null, navigate to the sign-in activity
+                            Intent intent = new Intent(requireContext(), signIn.class);
+                            startActivity(intent);
+                            requireActivity().finish(); // Finish the current activity
+                        })
+                        .setCancelable(false) // Set dialog non-cancelable
+                        .show();
+            }
+        };
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Remove the authStateListener to prevent memory leaks
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the authStateListener when the fragment is resumed
+        if (authStateListener != null) {
+            mAuth.addAuthStateListener(authStateListener);
+        }
     }
 
     @Override
@@ -59,6 +131,7 @@ public class profileSetCalorieGoalFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_set_calorie_goal, container, false);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         String userId = currentUser.getUid();
 
         tvSetCalorieDaily = view.findViewById(R.id.tvSetCalorieDaily);

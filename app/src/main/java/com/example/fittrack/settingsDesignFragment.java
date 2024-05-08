@@ -52,13 +52,81 @@ public class settingsDesignFragment extends Fragment {
 
     public settingsDesignFragment() {
     }
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-//        currentTheme = prefs.getInt(THEME_PREF_KEY, THEME_DEFAULT);
-//    }
-//
+    private FirebaseAuth.AuthStateListener authStateListener;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Add auth state listener when the fragment starts
+        mAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Remove auth state listener when the fragment stops
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Remove the authStateListener when the fragment is destroyed
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Initialize FirebaseAuth instance
+        mAuth = FirebaseAuth.getInstance();
+
+        // Initialize AuthStateListener
+        authStateListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user == null) {
+                Log.d(TAG, "onAuthStateChanged:signed_out");
+                // Example: Redirect to sign-in fragment
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+                builder.setTitle("Sign In Required")
+                        .setMessage("Please sign in to access this feature.")
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            // Handle sign-in action or any other action
+                            // If currentUser is null, navigate to the sign-in activity
+                            Intent intent = new Intent(requireContext(), signIn.class);
+                            startActivity(intent);
+                            requireActivity().finish(); // Finish the current activity
+                        })
+                        .setCancelable(false) // Set dialog non-cancelable
+                        .show();
+            }
+        };
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Remove the authStateListener to prevent memory leaks
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the authStateListener when the fragment is resumed
+        if (authStateListener != null) {
+            mAuth.addAuthStateListener(authStateListener);
+        }
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -186,6 +254,7 @@ public class settingsDesignFragment extends Fragment {
             fragmentTransaction.replace(R.id.fragmentContainerView3, newFragment);
             fragmentTransaction.commit();
         });
+
         return view;
     }
 

@@ -2,8 +2,10 @@ package com.example.fittrack;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -44,18 +46,88 @@ public class profileCalorieFragment extends Fragment {
     BarChart barChart;
     public profileCalorieFragment() {
     }
+    private FirebaseAuth.AuthStateListener authStateListener;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Add auth state listener when the fragment starts
+        mAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Remove auth state listener when the fragment stops
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Remove the authStateListener when the fragment is destroyed
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize FirebaseAuth instance
+        mAuth = FirebaseAuth.getInstance();
+
+        // Initialize AuthStateListener
+        authStateListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user == null) {
+                Log.d(TAG, "onAuthStateChanged:signed_out");
+                // Example: Redirect to sign-in fragment
+                androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Sign In Required")
+                        .setMessage("Please sign in to access this feature.")
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            // Handle sign-in action or any other action
+                            // If currentUser is null, navigate to the sign-in activity
+                            Intent intent = new Intent(requireContext(), signIn.class);
+                            startActivity(intent);
+                            requireActivity().finish(); // Finish the current activity
+                        })
+                        .setCancelable(false) // Set dialog non-cancelable
+                        .show();
+            }
+        };
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Remove the authStateListener to prevent memory leaks
+        if (authStateListener != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the authStateListener when the fragment is resumed
+        if (authStateListener != null) {
+            mAuth.addAuthStateListener(authStateListener);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_profile_calorie, container, false);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         String userId = currentUser.getUid();
 
         if(view != null && isAdded()){
@@ -66,50 +138,69 @@ public class profileCalorieFragment extends Fragment {
             btnProfileCalorieSetGoal = view.findViewById(R.id.btnProfileCalorieSetGoal);
             barChart = view.findViewById(R.id.calorieBarChart);
 
-            DocumentReference weeklyCalorieRef = db.collection("weekly_calorie").document(userId);
-            DocumentReference docRef = db.collection("users").document(userId);
+            authStateListener = firebaseAuth -> {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    // Example: Redirect to sign-in fragment
+                    androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                    builder.setTitle("Sign In Required")
+                            .setMessage("Please sign in to access this feature.")
+                            .setPositiveButton("OK", (dialog, which) -> {
+                                // Handle sign-in action or any other action
+                                // If currentUser is null, navigate to the sign-in activity
+                                Intent intent = new Intent(requireContext(), signIn.class);
+                                startActivity(intent);
+                                requireActivity().finish(); // Finish the current activity
+                            })
+                            .setCancelable(false) // Set dialog non-cancelable
+                            .show();
+                    return;
+                }
+                DocumentReference weeklyCalorieRef = db.collection("weekly_calorie").document(userId);
+                DocumentReference docRef = db.collection("users").document(userId);
 
-            if(userId != null){
-                hideContentView();
+                if(userId != null){
+                    hideContentView();
 
-                   Log.d(TAG, "Fragment is attached");
-                fetchWaterData(userId);
-                displayBarChart(weeklyCalorieRef);
+                    Log.d(TAG, "Fragment is attached");
+                    fetchWaterData(userId);
+                    displayBarChart(weeklyCalorieRef);
 
-                btnProfileCalorieSetGoal.setOnClickListener(v -> {
-                    docRef.get()
-                            .addOnSuccessListener(documentSnapshot -> {
-                                if(isAdded()){
-                                    if(documentSnapshot.exists()){
-                                        int calorieDailyGoal, calorieWeeklyGoal;
+                    btnProfileCalorieSetGoal.setOnClickListener(v -> {
+                        docRef.get()
+                                .addOnSuccessListener(documentSnapshot -> {
+                                    if(isAdded()){
+                                        if(documentSnapshot.exists()){
+                                            int calorieDailyGoal, calorieWeeklyGoal;
 
-                                        calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
-                                        calorieWeeklyGoal = documentSnapshot.getLong("calorieWeeklyGoal").intValue();
+                                            calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
+                                            calorieWeeklyGoal = documentSnapshot.getLong("calorieWeeklyGoal").intValue();
 
-                                        Bundle bundle = new Bundle();
-                                        bundle.putInt("dailyGoal", calorieDailyGoal);
-                                        bundle.putInt("weeklyGoal", calorieWeeklyGoal);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt("dailyGoal", calorieDailyGoal);
+                                            bundle.putInt("weeklyGoal", calorieWeeklyGoal);
 
-                                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        Fragment newFragment = new profileSetCalorieGoalFragment();
-                                        newFragment.setArguments(bundle);
-                                        fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                                        fragmentTransaction.addToBackStack(null);
-                                        fragmentTransaction.commit();
+                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            Fragment newFragment = new profileSetCalorieGoalFragment();
+                                            newFragment.setArguments(bundle);
+                                            fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
+                                            fragmentTransaction.commit();
+                                        }else{
+                                            Log.e(TAG, "Document does not exist");
+                                        }
                                     }else{
-                                        Log.e(TAG, "Document does not exist");
+                                        Log.e(TAG, "Fragment is not attached");
                                     }
-                                }else{
-                                    Log.e(TAG, "Fragment is not attached");
-                                }
-                            }).addOnFailureListener(e -> {
-                                Log.e(TAG, "An error occurred: " + e.getMessage());
-                            });
-                });
-            }else{
-                Log.e(TAG, "User ID is null");
-            }
+                                }).addOnFailureListener(e -> {
+                                    Log.e(TAG, "An error occurred: " + e.getMessage());
+                                });
+                    });
+                }else{
+                    Log.e(TAG, "User ID is null");
+                }
+            };
         }else{
             Log.e(TAG, "View is null or Fragment is not attached");
         }

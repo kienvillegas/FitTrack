@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -224,6 +225,7 @@ public class profilePage extends AppCompatActivity {
         imProfileSettings.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), settingsPage.class);
             startActivity(intent);
+            finish();
         });
 
 

@@ -59,9 +59,9 @@ public class settingsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         applyTheme();
-
         setContentView(R.layout.activity_settings_page);
         mAuth = FirebaseAuth.getInstance();
+
         btnSignOut = findViewById(R.id.btnSignOut);
         imSettingsBack = findViewById(R.id.imSettingsBack);
 
@@ -90,8 +90,13 @@ public class settingsPage extends AppCompatActivity {
             finish();
         });
 
-        imSettingsBack.setOnClickListener(view -> onBackPressed());
+//        imSettingsBack.setOnClickListener(view -> onBackPressed());
 
+        imSettingsBack.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), profilePage.class);
+            startActivity(intent);
+            finish();
+        });
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACTIVITY_RECOGNITION)
                 != PackageManager.PERMISSION_GRANTED) {

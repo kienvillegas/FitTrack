@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imageView84"
         android:layout_width="0dp"
-        android:layout_height="330dp"
+        android:layout_height="320dp"
         android:src="@drawable/rectangle_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
@@ -177,4 +177,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

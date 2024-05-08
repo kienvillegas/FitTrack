@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -60,6 +61,7 @@ public class bannerSleepGoalAchieved extends AppCompatActivity {
         setContentView(R.layout.activity_banner_sleep_goal_achieved);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         String userId = currentUser.getUid();
 //
 //        tvSleepBannerTaken = findViewById(R.id.tvSleepBannerTaken);

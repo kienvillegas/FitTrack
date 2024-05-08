@@ -47,7 +47,6 @@ public class startActivityFragment extends Fragment {
         btnStartActStart = view.findViewById(R.id.btnStartActStart);
         btnStartActCancel = view.findViewById(R.id.btnStartActCancel);
 
-
         Bundle bundle = getArguments();
         final String[] actName = {""};
         final int[] timeGoal = {1};
