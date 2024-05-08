@@ -12,6 +12,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -73,7 +74,6 @@ public class actStepTracker extends AppCompatActivity{
         DataManager dataManager = new DataManager(actStepTracker.this);
 
         final String[] storedDate = {dataManager.getStoredDate()};
-        String currentDate = getCurrentDateTime();
 
         DocumentReference docRef = db.collection("users").document(userId);
 
@@ -91,6 +91,8 @@ public class actStepTracker extends AppCompatActivity{
         etStepTracker = findViewById(R.id.etStepTrackerInput);
         btnAddSteps = findViewById(R.id.btnAddSteps);
         pbAddSteps = findViewById(R.id.pbAddSteps);
+
+        etStepTracker.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
 
         pbAddSteps.setVisibility(View.GONE);
         btnAddSteps.setVisibility(View.VISIBLE);

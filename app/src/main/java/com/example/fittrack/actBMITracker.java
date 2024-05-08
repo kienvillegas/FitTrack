@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
@@ -92,6 +93,9 @@ public class actBMITracker extends AppCompatActivity {
         pbEnterData = findViewById(R.id.pbEnterData);
         lineChart = findViewById(R.id.lineChart);
 
+        etBMITrackeHeight.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+        etBMITrackeWeight.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+
         DocumentReference docRef = db.collection("users").document(userId);
         DocumentReference bmiRef = db.collection("bmi").document(userId);
         fetchBMIData(bmiRef);
@@ -104,6 +108,7 @@ public class actBMITracker extends AppCompatActivity {
             btnEnterData.setVisibility(View.GONE);
 
             String weight, height;
+            double weightDbl, heightDbl;
             weight = etBMITrackeWeight.getText().toString().trim();
             height = etBMITrackeHeight.getText().toString().trim();
 
@@ -125,7 +130,10 @@ public class actBMITracker extends AppCompatActivity {
                 return;
             }
 
-            if(Double.parseDouble(weight) > 100){
+            heightDbl = Double.parseDouble(height);
+            weightDbl = Double.parseDouble(weight);
+
+            if(weightDbl > 100){
                 pbEnterData.setVisibility(View.GONE);
                 btnEnterData.setVisibility(View.VISIBLE);
                 etBMITrackeWeight.setBackgroundResource(R.drawable.text_field_red);
@@ -134,7 +142,7 @@ public class actBMITracker extends AppCompatActivity {
                 return;
             }
 
-            if(Double.parseDouble(height) > 3){
+            if(heightDbl > 3){
                 pbEnterData.setVisibility(View.GONE);
                 btnEnterData.setVisibility(View.VISIBLE);
                 etBMITrackeHeight.setBackgroundResource(R.drawable.text_field_red);
@@ -147,10 +155,7 @@ public class actBMITracker extends AppCompatActivity {
                 if(documentSnapshot.exists()){
                     String day = getCurrentDay();
 
-                    double heightDbl, weightDbl, bmi;
-
-                    heightDbl = Double.parseDouble(height);
-                    weightDbl = Double.parseDouble(weight);
+                    double bmi;
                     bmi = weightDbl / Math.pow(heightDbl, 2);
 
                     Map<String,Object> bmiRecords = new HashMap<>();

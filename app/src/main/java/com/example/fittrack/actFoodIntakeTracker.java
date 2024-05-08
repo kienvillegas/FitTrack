@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -65,6 +66,7 @@ public class actFoodIntakeTracker extends AppCompatActivity {
         String userId = currentUser.getUid();
 
         DataManager dataManager = new DataManager(this);
+        DocumentReference docRef = db.collection("users").document(userId);
 
         imBackBtn = findViewById(R.id.imCalorieTrackerBack);
         tvCalorieTrackerTaken = findViewById(R.id.tvCalorieTrackerTaken);
@@ -74,6 +76,8 @@ public class actFoodIntakeTracker extends AppCompatActivity {
         pbCalorieTracker = findViewById(R.id.pbCalorieTracker);
         btnAddCalories = findViewById(R.id.btnAddCalories);
         pbAddCalories = findViewById(R.id.pbAddCalories);
+
+        etCalorieTrackerInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
 
         pbAddCalories.setVisibility(View.GONE);
         btnAddCalories.setVisibility(View.VISIBLE);
@@ -86,24 +90,31 @@ public class actFoodIntakeTracker extends AppCompatActivity {
 
             String inputCalorie = etCalorieTrackerInput.getText().toString().trim();
             String day = getCurrentDay();
+
+            if (inputCalorie.isEmpty()) {
+                pbAddCalories.setVisibility(View.GONE);
+                btnAddCalories.setVisibility(View.VISIBLE);
+
+                etCalorieTrackerInput.setBackgroundResource(R.drawable.text_field_red);
+                etCalorieTrackerInput.setError("Required");
+                return;
+            }
+
             try {
-                DocumentReference docRef = db.collection("users").document(userId);
                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         int dailyCalorieTaken, weeklyCalorieTaken, calorieDailyGoal, calorieWeeklyGoal;
                         int diff = 0;
+                        int calorieInt = Integer.parseInt(inputCalorie);
 
                         dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
                         weeklyCalorieTaken = documentSnapshot.getLong("weeklyCalorieTaken").intValue();
                         calorieDailyGoal = documentSnapshot.getLong("calorieDailyGoal").intValue();
                         calorieWeeklyGoal  = documentSnapshot.getLong("calorieWeeklyGoal").intValue();
 
-                        dailyCalorieTaken += Integer.parseInt(inputCalorie);
-                        weeklyCalorieTaken += Integer.parseInt(inputCalorie);
-
                         diff = calorieWeeklyGoal - weeklyCalorieTaken;
 
-                        if(Integer.parseInt(inputCalorie) > diff){
+                        if(calorieInt > diff){
                             pbAddCalories.setVisibility(View.GONE);
                             btnAddCalories.setVisibility(View.VISIBLE);
                             etCalorieTrackerInput.setBackgroundResource(R.drawable.text_field_red);
@@ -111,14 +122,8 @@ public class actFoodIntakeTracker extends AppCompatActivity {
                             return;
                         }
 
-                        if (inputCalorie.isEmpty()) {
-                            pbAddCalories.setVisibility(View.GONE);
-                            btnAddCalories.setVisibility(View.VISIBLE);
-
-                            etCalorieTrackerInput.setBackgroundResource(R.drawable.text_field_red);
-                            etCalorieTrackerInput.setError("Required");
-                            return;
-                        }
+                        dailyCalorieTaken += calorieInt;
+                        weeklyCalorieTaken += calorieInt;
 
                         saveWeeklyCalorie(userId, day, dailyCalorieTaken);
                         checkGoalAchievement(dailyCalorieTaken, calorieDailyGoal, userId);

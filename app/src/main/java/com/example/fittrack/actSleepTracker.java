@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -80,6 +81,8 @@ public class actSleepTracker extends AppCompatActivity {
         pbSleepTracker = findViewById(R.id.pbSleepTracker);
         btnAddHours = findViewById(R.id.btnAddHours);
         pbAddHours = findViewById(R.id.pbAddHours);
+
+        etSleepTrackerInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
 
         pbAddHours.setVisibility(View.GONE);
         btnAddHours.setVisibility(View.VISIBLE);
