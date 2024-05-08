@@ -171,12 +171,13 @@
         android:id="@+id/btnChangeThemeDefault"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="95dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/primary"
         android:drawableBottom="@drawable/icon_check"
         android:gravity="center"
-        app:layout_constraintStart_toStartOf="@+id/imageView84"
+        app:layout_constraintEnd_toStartOf="@+id/btnChangeThemeSecond"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
     <Button
@@ -186,6 +187,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/orange"
+        app:layout_constraintEnd_toStartOf="@+id/btnChangeThemeThird"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnChangeThemeDefault"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
@@ -196,6 +199,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnChangeThemeSecond"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
@@ -203,7 +208,7 @@
         android:id="@+id/btnChangeThemeSave"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/btn_mid_rounded"
         android:backgroundTint="?attr/colorPrimary"
         android:fontFamily="@font/outfit_medium"
