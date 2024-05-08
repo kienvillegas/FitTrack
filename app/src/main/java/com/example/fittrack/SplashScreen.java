@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 public class SplashScreen extends AppCompatActivity {
-    private static final long SPLASH_TIMEOUT = 10000;
+    private static final long SPLASH_TIMEOUT = 5000;
     private static final String THEME_PREF_KEY = "themePref";
     private static final int THEME_DEFAULT = 0;
     private static final int THEME_ORANGE = 1;

@@ -3,6 +3,7 @@ package com.example.fittrack;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,8 @@ public class inProgressActivityFragment extends Fragment {
 
     public inProgressActivityFragment() {
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
