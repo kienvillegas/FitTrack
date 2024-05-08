@@ -6,7 +6,7 @@
     <item
         android:id="@+id/nav_activity"
         android:icon="@drawable/activity_icon"
-        android:title="Activty" />
+        android:title="Activity" />
 
     <item
         android:id="@+id/nav_profile"
