@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +65,9 @@ public class profileSetWaterGoalFragment extends Fragment {
         btnSetWaterCancel = view.findViewById(R.id.btnSetWaterCancel);
         pbSetWater = view.findViewById(R.id.pbSetWater);
 
+        etSetWaterWeekly.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+        etSetWaterDaily.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+
         pbSetWater.setVisibility(View.GONE);
         btnSetWaterGoal.setVisibility(View.VISIBLE);
         btnSetWaterCancel.setVisibility(View.VISIBLE);
@@ -98,10 +102,8 @@ public class profileSetWaterGoalFragment extends Fragment {
 
             dailyGoal = etSetWaterDaily.getText().toString().trim();
             weeklyGoal = etSetWaterWeekly.getText().toString().trim();
-            dailyGoalInt = dailyGoal.isEmpty() ? 0 : Integer.parseInt(dailyGoal);
-            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
 
-            if(dailyGoalInt == 0){
+            if(dailyGoal.isEmpty()){
                 pbSetWater.setVisibility(View.GONE);
                 btnSetWaterGoal.setVisibility(View.VISIBLE);
                 btnSetWaterCancel.setVisibility(View.VISIBLE);
@@ -112,24 +114,28 @@ public class profileSetWaterGoalFragment extends Fragment {
                 return;
             }
 
-            if(dailyGoalInt > 999999){
+            dailyGoalInt = Integer.parseInt(dailyGoal);
+
+            if(dailyGoalInt > 4000){
                 pbSetWater.setVisibility(View.GONE);
                 btnSetWaterGoal.setVisibility(View.VISIBLE);
                 btnSetWaterCancel.setVisibility(View.VISIBLE);
 
                 etSetWaterDaily.setBackgroundResource(R.drawable.text_field_red);
-                etSetWaterDaily.setError("Invalid");
+                etSetWaterDaily.setError("Cannot be more than 4,000 mL");
                 etSetWaterDaily.requestFocus();
                 return;
             }
 
-            if(weeklyGoalInt > 999999){
+            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
+
+            if(weeklyGoalInt > 28000){
                 pbSetWater.setVisibility(View.GONE);
                 btnSetWaterGoal.setVisibility(View.VISIBLE);
                 btnSetWaterCancel.setVisibility(View.VISIBLE);
 
                 etSetWaterWeekly.setBackgroundResource(R.drawable.text_field_red);
-                etSetWaterWeekly.setError("Invalid");
+                etSetWaterWeekly.setError("Cannot be more than 28,000 mL");
                 etSetWaterWeekly.requestFocus();
                 return;
             }

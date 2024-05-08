@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,6 +69,9 @@ public class profileSetCalorieGoalFragment extends Fragment {
         btnSetCalorieGoal = view.findViewById(R.id.btnSetCalorieGoal);
         pbSetCalorie = view.findViewById(R.id.pbSetCalorie);
 
+        etSetCalorieDaily.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+        etSetCalorieWeekly.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+
         pbSetCalorie.setVisibility(View.GONE);
         btnSetCalorieCancel.setVisibility(View.VISIBLE);
         btnSetCalorieGoal.setVisibility(View.VISIBLE);
@@ -107,10 +111,8 @@ public class profileSetCalorieGoalFragment extends Fragment {
             dailyGoal = etSetCalorieDaily.getText().toString().trim();
             weeklyGoal = etSetCalorieWeekly.getText().toString().trim();
 
-            dailyGoalInt = dailyGoal.isEmpty() ? 0 : Integer.parseInt(dailyGoal);
-            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
 
-            if(dailyGoalInt == 0){
+            if(dailyGoal.isEmpty()){
                 pbSetCalorie.setVisibility(View.GONE);
                 btnSetCalorieCancel.setVisibility(View.VISIBLE);
                 btnSetCalorieGoal.setVisibility(View.VISIBLE);
@@ -120,24 +122,28 @@ public class profileSetCalorieGoalFragment extends Fragment {
                 return;
             }
 
-            if(dailyGoalInt > 999999){
+            dailyGoalInt = Integer.parseInt(dailyGoal);
+
+            if(dailyGoalInt > 3000){
                 pbSetCalorie.setVisibility(View.GONE);
                 btnSetCalorieGoal.setVisibility(View.VISIBLE);
                 btnSetCalorieCancel.setVisibility(View.VISIBLE);
 
                 etSetCalorieDaily.setBackgroundResource(R.drawable.text_field_red);
-                etSetCalorieDaily.setError("Invalid");
+                etSetCalorieDaily.setError("Cannot be more than 3,000 Kcal");
                 etSetCalorieDaily.requestFocus();
                 return;
             }
 
-            if(weeklyGoalInt > 999999){
+            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
+
+            if(weeklyGoalInt > 21000){
                 pbSetCalorie.setVisibility(View.GONE);
                 btnSetCalorieGoal.setVisibility(View.VISIBLE);
                 btnSetCalorieCancel.setVisibility(View.VISIBLE);
 
                 etSetCalorieWeekly.setBackgroundResource(R.drawable.text_field_red);
-                etSetCalorieWeekly.setError("Invalid");
+                etSetCalorieWeekly.setError("Cannot be more than 21,000 Kcal");
                 etSetCalorieWeekly.requestFocus();
                 return;
             }

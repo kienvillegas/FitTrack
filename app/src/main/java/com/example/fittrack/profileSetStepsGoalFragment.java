@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +71,9 @@ public class profileSetStepsGoalFragment extends Fragment {
         btnSetStepGoal = view.findViewById(R.id.btnSetStepGoal);
         pbSetStep = view.findViewById(R.id.pbSetStep);
 
+        etSetStepDaily.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+        etSetStepWeekly.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+
         pbSetStep.setVisibility(View.GONE);
         btnSetStepCancel.setVisibility(View.VISIBLE);
         btnSetStepGoal.setVisibility(View.VISIBLE);
@@ -106,10 +110,8 @@ public class profileSetStepsGoalFragment extends Fragment {
             dailyGoal = etSetStepDaily.getText().toString().trim();
             weeklyGoal = etSetStepWeekly.getText().toString().trim();
             Log.d(TAG, "" + weeklyGoal);
-            dailyGoalInt = dailyGoal.isEmpty() ? 0 : Integer.parseInt(dailyGoal);
-            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
 
-            if(dailyGoalInt == 0){
+            if(dailyGoal.isEmpty()){
                 pbSetStep.setVisibility(View.GONE);
                 btnSetStepCancel.setVisibility(View.VISIBLE);
                 btnSetStepGoal.setVisibility(View.VISIBLE);
@@ -120,24 +122,28 @@ public class profileSetStepsGoalFragment extends Fragment {
                 return;
             }
 
-            if(dailyGoalInt > 999999){
+            dailyGoalInt = Integer.parseInt(dailyGoal);
+
+            if(dailyGoalInt > 10000){
                 pbSetStep.setVisibility(View.GONE);
                 btnSetStepGoal.setVisibility(View.VISIBLE);
                 btnSetStepCancel.setVisibility(View.VISIBLE);
 
                 etSetStepDaily.setBackgroundResource(R.drawable.text_field_red);
-                etSetStepDaily.setError("Invalid");
+                etSetStepDaily.setError("Cannot be more than 10,000 steps");
                 etSetStepDaily.requestFocus();
                 return;
             }
 
-            if(weeklyGoalInt > 999999){
+            weeklyGoalInt = weeklyGoal.isEmpty() ? dailyGoalInt * 7 : Integer.parseInt(weeklyGoal);
+
+            if(weeklyGoalInt > 70000){
                 pbSetStep.setVisibility(View.GONE);
                 btnSetStepGoal.setVisibility(View.VISIBLE);
                 btnSetStepCancel.setVisibility(View.VISIBLE);
 
                 etSetStepWeekly.setBackgroundResource(R.drawable.text_field_red);
-                etSetStepWeekly.setError("Invalid");
+                etSetStepWeekly.setError("Cannot be more than 70,000 steps");
                 etSetStepWeekly.requestFocus();
                 return;
             }

@@ -65,6 +65,7 @@ public class profileSetSleepGoalFragment extends Fragment {
         btnSetSleepGoal = view.findViewById(R.id.btnSetSleepGoal);
         pbSetSleep = view.findViewById(R.id.pbSetSleep);
 
+
         pbSetSleep.setVisibility(View.GONE);
         btnSetSleepGoal.setVisibility(View.VISIBLE);
         btnSetSleepCancel.setVisibility(View.VISIBLE);
