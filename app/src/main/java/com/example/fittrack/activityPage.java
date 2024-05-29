@@ -130,6 +130,10 @@ public class activityPage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), profilePage.class));
                 finish();
                 return true;
+            }else if(item.getItemId() == R.id.nav_chat) {
+                startActivity(new Intent(getApplicationContext(), chatPage.class));
+                finish();
+                return true;
             }
             return false;
         });

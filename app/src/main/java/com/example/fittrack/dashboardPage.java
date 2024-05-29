@@ -57,7 +57,17 @@ public class dashboardPage extends AppCompatActivity {
     private ImageView[] bgImageView = new ImageView[7];
 
     TextView  tvStepPercent, tvCaloriePercent, tvSleepHours, tvWaterIntake, tvWeeklyPercent, tvAverageBMI, tvBMIResult, tvDashboardGreeting;
-    ProgressBar pbDashboardStep, pbDashboardFood, pbDashboardWkProgress, pbDashboardContent;
+
+    ProgressBar pbDashboardStep, pbDashboardFood, pbDashboardWkProgress;
+    ImageView imageView104, imageView99;
+    TextView textView181, textView183;
+
+    ImageView imSleepIcon, imageView101;
+    TextView textView184, textView187;
+    ImageView imageView16, imageView9;
+    TextView textView43;
+    ImageView imageView102, imageView98, imageView100, imageView107;
+    TextView textView178, textView180, textView188, textView190;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +101,30 @@ public class dashboardPage extends AppCompatActivity {
         pbDashboardFood = findViewById(R.id.pbDashboardFood);
         pbDashboardStep = findViewById(R.id.pbDashboardStep);
         pbDashboardWkProgress = findViewById(R.id.pbDashboardWkProgress);
+
+        imageView102 = findViewById(R.id.imageView102);
+        imageView98 = findViewById(R.id.imageView98);
+        textView178 = findViewById(R.id.textView178);
+        textView180 = findViewById(R.id.textView180);
+
+        imageView107 = findViewById(R.id.imageView107);
+        imageView100 = findViewById(R.id.imageView100);
+        textView188 = findViewById(R.id.textView188);
+        textView190 = findViewById(R.id.textView190);
+
+        imageView104 = findViewById(R.id.imageView104);
+        imageView99 = findViewById(R.id.imageView99);
+        textView181 = findViewById(R.id.textView181);
+        textView183 = findViewById(R.id.textView183);
+
+        imSleepIcon = findViewById(R.id.imSleepIcon);
+        imageView101 = findViewById(R.id.imageView101);
+        textView184 = findViewById(R.id.textView184);
+        textView187 = findViewById(R.id.textView187);
+
+        imageView16 = findViewById(R.id.imageView16);
+        imageView9 = findViewById(R.id.imageView9);
+        textView43 = findViewById(R.id.textView43);
 
         try{
             DataManager dataManager = new DataManager(dashboardPage.this);
@@ -158,7 +192,63 @@ public class dashboardPage extends AppCompatActivity {
             startActivity(intent);
         });
 
+        imageView102.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
+            startActivity(intent);
+        });
+
+        imageView98.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
+            startActivity(intent);
+        });
+
+        textView178.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
+            startActivity(intent);
+        });
+
+        textView180.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
+            startActivity(intent);
+        });
+
+        tvStepPercent.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
+            startActivity(intent);
+        });
+
+        pbDashboardStep.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actStepTracker.class);
+            startActivity(intent);
+        });
+
+
         imAddWater.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        imageView104.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        imageView99.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        textView181.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        textView183.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        tvWaterIntake.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), actWaterIntakeTracker.class);
             startActivity(intent);
         });
@@ -167,12 +257,93 @@ public class dashboardPage extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
             startActivity(intent);
         });
+
+        imageView107.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
+        });
+        imageView100.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
+        });
+        textView188.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        textView190.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        tvCaloriePercent.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
+        });
+
+        pbDashboardFood.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actFoodIntakeTracker.class);
+            startActivity(intent);
+        });
+
         imAddSleep.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
             startActivity(intent);
         });
 
+        imSleepIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
+            startActivity(intent);
+        });
+
+        imageView101.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
+            startActivity(intent);
+        });
+
+        textView184.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
+            startActivity(intent);
+        });
+
+        textView187.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
+            startActivity(intent);
+        });
+        tvSleepHours.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actSleepTracker.class);
+            startActivity(intent);
+        });
+
         imAddBMI.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actBMITracker.class);
+            startActivity(intent);
+        });
+//        imageView16 = findViewById(R.id.imageView16);
+//        imageView9 = findViewById(R.id.imageView9);
+//        textView43 = findViewById(R.id.textView43);
+
+        imageView16.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actBMITracker.class);
+            startActivity(intent);
+        });
+
+        imageView9.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actBMITracker.class);
+            startActivity(intent);
+        });
+
+        textView43.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actBMITracker.class);
+            startActivity(intent);
+        });
+
+        tvAverageBMI.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), actBMITracker.class);
+            startActivity(intent);
+        });
+
+        tvBMIResult.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), actBMITracker.class);
             startActivity(intent);
         });
@@ -189,6 +360,10 @@ public class dashboardPage extends AppCompatActivity {
                 return true;
             } else if (item.getItemId() == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), profilePage.class));
+                finish();
+                return true;
+            }else if(item.getItemId() == R.id.nav_chat) {
+                startActivity(new Intent(getApplicationContext(), chatPage.class));
                 finish();
                 return true;
             }

@@ -7,204 +7,108 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.ai.client.generativeai.GenerativeModel;
+import com.google.ai.client.generativeai.java.ChatFutures;
+import com.google.ai.client.generativeai.java.GenerativeModelFutures;
+import com.google.ai.client.generativeai.type.Content;
+import com.google.ai.client.generativeai.type.GenerateContentResponse;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthSettings;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.local.DocumentOverlayCache;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-public class profilePage extends AppCompatActivity {
+public class chatPage extends AppCompatActivity {
     private static final String THEME_PREF_KEY = "themePref";
     private static final int THEME_DEFAULT = 0;
     private static final int THEME_ORANGE = 1;
     private static final int THEME_GREEN = 2;
     private static final int REQUEST_ACTIVITY_RECOGNITION_PERMISSION = 1;
 
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
 
-    BottomNavigationView bottomNav;
-    ImageView imProfileSettings;
-    TextView tvStepTab, tvWaterTab, tvSleepTab, tvCalorieTab, tvProfileDayMonDate, tvProfileGreeting;
-    private boolean isSleepTab, isStepTab, isWaterTab, isCalorieTab = false;
+    RecyclerView recyclerView;
+    TextView welcomeTextView;
+    EditText messageEditText;
+    ImageButton sendButton;
+    List<Message> messageList;
+    MessageAdapter messageAdapter;
+
+    GenerativeModel gm;
+    ChatFutures chat;
+    GenerativeModelFutures model;
+
     private StepSensorManager stepSensorManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         applyTheme();
+        setContentView(R.layout.activity_chat_page);
 
-
-        setContentView(R.layout.activity_profile_page);
         mAuth = FirebaseAuth.getInstance();
 
-        bottomNav = findViewById(R.id.bottomNavProfile);
-        imProfileSettings = findViewById(R.id.imProfileSettings);
-        tvStepTab = findViewById(R.id.stepTab);
-        tvWaterTab = findViewById(R.id.waterTab);
-        tvCalorieTab = findViewById(R.id.calorieTab);
-//        tvSleepTab = findViewById(R.id.sleepTab);
-        tvProfileDayMonDate = findViewById(R.id.tvProfileDayMonDate);
-        tvProfileGreeting = findViewById(R.id.tvProfileGreeting);
-        bottomNav.setSelectedItemId(R.id.nav_profile);
+        messageList = new ArrayList<>();
 
-        SimpleDateFormat dayMonDate = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
-        Date date = new Date();
-        String currentDate = dayMonDate.format(date);
-        tvProfileDayMonDate.setText(currentDate);
+        recyclerView = findViewById(R.id.recycler_view);
+        welcomeTextView = findViewById(R.id.welcome_text);
+        messageEditText = findViewById(R.id.message_edit_text);
+        sendButton = findViewById(R.id.send_btn);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavActivity);
 
-        Calendar cal = Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        // setup recycler view
+        messageAdapter = new MessageAdapter(messageList);
+        recyclerView.setAdapter(messageAdapter);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setStackFromEnd(true);
+        recyclerView.setLayoutManager(llm);
 
-        if (hour >= 0 && hour < 12) {
-            tvProfileGreeting.setText("Good Morning!");
-        } else if (hour >= 12 && hour < 18) {
-            tvProfileGreeting.setText("Good Afternoon!");
-        } else {
-            tvProfileGreeting.setText("Good Evening!");
-        }
+        gm = new GenerativeModel("gemini-1.5-flash", "AIzaSyCdOJtRoFPzl_bB3y5hWX0T1k2HbKO_lZQ");
+        model = GenerativeModelFutures.from(gm);
+        fetchUserData();
 
-
-        tvStepTab.setOnClickListener(v -> {
-            isStepTab = true;
-            isWaterTab = false;
-            isCalorieTab = false;
-            isSleepTab = false;
-
-            if(isStepTab){
-                tvStepTab.setEnabled(false);
-                tvWaterTab.setEnabled(true);
-                tvCalorieTab.setEnabled(true);
-//                tvSleepTab.setEnabled(true);
-
-                tvStepTab.setBackgroundResource(R.drawable.back_select);
-                tvWaterTab.setBackgroundResource(0);
-                tvCalorieTab.setBackgroundResource(0);
-//                tvSleepTab.setBackgroundResource(0);
-                tvStepTab.setTextColor(getResources().getColor(R.color.whiteText)) ;
-                tvWaterTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvCalorieTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-//                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-
-                Fragment newFragment = new profileStepsFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                fragmentTransaction.commit();
-            }
-        });
-
-        tvWaterTab.setOnClickListener(v -> {
-            isStepTab = false;
-            isWaterTab = true;
-            isCalorieTab = false;
-//            isSleepTab = false;
-
-            if(isWaterTab) {
-                tvStepTab.setEnabled(true);
-                tvWaterTab.setEnabled(false);
-                tvCalorieTab.setEnabled(true);
-//                tvSleepTab.setEnabled(true);
-
-                tvStepTab.setBackgroundResource(0);
-                tvWaterTab.setBackgroundResource(R.drawable.back_select);
-                tvCalorieTab.setBackgroundResource(0);
-//                tvSleepTab.setBackgroundResource(0);
-                tvStepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvWaterTab.setTextColor(getResources().getColor(R.color.whiteText));
-                tvCalorieTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-//                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-
-                Fragment newFragment = new profileWaterFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                fragmentTransaction.commit();
-            }
-        });
-
-        tvCalorieTab.setOnClickListener(v -> {
-            isStepTab = false;
-            isWaterTab = false;
-            isCalorieTab = true;
-//            isSleepTab = false;
-
-            if(isCalorieTab) {
-                tvStepTab.setEnabled(true);
-                tvWaterTab.setEnabled(true);
-                tvCalorieTab.setEnabled(false);
-//                tvSleepTab.setEnabled(true);
-                tvStepTab.setBackgroundResource(0);
-                tvWaterTab.setBackgroundResource(0);
-                tvCalorieTab.setBackgroundResource(R.drawable.back_select);
-//                tvSleepTab.setBackgroundResource(0);
-                tvStepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvWaterTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-                tvCalorieTab.setTextColor(getResources().getColor(R.color.whiteText));
-//                tvSleepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-
-                Fragment newFragment = new profileCalorieFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-                fragmentTransaction.commit();
-            }
-        });
-
-//        tvSleepTab.setOnClickListener(v -> {
-//            isStepTab = false;
-//            isWaterTab = false;
-//            isCalorieTab = false;
-//            isSleepTab = true;
-//
-//            if(isSleepTab) {
-//                tvStepTab.setEnabled(true);
-//                tvWaterTab.setEnabled(true);
-//                tvCalorieTab.setEnabled(true);
-//                tvSleepTab.setEnabled(false);
-//                tvStepTab.setBackgroundResource(0);
-//                tvWaterTab.setBackgroundResource(0);
-//                tvCalorieTab.setBackgroundResource(0);
-//                tvSleepTab.setBackgroundResource(R.drawable.back_select);
-//                tvStepTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-//                tvWaterTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-//                tvCalorieTab.setTextColor(getResources().getColor(R.color.tertiaryDarkText));
-//                tvSleepTab.setTextColor(getResources().getColor(R.color.whiteText));
-//
-//                Fragment newFragment = new profileSleepFragment();
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.fragmentContainerView, newFragment);
-//                fragmentTransaction.commit();
-//            }
-//        });
-
-
+        bottomNav.setSelectedItemId(R.id.nav_chat);
         bottomNav.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_dashboard) {
                 startActivity(new Intent(getApplicationContext(), dashboardPage.class));
@@ -226,12 +130,38 @@ public class profilePage extends AppCompatActivity {
             return false;
         });
 
-        imProfileSettings.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), settingsPage.class);
-            startActivity(intent);
-            finish();
-        });
+        sendButton.setOnClickListener(v -> {
+            String question = messageEditText.getText().toString().trim();
 
+            addToChat(question, Message.SENT_BY_ME);
+            messageEditText.setText("");
+            try {
+                Content userMessage = new Content.Builder()
+                        .addText(question)
+                        .build();
+
+                Executor executor = Executors.newSingleThreadExecutor();
+                ListenableFuture<GenerateContentResponse> response = chat.sendMessage(userMessage);
+                Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
+                    @Override
+                    public void onSuccess(GenerateContentResponse result) {
+                        String resultText = result.getText();
+                        addToChat(resultText, Message.SEND_BY_BOT);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        t.printStackTrace();
+                        addResponse("Failed to load response due to " + t.getMessage());
+
+                    }
+                }, executor);
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            welcomeTextView.setVisibility(View.GONE);
+        });
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACTIVITY_RECOGNITION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -243,6 +173,72 @@ public class profilePage extends AppCompatActivity {
         }
     }
 
+    void addToChat(String message, String sentBy){
+        runOnUiThread(() -> {
+            messageList.add(new Message(message,sentBy));
+            messageAdapter.notifyDataSetChanged();
+            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+        });
+    }
+
+    void addResponse(String response){
+        addToChat(response,Message.SEND_BY_BOT);
+    }
+    private void createHistory(String name, int dailyCalorie, int dailyWater, int dailySleep, int dailyStep, int weeklyCalorie, int weeklyWater, int weeklySleep, int weeklyStep){
+        Content.Builder userContentBuilder = new Content.Builder();
+        userContentBuilder.setRole("user");
+        userContentBuilder.addText("Hello, I'm " + name +"! 19 years old. Here are my fitness records in the app FitTrack: \n" +
+                "Daily Calorie Taken: " + dailyCalorie + "\n" +
+                "Daily Water Taken: " + dailyWater + "\n" +
+                "Daily Sleep Taken: " + dailySleep + "\n" +
+                "Daily Step Taken: " + dailyStep + "\n" +
+                "Weekly Calorie Taken: " + weeklyCalorie + "\n" +
+                "Weekly Water Taken: " + weeklyWater + "\n" +
+                "Weekly Sleep Taken: " + weeklySleep + "\n" +
+                "Weekly Step Taken: " + weeklyStep);
+        Content userContent = userContentBuilder.build();
+
+        Content.Builder modelContentBuilder = new Content.Builder();
+        modelContentBuilder.setRole("model");
+        modelContentBuilder.addText("Great to meet you. That's awesome glad to know those information about your fitness");
+        Content modelContent = userContentBuilder.build();
+
+        List<Content> history = Arrays.asList(userContent, modelContent);
+        chat = model.startChat(history);
+    }
+    private void fetchUserData(){
+
+        String userId = currentUser.getUid();
+
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    String name;
+                    int dailyCalorieTaken, weeklyCalorieTaken;
+                    int dailyWaterTaken, weeklyWaterTaken;
+                    int dailySleepTaken, weeklySleepTaken;
+                    int dailyStepTaken, weeklyStepTaken;
+
+                    if(documentSnapshot.exists()){
+                        name = documentSnapshot.getString("name");
+                        dailyCalorieTaken = documentSnapshot.getLong("dailyCalorieTaken").intValue();
+                        dailyWaterTaken = documentSnapshot.getLong("dailyWaterTaken").intValue();
+                        dailySleepTaken = documentSnapshot.getLong("dailySleepTaken").intValue();
+                        dailyStepTaken = documentSnapshot.getLong("dailyStepTaken").intValue();
+
+                        weeklyCalorieTaken = documentSnapshot.getLong("weeklyCalorieTaken").intValue();
+                        weeklyWaterTaken = documentSnapshot.getLong("weeklyWaterTaken").intValue();
+                        weeklySleepTaken = documentSnapshot.getLong("weeklySleepTaken").intValue();
+                        weeklyStepTaken = documentSnapshot.getLong("weeklyStepTaken").intValue();
+
+                        createHistory(name,dailyCalorieTaken, dailyWaterTaken, dailySleepTaken, dailyStepTaken, weeklyCalorieTaken, weeklyWaterTaken, weeklySleepTaken, weeklyStepTaken);
+                    }else{
+                        Log.e(TAG, "Document does not exist");
+                    }
+                }).addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
     private void checkGoalAchievement(int dailyStepTaken, int steDailyGoal, String userId) {
         DocumentReference docRef = db.collection("users").document(userId);
         docRef.get()
@@ -273,13 +269,20 @@ public class profilePage extends AppCompatActivity {
                     Log.e(TAG, "Failed to update isStepDailyGoal: " + e.getMessage());
                 });
     }
+
+    private String getCurrentDay(){
+        Date date = new Date();
+        SimpleDateFormat dayFormat = new SimpleDateFormat("EEE", Locale.getDefault());
+
+        return dayFormat.format(date);
+    }
     private void initializeStepSensor() {
         Log.d(TAG, "initializeStepSensor");
 
         stepSensorManager = new StepSensorManager(this, stepCount -> {
             Log.d(TAG, "Listening...");
 
-            DataManager dataManager = new DataManager(profilePage.this);
+            DataManager dataManager = new DataManager(chatPage.this);
             FirebaseUser currentUser = mAuth.getCurrentUser();
             mAuth = FirebaseAuth.getInstance();
             String userId = currentUser.getUid();
@@ -321,14 +324,6 @@ public class profilePage extends AppCompatActivity {
         stepSensorManager.registerListener();
     }
 
-
-    private String getCurrentDay(){
-        Date date = new Date();
-        SimpleDateFormat dayFormat = new SimpleDateFormat("EEE", Locale.getDefault());
-
-        return dayFormat.format(date);
-    }
-
     private void saveWeekSteps(String userId, String day, int dailyStepTaken){
         DocumentReference weeklyStepRef = db.collection("weekly_step").document(userId);
         Map<String, Object> stepData = new HashMap<>();
@@ -366,7 +361,6 @@ public class profilePage extends AppCompatActivity {
                     Log.e(TAG, "Failed to add " + stepData + " to Firestore");
                 });
     }
-
     private void applyTheme() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int theme = prefs.getInt(THEME_PREF_KEY, 0);
@@ -383,7 +377,6 @@ public class profilePage extends AppCompatActivity {
                 setTheme(R.style.AppDefaultTheme);
         }
     }
-
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -391,7 +384,6 @@ public class profilePage extends AppCompatActivity {
             currentUser.reload();
         }
     }
-
 
     @Override
     protected void onDestroy() {

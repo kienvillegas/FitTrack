@@ -7,7 +7,10 @@
         android:id="@+id/nav_activity"
         android:icon="@drawable/activity_icon"
         android:title="Activity" />
-
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/chat_icon"
+        android:title="Chat" />
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/profile_icon"
